@@ -20,7 +20,7 @@ class UserManajemenController extends Controller
         $search = $request->query('search');
 
         $users = User::when($search, function ($query) use ($search) {
-            return $query->where('nama_user', 'like', '%' . $search . '%');
+            return $query->where('name', 'like', '%' . $search . '%');
         })
             ->paginate($perPage)
             ->appends(request()->query());
@@ -44,13 +44,13 @@ class UserManajemenController extends Controller
     {
         try {
             $validateData = $request->validate([
-                'nama_user' => 'required|string|max:100',
+                'name' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|confirmed|min:8',
                 'telepon' => 'nullable|numeric|digits_between:11,13|unique:users,telepon',
                 'role' => 'required|in:administrator,operator',
             ], [
-                'nama_user.required' => 'Nama tidak boleh kosong',
+                'name.required' => 'Nama tidak boleh kosong',
                 'email.required' => 'Email tidak boleh kosong',
                 'email.unique' => 'Email telah terdaftar',
                 'email.email' => 'Format email tidak valid',
@@ -65,10 +65,9 @@ class UserManajemenController extends Controller
             ]);
 
             $validateData['password'] = bcrypt($validateData['password']);
-            // dd($validateData);
 
             User::create($validateData);
-            return back()->with('success', 'Data user "' . $validateData['nama_user'] . '" berhasil ditambahkan.');
+            return back()->with('success', 'Data user "' . $validateData['name'] . '" berhasil ditambahkan.');
         } catch (ValidationException $e) {
             return back()
                 ->withErrors($e->validator)
@@ -103,12 +102,12 @@ class UserManajemenController extends Controller
     {
         try {
             $validateData = $request->validate([
-                'nama_user' => 'required|string|max:100',
+                'name' => 'required|string|max:100',
                 'email' => 'required|email|unique:users,email,' . $id,
                 'telepon' => 'nullable|numeric|digits_between:11,13|unique:users,telepon,' . $id,
                 'role' => 'required|in:administrator,operator',
             ], [
-                'nama_user.required' => 'Nama tidak boleh kosong',
+                'name.required' => 'Nama tidak boleh kosong',
                 'email.required' => 'Email tidak boleh kosong',
                 'email.unique' => 'Email telah terdaftar',
                 'telepon.numeric' => 'Nomor telepon harus angka',
@@ -119,7 +118,7 @@ class UserManajemenController extends Controller
             ]);
 
             User::findOrFail($id)->update($validateData);
-            return back()->with('success', 'Data user "' . $validateData['nama_user'] . '" berhasil diubah.');
+            return back()->with('success', 'Data user "' . $validateData['name'] . '" berhasil diubah.');
         } catch (ValidationException $e) {
             return back()
                 ->withErrors($e->validator)
@@ -137,7 +136,7 @@ class UserManajemenController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $nama = $user->nama_user;
+        $nama = $user->name;
         $user->delete();
 
         return back()->with('success', 'Data user ' . "$nama" . ' berhasil dihapus.');

@@ -50,17 +50,7 @@
                         <x-btn-primary type="submit" class="md:hidden">
                             <i class="fi fi-rs-search relative top-0.5"></i>
                         </x-btn-primary>
-
                     </form>
-
-                    <!-- Delete button -->
-                    <div>
-                        <button>
-                            <i
-                                class="fi fi-rs-trash text-red-300 hover:text-red-600 leading-none
-                            text-3xl relative top-1"></i>
-                        </button>
-                    </div>
                 </div>
 
                 <!-- Button Add User -->
@@ -108,10 +98,10 @@
                         <div class="p-4 space-y-4">
                             <!-- Nama -->
                             <div>
-                                <x-label for="nama_user" required>Nama</x-label>
-                                <x-text-input class="w-full" id="nama_user" name="nama_user" type="text"
-                                    placeholder="Masukkan nama lengkap" value="{{ old('nama_user') }}" />
-                                <x-error-message for="nama_user" />
+                                <x-label for="name" required>Nama</x-label>
+                                <x-text-input class="w-full" id="name" name="name" type="text"
+                                    placeholder="Masukkan nama lengkap" value="{{ old('name') }}" />
+                                <x-error-message for="name" />
                             </div>
 
                             <!-- Email -->
@@ -181,10 +171,6 @@
                 <table class="min-w-full text-left text-gray-500">
                     <thead class="bg-gray-100 text-sm text-gray-700 uppercase">
                         <tr>
-                            <th scope="col" class="px-2 pl-4 py-3 w-10"> <!-- Reduced padding and fixed width -->
-                                <input type="checkbox"
-                                    class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                            </th>
                             <th scope="col" class="px-2 py-3 w-12 text-center">No.</th>
                             <th scope="col" class="p-3">Nama</th>
                             <th scope="col" class="p-3">No. Telepon</th>
@@ -196,12 +182,8 @@
                     <tbody>
                         @forelse ($users as $data)
                             <tr class="bg-white text-gray-900 border-b hover:bg-gray-100">
-                                <td class="px-2 pl-4 py-3">
-                                    <input type="checkbox"
-                                        class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
-                                </td>
                                 <td class="px-2 py-3 text-center">{{ ++$i }}</td>
-                                <td class="p-3 ">{{ $data->nama_user }}</td>
+                                <td class="p-3 ">{{ $data->name }}</td>
                                 <td class="p-3 ">{{ $data->telepon ?? 'Belum ada nomor telepon.' }} </td>
                                 <td class="p-3">{{ $data->email }}</td>
                                 <td class="p-3">
@@ -251,11 +233,11 @@
                                             <div class="p-4 space-y-4">
                                                 <!-- Nama -->
                                                 <div>
-                                                    <x-label for="nama_user" required>Nama</x-label>
-                                                    <x-text-input class="w-full" id="nama_user" name="nama_user"
+                                                    <x-label for="name" required>Nama</x-label>
+                                                    <x-text-input class="w-full" id="name" name="name"
                                                         type="text" placeholder="Masukkan nama lengkap"
-                                                        value="{{ old('nama_user', $data->nama_user) }}" />
-                                                    <x-error-message for="nama_user" />
+                                                        value="{{ old('name', $data->name) }}" />
+                                                    <x-error-message for="name" />
                                                 </div>
 
                                                 <!-- Email -->
@@ -340,7 +322,7 @@
                                         <div class="flex justify-between items-center p-4 border-b">
                                             <h3 class="text-lg font-semibold text-gray-900"> <i
                                                     class="fi fi-rs-trash text-sm mr-2"></i>Delete
-                                                User "{{ $data->nama_user }}"</h3>
+                                                User "{{ $data->name }}"</h3>
                                             <button type="button"
                                                 class="text-gray-400 hover:text-gray-500 focus:outline-none"
                                                 data-modal-hide="deleteModal{{ $data->id }}">
@@ -375,8 +357,8 @@
                                 </div>
                             </div>
                         @empty
-                            <tr colspan="7">
-                                <td>Data tidak ditemukan.</td>
+                            <tr>
+                                <td colspan="6" class="p-4 text-center text-gray-500">Data tidak ditemukan.</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,14 +21,14 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                'nama_user' => 'Administrator',
+                'name' => 'Administrator',
                 'email' => 'administrator@gmail.com',
                 'password' => bcrypt('password'),
                 'telepon'  => '08123456789',
                 'role' => 'administrator'
             ],
             [
-                'nama_user' => 'Operator',
+                'name' => 'Operator',
                 'email' => 'operator@gmail.com',
                 'password' => bcrypt('password'),
                 'telepon'  => '08123456789',

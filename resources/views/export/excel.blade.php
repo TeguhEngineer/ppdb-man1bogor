@@ -8,7 +8,7 @@
     <tbody>
         @foreach ($data as $val)
             <tr>
-                <td style="font-size: 12px">{{ $val->nama_user }}</td>
+                <td style="font-size: 12px">{{ $val->name }}</td>
                 <td style="color: white">{{ $val->email }}</td>
             </tr>
         @endforeach
