@@ -14,6 +14,10 @@ export default {
             fontFamily: {
                 sans: ['Poppins', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                main: '#22690f',
+                secondary: '#fdce06',
+            }
         },
     },
 

@@ -1,277 +1,302 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BUSINESS REQUIREMENTS DOCUMENT (BRD)
 
-# Laravel 11 Basecode Template
+## Sistem Penerimaan Peserta Didik Baru (PPDB)
 
-Template basecode Laravel 11 dengan TailwindCSS, authentication, role-based access control, dan API support.
+---
 
-## Fitur
+## 1. TUJUAN SISTEM
 
-### Authentication & Authorization
-- ✅ Authentication dengan Laravel Breeze
-- ✅ Role-based middleware (Administrator & Operator)
-- ✅ Activity logging untuk audit trail
-- ✅ Protected routes dengan middleware
+Sistem PPDB ini dibuat untuk:
 
-### CRUD Features
-- ✅ User Management (Admin only)
-  - Create, Read, Update, Delete users
-  - Export to Excel
-  - Search & pagination
-- ✅ Product Management (Admin & Operator)
-  - CRUD dengan image upload
-  - Image storage management
-  - Search & pagination
-  - Clean code dengan Form Requests
+* Mempermudah proses pendaftaran siswa baru secara online
+* Mengintegrasikan seluruh jalur pendaftaran dalam satu platform
+* Memudahkan peserta dalam mengakses informasi, mendaftar, dan melihat hasil seleksi
 
-### API Support
-- ✅ RESTful API dengan versioning (v1)
-- ✅ Laravel Sanctum authentication
-- ✅ API Resources & Collections
-- ✅ Rate limiting
-- ✅ Endpoints:
-  - Authentication (login, register, logout)
-  - User management
-  - Product management
+---
 
-### UI/UX
-- ✅ TailwindCSS styling
-- ✅ Responsive sidebar navigation
-- ✅ Modal-based forms
-- ✅ Toast notifications
-- ✅ Error handling & validation messages
+## 2. AKTOR SISTEM
 
-## Installation
+### 2.1 Peserta (User)
 
-### Requirements
-- PHP >= 8.2
-- Composer
-- Node.js & NPM
-- SQLite/MySQL/PostgreSQL
+* Melihat informasi PPDB
+* Mendaftar akun
+* Login
+* Mengisi biodata
+* Mengisi Data Raport
+* Melihat status & pengumuman
 
-### Setup
+### 2.2 Admin
 
-1. Clone repository
-```bash
-git clone <repository-url>
-cd basecode-laravel11-tailwind
-```
+* Verifikasi data
+* Mengelola status seleksi
+* Mengelola pengumuman
 
-2. Install dependencies
-```bash
-composer install
-npm install
-```
+---
 
-3. Setup environment
-```bash
-copy .env.example .env
-php artisan key:generate
-```
+## 3. FITUR UTAMA SISTEM
 
-4. Configure database di `.env`
-```env
-DB_CONNECTION=sqlite
-# atau untuk MySQL:
-# DB_CONNECTION=mysql
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_DATABASE=your_database
-# DB_USERNAME=your_username
-# DB_PASSWORD=your_password
-```
+### 3.1 Landing Page
 
-5. Run migrations & seeders
-```bash
-php artisan migrate --seed
-```
+* Beranda
+* Informasi
+* Alur Pendaftaran
+* Pengumuman
+* FAQ
+* Kontak
+* CTA Login & Daftar
 
-6. Create storage link
-```bash
-php artisan storage:link
-```
+### 3.2 Sistem Pendaftaran
 
-7. Build assets
-```bash
-npm run dev
-```
+* 1 halaman berisi:
 
-8. Start development server
-```bash
-php artisan serve
-```
+  * Jalur Reguler
+  * Jalur Prestasi
+  * Jalur Afirmasi
+* User hanya bisa memilih 1 jalur
 
-## Default Users
+### 3.3 Autentikasi
 
-Setelah seeding, gunakan kredensial berikut:
+* Registrasi akun
+* Login
+* Logout
 
-**Administrator:**
-- Email: administrator@gmail.com
-- Password: password
+### 3.4 Dashboard Peserta
 
-**Operator:**
-- Email: operator@gmail.com
-- Password: password
+Menu:
+* Dasbor
+* Peserta
+  ** Akun Saya
+  ** Biodata
+* Lihat Pesan
+* Ubah Password
+* Keluar
 
-## API Documentation
+### 3.5 Informasi PPDB
 
-### Base URL
-```
-http://localhost:8000/api/v1
-```
+* Jadwal:
 
-### Authentication
+  * Pendaftaran
+  * Verifikasi biodata dan nilai raport
+  * Tes & wawancara
+  * Pengumuman
+  * Daftar ulang
+* Syarat umum:
 
-**Login**
-```http
-POST /api/v1/login
-Content-Type: application/json
+  * Rapor/Ijazah
+  * KK & Akta lahir
+  * Foto 3x4
+  * Surat pernyataan
 
-{
-  "email": "administrator@gmail.com",
-  "password": "password"
-}
-```
+### 3.6 Pengumuman
 
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "data": {
-    "user": {...},
-    "token": "your-api-token"
-  }
-}
-```
+* Menampilkan hasil seleksi peserta
 
-**Logout**
-```http
-POST /api/v1/logout
-Authorization: Bearer {token}
-```
+### 3.7 FAQ
 
-### Protected Endpoints
+* Cara daftar
+* Ketentuan jalur
+* Dokumen
+* Jadwal pengumuman
 
-Semua endpoint berikut memerlukan header:
-```
-Authorization: Bearer {your-api-token}
-```
+### 3.8 Kontak
 
-**Get Current User**
-```http
-GET /api/v1/user
-```
+* Informasi kontak admin
 
-**Users (Admin only)**
-```http
-GET    /api/v1/users
-POST   /api/v1/users
-GET    /api/v1/users/{id}
-PUT    /api/v1/users/{id}
-DELETE /api/v1/users/{id}
-```
+---
 
-**Products (Admin & Operator)**
-```http
-GET    /api/v1/produk
-POST   /api/v1/produk
-GET    /api/v1/produk/{id}
-PUT    /api/v1/produk/{id}
-DELETE /api/v1/produk/{id}
-```
+## 4. ALUR BISNIS
 
-## Project Structure
+Landing Page → Daftar → Login → Isi Biodata → Isi Nilai Raport → Verifikasi → Tes/Wawancara → Pengumuman → Daftar Ulang
 
-```
-app/
-├── Http/
-│   ├── Controllers/
-│   │   ├── Api/V1/          # API Controllers
-│   │   ├── ProdukController.php
-│   │   └── UserManajemenController.php
-│   ├── Middleware/
-│   │   ├── AdminMiddleware.php
-│   │   └── OperatorMiddleware.php
-│   └── Resources/           # API Resources
-├── Models/
-├── Traits/
-│   └── HasActivityLog.php   # Activity logging trait
-└── ...
+---
 
-routes/
-├── api.php                  # API routes (v1)
-├── web.php                  # Web routes
-└── ...
+## 5. DESAIN DATABASE
 
-resources/
-├── views/
-│   ├── produk/
-│   ├── userManajemen/
-│   └── ...
-└── ...
-```
+### 5.1 Tabel: users
 
-## Middleware
+id
+name
+email
+password
+role (default: peserta)
+created_at
+updated_at
 
-### Admin Middleware
-Hanya user dengan role `administrator` yang dapat mengakses.
+### 5.2 Tabel: jalur_pendaftaran
 
-```php
-Route::middleware('admin')->group(function () {
-    // Admin only routes
-});
-```
+id
+nama_jalur (Reguler / Prestasi / Afirmasi)
+deskripsi
+created_at
+updated_at
 
-### Operator Middleware
-User dengan role `administrator` atau `operator` dapat mengakses.
+### 5.3 Tabel: pendaftaran
 
-```php
-Route::middleware('operator')->group(function () {
-    // Admin & Operator routes
-});
-```
+id
+no_pendaftaran (Format: PPDB+YYYYMMDD+0001, contoh: PPDB202604220001)
+nisn
+user_id
+jalur_id
+kampus(defaut MAN 1 BOGOR)
+status_pendaftaran (pending, verifikasi, tes, lulus, tidak_lulus)
+created_at
+updated_at
 
-## Activity Logging
+### 5.4 Tabel: biodata
 
-Gunakan trait `HasActivityLog` untuk logging aktivitas:
+id
+<!-- Data Pendaftaran -->
+pendaftaran_id
+<!-- Data Pribadi -->
+foto_profil(upload file png/jpg/jpeg max.1mb)
+nama_lengkap
+tempat_lahir
+tanggal_lahir
+jenis_kelamin
+nik
+no_kk
+tinggi_badan
+berat_badan
+status_dalam_keluarga
+tinggal_bersama
+anak_ke
+jumlah_saudara
+agama
+no_whatsapp
+<!-- Data Alamat sesuai KK -->
+alamat
+desa
+kecamatan
+kabupaten
+provinsi
+kode_pos
+jarak_ke_sekolah
+waktu_tempuh_ke_sekolah
+<!-- Data Pendidikan -->
+asal_satuan_pendidikan(SMP/MTS)
+nama_asal_sekolah
+npsn
+<!-- Data Penunjang Prestasi -->
+kategori_prestasi
+jumlah_juz
+tingkat_prestasi
+jenis_prestasi
+nama_lomba
+sertifikat(upload file jpg/jpeg/png/pdf max.2mb)
+<!-- Data Slip Gaji -->
+slip_gaji(upload file jpg/jpeg/png/pdf max.2mb)
+<!-- Data Ayah -->
+nama_ayah
+nik_ayah
+tempat_lahir_ayah
+tanggal_lahir_ayah
+pendidikan_terakhir_ayah
+pekerjaan_ayah
+penghasilan_ayah
+no_hp_ayah
+<!-- Data Ibu -->
+nama_ibu
+nik_ibu
+tempat_lahir_ibu
+tanggal_lahir_ibu
+pendidikan_terakhir_ibu
+pekerjaan_ibu
+penghasilan_ibu
+no_hp_ibu
+kartu_keluarga(upload file)
+<!-- Data Wali -->
+nama_wali
+nik_wali
+tempat_lahir_wali
+tanggal_lahir_wali
+pendidikan_terakhir_wali
+pekerjaan_wali
+penghasilan_wali
+no_hp_wali
+created_at
+updated_at
 
-```php
-use App\Traits\HasActivityLog;
+### 5.5 Tabel: raport
 
-class YourController extends Controller
-{
-    use HasActivityLog;
+id
+pendaftaran_id
+file_rapor_ijazah
+file_kk
+file_akta_lahir
+file_foto
+file_surat_pernyataan
+created_at
+updated_at
 
-    public function store(Request $request)
-    {
-        // Your code...
-        
-        self::logActivity('create', 'Created item: ' . $item->name, [
-            'item_id' => $item->id
-        ]);
-    }
-}
-```
+### 5.6 Tabel: jadwal
 
-Log akan tersimpan di `storage/logs/laravel.log`.
+id
+jalur_id
+tanggal_pendaftaran
+tanggal_verifikasi
+tanggal_tes
+tanggal_pengumuman
+tanggal_daftar_ulang
+created_at
+updated_at
 
-## Development
+### 5.7 Tabel: pengumuman
 
-### Build for production
-```bash
-npm run build
-```
+id
+pendaftaran_id
+judul
+keterangan
+status (lulus / tidak_lulus)
+created_at
+updated_at
 
-### Run tests
-```bash
-php artisan test
-```
+### 5.8 Tabel: faq
 
-### Code formatting
-```bash
-./vendor/bin/pint
-```
+id
+pertanyaan
+jawaban
+created_at
+updated_at
 
-## License
+### 5.9 Tabel: kontak
 
-MIT License
+id
+nama_kontak
+email
+no_hp
+alamat
+created_at
+updated_at
+
+### 5.10 Tabel: pesan
+
+id
+pendaftaran_id
+judul
+isi_pesan
+status_baca (0/1)
+created_at
+updated_at
+
+---
+
+## 6. RULES SISTEM
+
+* 1 user hanya bisa memilih 1 jalur
+* Status pendaftaran: pending, verifikasi, tes, lulus, tidak_lulus
+* Sistem menyediakan notifikasi/pesan ke peserta
+
+---
+
+## 7. CATATAN UI/UX
+
+* Semua jalur dalam 1 halaman
+* CTA harus menonjol
+* Alur ditampilkan dalam bentuk teks (bukan gambar)
+* Desain bebas, flow tetap sama
+
+---
+
+## 8. KESIMPULAN
+
+Sistem PPDB berbasis web dengan konsep single landing page yang terintegrasi, memudahkan user dalam proses pendaftaran hingga pengumuman hasil seleksi.
