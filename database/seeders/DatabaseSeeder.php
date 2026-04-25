@@ -24,16 +24,14 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Administrator',
                 'email' => 'administrator@gmail.com',
                 'password' => bcrypt('password'),
-                'telepon'  => '08123456789',
-                'role' => 'administrator'
-            ],
-            [
-                'name' => 'Operator',
-                'email' => 'operator@gmail.com',
-                'password' => bcrypt('password'),
-                'telepon'  => '08123456789',
-                'role' => 'operator'
+                'role' => 'administrator',
+                'created_at' => now(),
+                'updated_at' => now()
             ]
+        ]);
+
+        $this->call([
+            JalurSeeder::class,
         ]);
     }
 }
