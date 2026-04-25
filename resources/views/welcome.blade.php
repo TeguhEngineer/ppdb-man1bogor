@@ -72,24 +72,24 @@
   <script>
     // Tab Logic
     function switchTab(tabId) {
-        // Hide all contents
-        document.querySelectorAll('.tab-content').forEach(el => {
-            el.classList.add('hidden');
-        });
-        
-        // Remove active state from all buttons
-        document.querySelectorAll('#jalur-pendaftaran-section .tab-btn').forEach(el => {
-            el.classList.remove('bg-main', 'text-white', 'shadow-md');
-            el.classList.add('bg-white', 'md:bg-transparent', 'text-gray-600');
-        });
-        
-        // Show selected content
-        document.getElementById('tab-content-' + tabId).classList.remove('hidden');
-        
-        // Add active state to selected button
-        const activeBtn = document.getElementById('tab-btn-' + tabId);
-        activeBtn.classList.remove('bg-white', 'md:bg-transparent', 'text-gray-600');
-        activeBtn.classList.add('bg-main', 'text-white', 'shadow-md');
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.add('hidden');
+      });
+
+      // Remove active state from all buttons
+      document.querySelectorAll('#jalur-pendaftaran-section .tab-btn').forEach(el => {
+        el.classList.remove('bg-main', 'text-white', 'shadow-md');
+        el.classList.add('bg-white', 'md:bg-transparent', 'text-gray-600');
+      });
+
+      // Show selected content
+      document.getElementById('tab-content-' + tabId).classList.remove('hidden');
+
+      // Add active state to selected button
+      const activeBtn = document.getElementById('tab-btn-' + tabId);
+      activeBtn.classList.remove('bg-white', 'md:bg-transparent', 'text-gray-600');
+      activeBtn.classList.add('bg-main', 'text-white', 'shadow-md');
     }
 
     // Mobile Menu Logic
@@ -200,139 +200,205 @@
 
       <!-- Sub 3: Jalur Pendaftaran -->
       <div id="jalur-pendaftaran-section">
-        <h3 class="text-2xl font-bold text-gray-900 text-center mb-10">Pilihan Jalur Masuk</h3>
-        
+        <h3 class="text-2xl font-bold text-gray-900 text-center mb-10">Pilihan Jalur Pendaftaran</h3>
+
         <!-- Tab Navigation -->
-        <div class="flex flex-col sm:flex-row justify-center gap-2 mb-10 md:bg-gray-100 p-2 rounded-2xl max-w-3xl mx-auto">
-            <button onclick="switchTab('reguler')" id="tab-btn-reguler" class="tab-btn active bg-main text-white shadow-md px-6 py-3 rounded-xl font-bold transition-all duration-200 w-full sm:w-1/3 text-center">
-                Jalur Reguler
-            </button>
-            <button onclick="switchTab('prestasi')" id="tab-btn-prestasi" class="tab-btn bg-white md:bg-transparent text-gray-600 hover:text-main border md:border-none border-gray-200 px-6 py-3 rounded-xl font-bold transition-all duration-200 w-full sm:w-1/3 text-center relative">
-                Jalur Prestasi <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-secondary rounded-full animate-pulse"></span>
-            </button>
-            <button onclick="switchTab('afirmasi')" id="tab-btn-afirmasi" class="tab-btn bg-white md:bg-transparent text-gray-600 hover:text-main border md:border-none border-gray-200 px-6 py-3 rounded-xl font-bold transition-all duration-200 w-full sm:w-1/3 text-center">
-                Jalur Afirmasi
-            </button>
+        <div
+          class="flex flex-col sm:flex-row justify-center gap-2 mb-10 md:bg-gray-100 p-2 rounded-2xl max-w-3xl mx-auto">
+          <button onclick="switchTab('reguler')" id="tab-btn-reguler"
+            class="tab-btn active bg-main text-white shadow-md px-6 py-3 rounded-xl font-bold transition-all duration-200 w-full sm:w-1/3 text-center">
+            Jalur Reguler
+          </button>
+          <button onclick="switchTab('prestasi')" id="tab-btn-prestasi"
+            class="tab-btn bg-white md:bg-transparent text-gray-600 hover:text-main border md:border-none border-gray-200 px-6 py-3 rounded-xl font-bold transition-all duration-200 w-full sm:w-1/3 text-center relative">
+            Jalur Prestasi <span
+              class="absolute top-2 right-2 w-2.5 h-2.5 bg-secondary rounded-full animate-pulse"></span>
+          </button>
+          <button onclick="switchTab('afirmasi')" id="tab-btn-afirmasi"
+            class="tab-btn bg-white md:bg-transparent text-gray-600 hover:text-main border md:border-none border-gray-200 px-6 py-3 rounded-xl font-bold transition-all duration-200 w-full sm:w-1/3 text-center">
+            Jalur Afirmasi
+          </button>
         </div>
 
         <!-- Tab Content Container -->
         <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-            
-            <!-- REGULER TAB -->
-            <div id="tab-content-reguler" class="tab-content flex flex-col">
-                <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
-                  <img src="/poster-ppdb.jpeg" alt="Poster PPDB Reguler" class="absolute inset-0 w-full h-full object-cover">
-                  <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                  <div class="absolute bottom-6 left-6 md:left-10 text-white">
-                      <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Reguler</h4>
-                      <p class="text-gray-200 font-medium">Berdasarkan wilayah terdekat / Zonasi Umum.</p>
-                  </div>
-                </div>
-                <div class="p-6 md:p-10 flex flex-col">
-                  <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                      <h5 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Persyaratan Wajib</h5>
-                      <ul class="text-sm text-gray-700 space-y-3 font-medium">
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Wajib memiliki Kartu Keluarga (KK) & Akta Lahir.</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Diwajibkan mengikuti Ujian Tes Tertulis.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Jadwal & Informasi Penting</h5>
-                      <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                          <p class="text-xs text-gray-500 mb-1">Masa Pendaftaran Online:</p>
-                          <p class="text-sm font-bold text-gray-900 mb-4">1 - 30 April 2026</p>
-                          
-                          <p class="text-xs text-gray-500 mb-1">Jadwal Ujian & Status Daftar Ulang:</p>
-                          <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
-                          
-                          <p class="text-xs text-gray-400">Pastikan sering memantau <span class="font-bold text-gray-600">Dashboard Akun</span> Anda untuk melihat pengumuman kelulusan.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <a href="/register?jalur=reguler" class="w-full text-center bg-gray-900 border-2 border-gray-900 text-white hover:bg-main hover:border-main transition-all duration-300 py-4 rounded-xl font-bold shadow-lg">Pilih Jalur Reguler</a>
-                </div>
-            </div>
 
-            <!-- PRESTASI TAB -->
-            <div id="tab-content-prestasi" class="tab-content flex flex-col hidden">
-                <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
-                  <img src="/poster-ppdb.jpeg" alt="Poster PPDB Prestasi" class="absolute inset-0 w-full h-full object-cover">
-                  <div class="absolute inset-0 bg-main/40 mix-blend-multiply"></div>
-                  <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
-                  <div class="absolute bottom-6 left-6 md:left-10 text-white">
-                      <div class="uppercase text-xs font-bold bg-secondary text-main px-2 py-1 inline-block rounded mb-2">Jalur Favorit</div>
-                      <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Prestasi</h4>
-                      <p class="text-gray-200 font-medium">Akademik dan Non-Akademik Tingkat Kabupaten/Provinsi.</p>
-                  </div>
-                </div>
-                <div class="p-6 md:p-10 flex flex-col">
-                  <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                      <h5 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Persyaratan Khusus</h5>
-                      <ul class="text-sm text-gray-700 space-y-3 font-medium">
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Memiliki nilai rata-rata Raport Minimal 85.</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Wajib melampirkan Sertifikat/Piagam Kejuaraan (Minimal Juara 3 Kabupaten).</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Wajib Kartu Keluarga (KK) & Akta Lahir.</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Seleksi via Portofolio (Bebas Tes Tulis).</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Jadwal & Informasi Penting</h5>
-                      <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                          <p class="text-xs text-gray-500 mb-1">Masa Pendaftaran Online:</p>
-                          <p class="text-sm font-bold text-gray-900 mb-4">1 - 31 Maret 2026</p>
-                          
-                          <p class="text-xs text-gray-500 mb-1">Cek Lulus & Info Wawancara:</p>
-                          <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
-                          
-                          <p class="text-xs text-gray-400">Pendaftar jalur ini dimohon rajin mengecek <span class="font-bold text-gray-600">Dashboard</span>, karena jadwal wawancara dapat berubah sewaktu-waktu.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <a href="/register?jalur=prestasi" class="w-full text-center bg-secondary text-main hover:bg-[#e0b605] py-4 rounded-xl font-bold shadow-lg transition-all duration-300">Pilih Jalur Prestasi</a>
-                </div>
+          <!-- REGULER TAB -->
+          <div id="tab-content-reguler" class="tab-content flex flex-col">
+            <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
+              <img src="/poster-ppdb.jpeg" alt="Poster PPDB Reguler"
+                class="absolute inset-0 w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 md:left-10 text-white">
+                <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Reguler</h4>
+                <p class="text-gray-200 font-medium">Berdasarkan wilayah terdekat / Zonasi Umum.</p>
+              </div>
             </div>
+            <div class="p-6 md:p-10 flex flex-col">
+              <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h5
+                    class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+                    Persyaratan Wajib</h5>
+                  <ul class="text-sm text-gray-700 space-y-3 font-medium">
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Wajib memiliki Kartu Keluarga (KK) & Akta Lahir.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Diwajibkan mengikuti Ujian Tes Tertulis.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5
+                    class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+                    Jadwal & Informasi Penting</h5>
+                  <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                    <p class="text-xs text-gray-500 mb-1">Masa Pendaftaran Online:</p>
+                    <p class="text-sm font-bold text-gray-900 mb-4">1 - 30 April 2026</p>
 
-            <!-- AFIRMASI TAB -->
-            <div id="tab-content-afirmasi" class="tab-content flex flex-col hidden">
-                <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
-                  <img src="/poster-ppdb.jpeg" alt="Poster PPDB Afirmasi" class="absolute inset-0 w-full h-full object-cover">
-                  <div class="absolute inset-0 bg-blue-900/30 mix-blend-multiply"></div>
-                  <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-                  <div class="absolute bottom-6 left-6 md:left-10 text-white">
-                      <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Afirmasi</h4>
-                      <p class="text-gray-200 font-medium">Diperuntukkan bagi peserta dari keluarga ekonomi tidak mampu.</p>
+                    <p class="text-xs text-gray-500 mb-1">Jadwal Ujian & Status Daftar Ulang:</p>
+                    <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
+
+                    <p class="text-xs text-gray-400">Pastikan sering memantau <span
+                        class="font-bold text-gray-600">Dashboard Akun</span> Anda untuk melihat pengumuman kelulusan.
+                    </p>
                   </div>
                 </div>
-                <div class="p-6 md:p-10 flex flex-col">
-                  <div class="grid md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                      <h5 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Persyaratan Tambahan</h5>
-                      <ul class="text-sm text-gray-700 space-y-3 font-medium">
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Wajib KK & Akta Lahir.</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Mengunggah Surat Keterangan Tidak Mampu (SKTM) Asli.</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Mengunggah Kartu KIP / PKH (Bila Ada).</li>
-                        <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Bersedia menerima survey langsung oleh panitia ke lokasi domisili.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">Jadwal & Informasi Penting</h5>
-                      <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                          <p class="text-xs text-gray-500 mb-1">Masa Pendaftaran Online:</p>
-                          <p class="text-sm font-bold text-gray-900 mb-4">1 - 31 Maret 2026</p>
-                          
-                          <p class="text-xs text-gray-500 mb-1">Proses Survey & Status:</p>
-                          <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
-                          
-                          <p class="text-xs text-gray-400">Notifikasi detail mengenai jadwal survey faktual akan dikirim ke <span class="font-bold text-gray-600">Dashboard Akun</span>.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <a href="/register?jalur=afirmasi" class="w-full text-center bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 transition py-4 rounded-xl font-bold shadow-lg">Pilih Jalur Afirmasi</a>
-                </div>
+              </div>
+              <a href="/register?jalur=reguler"
+                class="w-full text-center bg-gray-900 border-2 border-gray-900 text-white hover:bg-main hover:border-main transition-all duration-300 py-4 rounded-xl font-bold shadow-lg">Daftar
+                Jalur Reguler</a>
             </div>
+          </div>
+
+          <!-- PRESTASI TAB -->
+          <div id="tab-content-prestasi" class="tab-content flex flex-col hidden">
+            <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
+              <img src="/poster-ppdb.jpeg" alt="Poster PPDB Prestasi"
+                class="absolute inset-0 w-full h-full object-cover">
+              <div class="absolute inset-0 bg-main/40 mix-blend-multiply"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 md:left-10 text-white">
+                <div class="uppercase text-xs font-bold bg-secondary text-main px-2 py-1 inline-block rounded mb-2">
+                  Jalur Favorit</div>
+                <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Prestasi</h4>
+                <p class="text-gray-200 font-medium">Akademik dan Non-Akademik Tingkat Kabupaten/Provinsi.</p>
+              </div>
+            </div>
+            <div class="p-6 md:p-10 flex flex-col">
+              <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h5
+                    class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+                    Persyaratan Khusus</h5>
+                  <ul class="text-sm text-gray-700 space-y-3 font-medium">
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Memiliki nilai rata-rata Raport Minimal 85.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Wajib melampirkan Sertifikat/Piagam Kejuaraan (Minimal Juara 3 Kabupaten).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Wajib Kartu Keluarga (KK) & Akta Lahir.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Seleksi via Portofolio (Bebas Tes Tulis).</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5
+                    class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+                    Jadwal & Informasi Penting</h5>
+                  <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                    <p class="text-xs text-gray-500 mb-1">Masa Pendaftaran Online:</p>
+                    <p class="text-sm font-bold text-gray-900 mb-4">1 - 31 Maret 2026</p>
+
+                    <p class="text-xs text-gray-500 mb-1">Cek Lulus & Info Wawancara:</p>
+                    <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
+
+                    <p class="text-xs text-gray-400">Pendaftar jalur ini dimohon rajin mengecek <span
+                        class="font-bold text-gray-600">Dashboard</span>, karena jadwal wawancara dapat berubah
+                      sewaktu-waktu.</p>
+                  </div>
+                </div>
+              </div>
+              <a href="/register?jalur=prestasi"
+                class="w-full text-center bg-secondary text-main hover:bg-[#e0b605] py-4 rounded-xl font-bold shadow-lg transition-all duration-300">Daftar
+                Jalur Prestasi</a>
+            </div>
+          </div>
+
+          <!-- AFIRMASI TAB -->
+          <div id="tab-content-afirmasi" class="tab-content flex flex-col hidden">
+            <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
+              <img src="/poster-ppdb.jpeg" alt="Poster PPDB Afirmasi"
+                class="absolute inset-0 w-full h-full object-cover">
+              <div class="absolute inset-0 bg-blue-900/30 mix-blend-multiply"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+              <div class="absolute bottom-6 left-6 md:left-10 text-white">
+                <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Afirmasi</h4>
+                <p class="text-gray-200 font-medium">Diperuntukkan bagi peserta dari keluarga ekonomi tidak mampu.</p>
+              </div>
+            </div>
+            <div class="p-6 md:p-10 flex flex-col">
+              <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h5
+                    class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+                    Persyaratan Tambahan</h5>
+                  <ul class="text-sm text-gray-700 space-y-3 font-medium">
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Wajib KK & Akta Lahir.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Mengunggah Surat Keterangan Tidak Mampu (SKTM) Asli.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Mengunggah Kartu KIP / PKH (Bila Ada).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Bersedia menerima survey langsung oleh panitia ke lokasi domisili.</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5
+                    class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
+                    Jadwal & Informasi Penting</h5>
+                  <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                    <p class="text-xs text-gray-500 mb-1">Masa Pendaftaran Online:</p>
+                    <p class="text-sm font-bold text-gray-900 mb-4">1 - 31 Maret 2026</p>
+
+                    <p class="text-xs text-gray-500 mb-1">Proses Survey & Status:</p>
+                    <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
+
+                    <p class="text-xs text-gray-400">Notifikasi detail mengenai jadwal survey faktual akan dikirim ke
+                      <span class="font-bold text-gray-600">Dashboard Akun</span>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <a href="/register?jalur=afirmasi"
+                class="w-full text-center bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 transition py-4 rounded-xl font-bold shadow-lg">Daftar
+                Jalur Afirmasi</a>
+            </div>
+          </div>
 
         </div>
       </div>
