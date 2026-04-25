@@ -121,19 +121,29 @@ role (default: peserta)
 created_at
 updated_at
 
-### 5.2 Tabel: pendaftaran
+### 5.2 Tabel: jalur
+
+id
+nama_jalur
+total_kuota
+deskripsi
+created_at
+updated_at
+
+
+### 5.3 Tabel: pendaftaran
 
 id
 no_pendaftaran (Format: PPDB+YYYYMMDD+0001, contoh: PPDB202604220001)
 nisn
 user_id
-nama_jalur(Reguler/Prestasi/Afirmasi)
+jalur_id
 kampus(default MAN 1 BOGOR)
 status_pendaftaran (pending, verifikasi, tes, lulus, tidak_lulus)
 created_at
 updated_at
 
-### 5.3 Tabel: biodata
+### 5.4 Tabel: biodata
 
 id
 <!-- Data Pendaftaran -->
@@ -218,7 +228,7 @@ updated_at
 ### 5.5 Tabel:  berkas (jpg/pdf max 1mb)
 
 id
-peserta_id
+pendaftaran_id
 file_raport
 file_nisn
 file_foto
@@ -241,7 +251,7 @@ updated_at
 ### 5.7 Tabel: pengumuman
 
 id
-peserta_id
+pendaftaran_id
 judul
 keterangan
 status (lulus / tidak_lulus)
