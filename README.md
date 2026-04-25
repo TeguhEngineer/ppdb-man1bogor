@@ -22,7 +22,7 @@ Sistem PPDB ini dibuat untuk:
 * Mendaftar akun
 * Login
 * Mengisi biodata
-* Mengisi Data Raport
+* Upload berkas
 * Melihat status & pengumuman
 
 ### 2.2 Admin
@@ -63,20 +63,19 @@ Sistem PPDB ini dibuat untuk:
 ### 3.4 Dashboard Peserta
 
 Menu:
-* Dasbor
-* Peserta
-  ** Akun Saya
-  ** Biodata
-* Lihat Pesan
+
+* Akun Saya
+* Biodata
+* Upload Berkas
+* Pengumuman
 * Ubah Password
-* Keluar
 
 ### 3.5 Informasi PPDB
 
 * Jadwal:
 
   * Pendaftaran
-  * Verifikasi biodata dan nilai raport
+  * Verifikasi berkas
   * Tes & wawancara
   * Pengumuman
   * Daftar ulang
@@ -89,7 +88,7 @@ Menu:
 
 ### 3.6 Pengumuman
 
-* Menampilkan hasil seleksi peserta
+* Menampilkan hasil seleksi peserta pada akun masing masing dalam menu pengumuman
 
 ### 3.7 FAQ
 
@@ -106,7 +105,7 @@ Menu:
 
 ## 4. ALUR BISNIS
 
-Landing Page → Daftar → Login → Isi Biodata → Isi Nilai Raport → Verifikasi → Tes/Wawancara → Pengumuman → Daftar Ulang
+Landing Page → Daftar → Login → Isi Biodata → Upload Berkas → Verifikasi → Tes/Wawancara → Pengumuman → Daftar Ulang
 
 ---
 
@@ -122,37 +121,30 @@ role (default: peserta)
 created_at
 updated_at
 
-### 5.2 Tabel: jalur_pendaftaran
-
-id
-nama_jalur (Reguler / Prestasi / Afirmasi)
-deskripsi
-created_at
-updated_at
-
-### 5.3 Tabel: pendaftaran
+### 5.2 Tabel: pendaftaran
 
 id
 no_pendaftaran (Format: PPDB+YYYYMMDD+0001, contoh: PPDB202604220001)
 nisn
 user_id
-jalur_id
-kampus(defaut MAN 1 BOGOR)
+nama_jalur(Reguler/Prestasi/Afirmasi)
+kampus(default MAN 1 BOGOR)
 status_pendaftaran (pending, verifikasi, tes, lulus, tidak_lulus)
 created_at
 updated_at
 
-### 5.4 Tabel: biodata
+### 5.3 Tabel: biodata
 
 id
 <!-- Data Pendaftaran -->
 pendaftaran_id
+
 <!-- Data Pribadi -->
 foto_profil(upload file png/jpg/jpeg max.1mb)
 nama_lengkap
 tempat_lahir
 tanggal_lahir
-jenis_kelamin
+jenis_kelamin (laki-laki, perempuan)
 nik
 no_kk
 tinggi_badan
@@ -163,6 +155,7 @@ anak_ke
 jumlah_saudara
 agama
 no_whatsapp
+
 <!-- Data Alamat sesuai KK -->
 alamat
 desa
@@ -172,10 +165,12 @@ provinsi
 kode_pos
 jarak_ke_sekolah
 waktu_tempuh_ke_sekolah
+
 <!-- Data Pendidikan -->
 asal_satuan_pendidikan(SMP/MTS)
 nama_asal_sekolah
 npsn
+
 <!-- Data Penunjang Prestasi -->
 kategori_prestasi
 jumlah_juz
@@ -183,8 +178,10 @@ tingkat_prestasi
 jenis_prestasi
 nama_lomba
 sertifikat(upload file jpg/jpeg/png/pdf max.2mb)
+
 <!-- Data Slip Gaji -->
 slip_gaji(upload file jpg/jpeg/png/pdf max.2mb)
+
 <!-- Data Ayah -->
 nama_ayah
 nik_ayah
@@ -194,6 +191,7 @@ pendidikan_terakhir_ayah
 pekerjaan_ayah
 penghasilan_ayah
 no_hp_ayah
+
 <!-- Data Ibu -->
 nama_ibu
 nik_ibu
@@ -204,6 +202,7 @@ pekerjaan_ibu
 penghasilan_ibu
 no_hp_ibu
 kartu_keluarga(upload file)
+
 <!-- Data Wali -->
 nama_wali
 nik_wali
@@ -216,15 +215,14 @@ no_hp_wali
 created_at
 updated_at
 
-### 5.5 Tabel: raport
+### 5.5 Tabel:  berkas (jpg/pdf max 1mb)
 
 id
-pendaftaran_id
-file_rapor_ijazah
-file_kk
-file_akta_lahir
+peserta_id
+file_raport
+file_nisn
 file_foto
-file_surat_pernyataan
+file_surat_keterangan_aktif
 created_at
 updated_at
 
@@ -243,38 +241,10 @@ updated_at
 ### 5.7 Tabel: pengumuman
 
 id
-pendaftaran_id
+peserta_id
 judul
 keterangan
 status (lulus / tidak_lulus)
-created_at
-updated_at
-
-### 5.8 Tabel: faq
-
-id
-pertanyaan
-jawaban
-created_at
-updated_at
-
-### 5.9 Tabel: kontak
-
-id
-nama_kontak
-email
-no_hp
-alamat
-created_at
-updated_at
-
-### 5.10 Tabel: pesan
-
-id
-pendaftaran_id
-judul
-isi_pesan
-status_baca (0/1)
 created_at
 updated_at
 
@@ -283,8 +253,9 @@ updated_at
 ## 6. RULES SISTEM
 
 * 1 user hanya bisa memilih 1 jalur
+* Semua berkas wajib diupload
 * Status pendaftaran: pending, verifikasi, tes, lulus, tidak_lulus
-* Sistem menyediakan notifikasi/pesan ke peserta
+* Sistem menyediakan notifikasi/pengumuman ke peserta
 
 ---
 
