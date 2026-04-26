@@ -115,12 +115,16 @@
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Selesai Diupload
                     </span>
-                    <button class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Berkas</button>
+                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}" class="block text-center mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Berkas</a>
                 @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                         Belum Diupload
                     </span>
-                    <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors" {{ !$isBiodataComplete ? 'disabled title="Lengkapi biodata terlebih dahulu"' : '' }} style="{{ !$isBiodataComplete ? 'opacity: 0.5; cursor: not-allowed;' : '' }}">Upload Berkas</button>
+                    @if(!$isBiodataComplete)
+                        <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors opacity-50 cursor-not-allowed" disabled title="Lengkapi biodata terlebih dahulu">Upload Berkas</button>
+                    @else
+                        <a href="{{ route('berkas.create') }}" class="block text-center mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Upload Berkas</a>
+                    @endif
                 @endif
             </div>
         </div>

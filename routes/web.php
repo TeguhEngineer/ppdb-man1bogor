@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BiodataController;
+use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 Route::middleware('auth')->group(function () {
     Route::resource('biodata', BiodataController::class);
+    Route::resource('berkas', BerkasController::class);
     
     // Profile routes (all authenticated users)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.index');

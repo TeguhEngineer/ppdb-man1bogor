@@ -35,7 +35,7 @@
             </a>
         </div>
         <div class="flex items-center mr-4">
-            <a href="#" class="flex items-center flex-1 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg ml-3">
+            <a href="{{ route('berkas.create') }}" class="flex items-center flex-1 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg ml-3">
                 <i class="fi fi-rs-folder-upload text-lg leading-none relative top-0.5"></i>
                 <span class="ml-3 font-medium">Upload Berkas</span>
             </a>

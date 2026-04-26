@@ -121,9 +121,9 @@ class BiodataController extends Controller
 
         $validated['pendaftaran_id'] = $pendaftaran->id;
         
-        Biodata::create($validated);
+        $biodatum = Biodata::create($validated);
 
-        return redirect()->back()->with('success', 'Biodata berhasil disimpan!');
+        return redirect()->route('biodata.edit', $biodatum->id)->with('success', 'Biodata berhasil disimpan!');
     }
 
     public function edit(Biodata $biodatum)
