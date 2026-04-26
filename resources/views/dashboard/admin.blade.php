@@ -36,7 +36,8 @@
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
             <h3 class="font-bold text-gray-800">Pendaftar Terbaru</h3>
-            <a href="#" class="text-sm text-indigo-600 font-medium hover:text-indigo-800">Lihat Semua</a>
+            <a href="{{ route('admin.verifikasi.index') }}"
+                class="text-sm text-indigo-600 font-medium hover:text-indigo-800">Lihat Semua</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -58,11 +59,14 @@
                             <td class="px-6 py-4 text-sm text-gray-500">{{ $reg->created_at->format('d M Y') }}</td>
                             <td class="px-6 py-4">
                                 @if($reg->status_pendaftaran == 'pending')
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>
                                 @elseif($reg->status_pendaftaran == 'verifikasi')
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Verifikasi</span>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Verifikasi</span>
                                 @else
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">{{ ucfirst($reg->status_pendaftaran) }}</span>
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">{{ ucfirst($reg->status_pendaftaran) }}</span>
                                 @endif
                             </td>
                         </tr>
