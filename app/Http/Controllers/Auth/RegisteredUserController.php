@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
         try {
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
+                'nisn' => ['required', 'string', 'max:20'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'jalur' => ['nullable', 'string']
@@ -76,6 +77,7 @@ class RegisteredUserController extends Controller
                 'no_pendaftaran' => $noPendaftaran,
                 'user_id' => $user->id,
                 'jalur_id' => $jalur->id,
+                'nisn' => $validated['nisn'],
                 'status_pendaftaran' => 'pending'
             ]);
 

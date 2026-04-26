@@ -40,6 +40,16 @@
             @enderror
         </div>
 
+        <!-- NISN -->
+        <div>
+            <label for="nisn" class="block font-medium text-sm text-gray-700 mb-1">NISN (Nomor Induk Siswa Nasional)</label>
+            <input id="nisn" type="text" name="nisn" value="{{ old('nisn') }}" required
+                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white" placeholder="Masukkan 10 digit NISN" />
+            @error('nisn')
+                <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
+            @enderror
+        </div>
+
         <!-- Email Address -->
         <div>
             <label for="email" class="block font-medium text-sm text-gray-700 mb-1">Email Aktif</label>
