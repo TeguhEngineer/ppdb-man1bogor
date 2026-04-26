@@ -26,13 +26,31 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->safe()->only(['name', 'email']));
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+
+        if ($request->hasFile('foto_profil')) {
+            $pendaftaran = $user->pendaftarans()->latest()->first();
+            if ($pendaftaran) {
+                // Pastikan biodata ada, jika tidak, kita tidak bisa menyimpan foto_profil
+                $biodata = $pendaftaran->biodata;
+                if ($biodata) {
+                    if ($biodata->foto_profil && \Illuminate\Support\Facades\Storage::disk('public')->exists($biodata->foto_profil)) {
+                        \Illuminate\Support\Facades\Storage::disk('public')->delete($biodata->foto_profil);
+                    }
+                    $path = $request->file('foto_profil')->store('berkas/foto_profil', 'public');
+                    $biodata->update(['foto_profil' => $path]);
+                } else {
+                    return Redirect::route('profile.index')->with('error', 'Gagal mengunggah foto. Anda belum mengisi biodata pendaftaran.');
+                }
+            }
+        }
 
         return Redirect::route('profile.index')->with('status', 'profile-updated');
     }

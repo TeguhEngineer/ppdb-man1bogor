@@ -20,7 +20,13 @@
                 <button @click="open = !open"
                     class="flex items-center space-x-1.5 md:space-x-2 p-1 md:p-1.5 rounded-full border-2 border-indigo-100 hover:bg-indigo-50 focus:outline-none transition-colors">
                     <div class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
-                        <img src="https://i.pravatar.cc/100" alt="User profile" class="w-full h-full object-cover">
+                        @php
+                            $user = Auth::user();
+                            $pendaftaran = $user->pendaftarans()->latest()->first();
+                            $foto = $pendaftaran && $pendaftaran->biodata ? $pendaftaran->biodata->foto_profil : null;
+                            $avatarUrl = $foto ? Storage::url($foto) : 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&background=random';
+                        @endphp
+                        <img src="{{ $avatarUrl }}" alt="User profile" class="w-full h-full object-cover">
                     </div>
                     <span
                         class="text-gray-700 font-medium text-xs md:text-sm pr-1.5 md:pr-2 hidden sm:inline-block">{{ Auth::user()->name }}</span>
