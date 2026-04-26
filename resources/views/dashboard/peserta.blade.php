@@ -80,12 +80,12 @@
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Selesai Diisi
                     </span>
-                    <button class="mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Biodata</button>
+                    <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="block mt-4 w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Biodata</a>
                 @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Diisi
                     </span>
-                    <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi Biodata Sekarang</button>
+                    <a href="{{ route('biodata.create') }}" class="block mt-4 w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi Biodata Sekarang</a>
                 @endif
             </div>
         </div>
