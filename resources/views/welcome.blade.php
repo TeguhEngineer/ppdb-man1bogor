@@ -178,7 +178,7 @@
             <div
               class="w-12 h-12 mx-auto bg-white border-2 border-main text-main rounded-full flex items-center justify-center font-bold text-lg mb-4">
               2</div>
-            <h4 class="font-bold text-gray-900">Isi Data & Raport</h4>
+            <h4 class="font-bold text-gray-900">Isi Data & Berkas</h4>
             <p class="text-gray-500 mt-1">Lengkapi biodata lengkap</p>
           </div>
           <div>

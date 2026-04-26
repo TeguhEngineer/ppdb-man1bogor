@@ -79,7 +79,7 @@
                             <div>
                                 <x-label for="description">Deskripsi</x-label>
                                 <textarea id="description" name="description" rows="3"
-                                    class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    class="w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm"
                                     placeholder="Masukkan deskripsi produk">{{ old('description') }}</textarea>
                                 <x-error-message for="description" />
                             </div>
@@ -103,7 +103,7 @@
                             <div>
                                 <x-label for="image">Gambar Produk</x-label>
                                 <input type="file" id="image" name="image" accept="image/*"
-                                    class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" />
+                                    class="w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm" />
                                 <x-error-message for="image" />
                                 <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG, GIF. Maksimal 2MB</p>
                             </div>
@@ -203,7 +203,7 @@
                                                 <div>
                                                     <x-label for="description">Deskripsi</x-label>
                                                     <textarea id="description" name="description" rows="3"
-                                                        class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">{{ old('description', $data->description) }}</textarea>
+                                                        class="w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm">{{ old('description', $data->description) }}</textarea>
                                                     <x-error-message for="description" />
                                                 </div>
 
@@ -232,7 +232,7 @@
                                                             class="w-32 h-32 object-cover rounded mb-2">
                                                     @endif
                                                     <input type="file" id="image" name="image" accept="image/*"
-                                                        class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" />
+                                                        class="w-full border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm" />
                                                     <x-error-message for="image" />
                                                     <p class="text-xs text-gray-500 mt-1">Kosongkan jika tidak ingin
                                                         mengubah gambar</p>

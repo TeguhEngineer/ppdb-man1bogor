@@ -13,8 +13,8 @@
                         <p class="text-sm font-medium text-gray-600">Total Users</p>
                         <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\User::count() }}</p>
                     </div>
-                    <div class="bg-indigo-100 rounded-full p-3">
-                        <i class="fi fi-rs-users text-2xl text-indigo-600"></i>
+                    <div class="bg-emerald-100 rounded-full p-3">
+                        <i class="fi fi-rs-users text-2xl text-emerald-600"></i>
                     </div>
                 </div>
                 <div class="mt-4 flex items-center text-sm">
@@ -112,11 +112,11 @@
                                         <p class="text-sm text-gray-500">Stok: {{ $product->stock }}</p>
                                     </div>
                                 </div>
-                                <span class="text-sm font-semibold text-indigo-600">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                <span class="text-sm font-semibold text-emerald-600">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                             </div>
                         @endforeach
                     </div>
-                    <a href="{{ route('produk.index') }}" class="block mt-4 text-center text-sm text-indigo-600 hover:text-indigo-800 font-medium">
+                    <a href="{{ route('produk.index') }}" class="block mt-4 text-center text-sm text-emerald-600 hover:text-emerald-800 font-medium">
                         Lihat Semua Produk →
                     </a>
                 @else
@@ -137,8 +137,8 @@
                 <div class="space-y-4">
                     <div class="flex items-center justify-between py-3 border-b border-gray-100">
                         <div class="flex items-center space-x-3">
-                            <div class="bg-indigo-100 rounded-full p-2">
-                                <i class="fi fi-rs-laptop text-indigo-600"></i>
+                            <div class="bg-emerald-100 rounded-full p-2">
+                                <i class="fi fi-rs-laptop text-emerald-600"></i>
                             </div>
                             <span class="text-gray-700">Laravel Version</span>
                         </div>

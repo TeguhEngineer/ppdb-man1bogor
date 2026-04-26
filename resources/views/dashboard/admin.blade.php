@@ -37,7 +37,7 @@
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
             <h3 class="font-bold text-gray-800">Pendaftar Terbaru</h3>
             <a href="{{ route('admin.verifikasi.index') }}"
-                class="text-sm text-indigo-600 font-medium hover:text-indigo-800">Lihat Semua</a>
+                class="text-sm text-emerald-600 font-medium hover:text-emerald-800">Lihat Semua</a>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">

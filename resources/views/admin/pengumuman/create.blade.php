@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <a href="{{ route('admin.pengumuman.index') }}"
-                class="text-lg text-indigo-600 hover:text-indigo-900 font-medium">
+                class="text-lg text-emerald-600 hover:text-emerald-900 font-medium">
                 &larr;
             </a>
             <h2 class="font-bold text-xl text-gray-800 leading-tight">
@@ -16,11 +16,11 @@
 
         <!-- Info Panel -->
         <div class="lg:col-span-1 space-y-6">
-            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 shadow-sm">
-                <h3 class="text-indigo-800 font-bold text-lg mb-3 flex items-center">
+            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-6 shadow-sm">
+                <h3 class="text-emerald-800 font-bold text-lg mb-3 flex items-center">
                     <i class="fi fi-rs-info mr-2"></i> Petunjuk Siaran
                 </h3>
-                <ul class="text-sm text-indigo-700 space-y-3 leading-relaxed">
+                <ul class="text-sm text-emerald-700 space-y-3 leading-relaxed">
                     <li><strong class="font-bold block">1. Pilih Target</strong> Tentukan kelompok peserta mana yang
                         akan menerima pesan ini berdasarkan status pendaftarannya.</li>
                     <li><strong class="font-bold block">2. Broadcast Massal</strong> Sistem akan menduplikat pesan
@@ -63,7 +63,7 @@
                                 <span class="text-red-500">*</span></label>
                             <p class="text-xs text-gray-500 mb-2">Pilih target penerima pesan ini.</p>
                             <select name="target_status" id="target_status"
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
                                 <option value="semua" {{ old('target_status') == 'semua' ? 'selected' : '' }}>Semua
                                     Peserta</option>
@@ -87,7 +87,7 @@
                                 class="text-red-500">*</span></label>
                         <input type="text" name="judul" id="judul" value="{{ old('judul') }}"
                             placeholder="Contoh: Pengumuman Hasil Seleksi Tahap I"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                             required>
                     </div>
 
@@ -97,13 +97,13 @@
                             Keterangan <span class="text-red-500">*</span></label>
                         <p class="text-xs text-gray-500 mb-2">Tuliskan instruksi atau pesan lengkap di sini.</p>
                         <textarea name="keterangan" id="keterangan" rows="8"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                             placeholder="Tulis pengumuman Anda di sini..." required>{{ old('keterangan') }}</textarea>
                     </div>
 
                     <div class="flex justify-end pt-4 border-t border-gray-100">
                         <button type="submit"
-                            class="inline-flex justify-center items-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                            class="inline-flex justify-center items-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
                             onclick="return confirm('Pengumuman ini akan disiarkan ke seluruh peserta sesuai target. Lanjutkan?');">
                             <i class="fi fi-rs-paper-plane mr-2"></i> Siarkan Pengumuman
                         </button>

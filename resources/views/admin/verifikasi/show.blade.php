@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <a href="{{ route('admin.verifikasi.index') }}"
-                class="text-lg text-indigo-600 hover:text-indigo-900 font-medium">
+                class="text-lg text-emerald-600 hover:text-emerald-900 font-medium">
                 &larr;
             </a>
             <h2 class="font-bold text-xl text-gray-800 leading-tight">
@@ -143,50 +143,50 @@
                             <li
                                 class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                 <div class="flex items-center">
-                                    <i class="fi fi-rs-document-signed text-indigo-500 text-xl mr-3"></i>
+                                    <i class="fi fi-rs-document-signed text-emerald-500 text-xl mr-3"></i>
                                     <div>
                                         <p class="font-medium text-sm text-gray-900">Raport Terakhir</p>
                                     </div>
                                 </div>
                                 <a href="{{ Storage::url($pendaftaran->berkas->file_raport) }}" target="_blank"
-                                    class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                     / Unduh</a>
                             </li>
                             <li
                                 class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                 <div class="flex items-center">
-                                    <i class="fi fi-rs-id-badge text-indigo-500 text-xl mr-3"></i>
+                                    <i class="fi fi-rs-id-badge text-emerald-500 text-xl mr-3"></i>
                                     <div>
                                         <p class="font-medium text-sm text-gray-900">Scan NISN</p>
                                     </div>
                                 </div>
                                 <a href="{{ Storage::url($pendaftaran->berkas->file_nisn) }}" target="_blank"
-                                    class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                     / Unduh</a>
                             </li>
                             <li
                                 class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                 <div class="flex items-center">
-                                    <i class="fi fi-rs-picture text-indigo-500 text-xl mr-3"></i>
+                                    <i class="fi fi-rs-picture text-emerald-500 text-xl mr-3"></i>
                                     <div>
                                         <p class="font-medium text-sm text-gray-900">Pas Foto</p>
                                     </div>
                                 </div>
                                 <a href="{{ Storage::url($pendaftaran->berkas->file_foto) }}" target="_blank"
-                                    class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                     / Unduh</a>
                             </li>
                             <li
                                 class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                 <div class="flex items-center">
-                                    <i class="fi fi-rs-memo text-indigo-500 text-xl mr-3"></i>
+                                    <i class="fi fi-rs-memo text-emerald-500 text-xl mr-3"></i>
                                     <div>
                                         <p class="font-medium text-sm text-gray-900">Surat Keterangan Aktif / SKL</p>
                                     </div>
                                 </div>
                                 <a href="{{ Storage::url($pendaftaran->berkas->file_surat_keterangan_aktif) }}"
                                     target="_blank"
-                                    class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                     / Unduh</a>
                             </li>
                         </ul>
@@ -211,13 +211,13 @@
                                 <li
                                     class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                     <div class="flex items-center">
-                                        <i class="fi fi-rs-users text-indigo-500 text-xl mr-3"></i>
+                                        <i class="fi fi-rs-users text-emerald-500 text-xl mr-3"></i>
                                         <div>
                                             <p class="font-medium text-sm text-gray-900">Kartu Keluarga</p>
                                         </div>
                                     </div>
                                     <a href="{{ Storage::url($pendaftaran->biodata->kartu_keluarga) }}" target="_blank"
-                                        class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                        class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                         / Unduh</a>
                                 </li>
                             @endif
@@ -225,13 +225,13 @@
                                 <li
                                     class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                     <div class="flex items-center">
-                                        <i class="fi fi-rs-money-bill-wave text-indigo-500 text-xl mr-3"></i>
+                                        <i class="fi fi-rs-money-bill-wave text-emerald-500 text-xl mr-3"></i>
                                         <div>
                                             <p class="font-medium text-sm text-gray-900">Slip Gaji / Penghasilan</p>
                                         </div>
                                     </div>
                                     <a href="{{ Storage::url($pendaftaran->biodata->slip_gaji) }}" target="_blank"
-                                        class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                        class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                         / Unduh</a>
                                 </li>
                             @endif
@@ -239,13 +239,13 @@
                                 <li
                                     class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
                                     <div class="flex items-center">
-                                        <i class="fi fi-rs-diploma text-indigo-500 text-xl mr-3"></i>
+                                        <i class="fi fi-rs-diploma text-emerald-500 text-xl mr-3"></i>
                                         <div>
                                             <p class="font-medium text-sm text-gray-900">Sertifikat Prestasi</p>
                                         </div>
                                     </div>
                                     <a href="{{ Storage::url($pendaftaran->biodata->sertifikat) }}" target="_blank"
-                                        class="text-sm font-medium text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md">Lihat
+                                        class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
                                         / Unduh</a>
                                 </li>
                             @endif
@@ -303,7 +303,7 @@
                             <label for="status_pendaftaran" class="block text-sm font-medium text-gray-700 mb-1">Ubah
                                 Status Menjadi:</label>
                             <select name="status_pendaftaran" id="status_pendaftaran"
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
                                 <option value="pending" {{ $pendaftaran->status_pendaftaran == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="verifikasi" {{ $pendaftaran->status_pendaftaran == 'verifikasi' ? 'selected' : '' }}>Verifikasi</option>
@@ -318,7 +318,7 @@
                             @enderror
                         </div>
                         <button type="submit"
-                            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors">
+                            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors">
                             Simpan Perubahan Status
                         </button>
                     </form>
@@ -326,9 +326,9 @@
             </div>
 
             <!-- Quick Info -->
-            <div class="bg-indigo-50 overflow-hidden shadow-sm rounded-xl border border-indigo-100 p-6">
-                <h4 class="font-bold text-indigo-900 mb-3 text-sm uppercase tracking-wider">Informasi Pendaftaran</h4>
-                <ul class="space-y-2 text-sm text-indigo-800">
+            <div class="bg-emerald-50 overflow-hidden shadow-sm rounded-xl border border-emerald-100 p-6">
+                <h4 class="font-bold text-emerald-900 mb-3 text-sm uppercase tracking-wider">Informasi Pendaftaran</h4>
+                <ul class="space-y-2 text-sm text-emerald-800">
                     <li class="flex justify-between">
                         <span class="font-medium opacity-70">Jalur</span>
                         <span class="font-bold">{{ $pendaftaran->jalur->nama_jalur }}</span>

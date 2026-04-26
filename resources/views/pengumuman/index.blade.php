@@ -22,7 +22,7 @@
         @else
             @if($pengumumans->isEmpty())
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-indigo-50 mb-4 text-indigo-500">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 mb-4 text-emerald-500">
                         <i class="fi fi-rs-envelope-open text-2xl"></i>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 mb-1">Belum Ada Pengumuman</h3>
@@ -35,7 +35,7 @@
 
                             <div class="p-6 sm:p-8">
                                 <div class="flex items-center space-x-3 mb-4">
-                                    <div class="flex-shrink-0 bg-indigo-100 text-indigo-600 rounded-lg p-2">
+                                    <div class="flex-shrink-0 bg-emerald-100 text-emerald-600 rounded-lg p-2">
                                         <i class="fi fi-rs-megaphone text-xl"></i>
                                     </div>
                                     <div>

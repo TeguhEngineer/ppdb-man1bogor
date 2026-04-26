@@ -14,7 +14,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-indigo-50 antialiased">
+<body class="bg-emerald-50 antialiased">
     <div class="flex h-screen overflow-hidden">
         <!-- Mobile Overlay -->
         <div id="overlay" onclick="toggleSidebar()"

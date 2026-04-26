@@ -18,7 +18,7 @@
             <!-- User Menu -->
             <div class="relative" x-data="{ open: false }">
                 <button @click="open = !open"
-                    class="flex items-center space-x-1.5 md:space-x-2 p-1 md:p-1.5 rounded-full border-2 border-indigo-100 hover:bg-indigo-50 focus:outline-none transition-colors">
+                    class="flex items-center space-x-1.5 md:space-x-2 p-1 md:p-1.5 rounded-full border-2 border-emerald-100 hover:bg-emerald-50 focus:outline-none transition-colors">
                     <div class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
                         @php
                             $user = Auth::user();

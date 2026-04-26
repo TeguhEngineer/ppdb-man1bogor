@@ -11,11 +11,11 @@
             <form method="GET" action="{{ route('admin.verifikasi.index') }}" class="mb-6 flex flex-col md:flex-row gap-4">
                 <div class="flex-1">
                     <label for="search" class="sr-only">Cari</label>
-                    <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari nama, NISN, no pendaftaran..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari nama, NISN, no pendaftaran..." class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
                 </div>
                 <div class="w-full md:w-64">
                     <label for="status" class="sr-only">Status</label>
-                    <select name="status" id="status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" onchange="this.form.submit()">
+                    <select name="status" id="status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" onchange="this.form.submit()">
                         <option value="">Semua Status</option>
                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="verifikasi" {{ request('status') == 'verifikasi' ? 'selected' : '' }}>Verifikasi</option>
@@ -24,7 +24,7 @@
                         <option value="tidak_lulus" {{ request('status') == 'tidak_lulus' ? 'selected' : '' }}>Tidak Lulus</option>
                     </select>
                 </div>
-                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-md transition-colors">
                     Filter
                 </button>
             </form>
@@ -44,7 +44,7 @@
                     <tbody class="text-sm divide-y divide-gray-100">
                         @forelse($pendaftarans as $pendaftaran)
                         <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="p-4 font-medium text-indigo-600">{{ $pendaftaran->no_pendaftaran }}</td>
+                            <td class="p-4 font-medium text-emerald-600">{{ $pendaftaran->no_pendaftaran }}</td>
                             <td class="p-4">
                                 <p class="font-bold text-gray-800">{{ $pendaftaran->user->name }}</p>
                                 <p class="text-xs text-gray-500 mt-1">NISN: {{ $pendaftaran->nisn ?? '-' }}</p>
@@ -82,7 +82,7 @@
                                 </span>
                             </td>
                             <td class="p-4 text-right">
-                                <a href="{{ route('admin.verifikasi.show', $pendaftaran->id) }}" class="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-indigo-600 font-medium border border-gray-200 px-3 py-1.5 rounded-md shadow-sm transition-colors text-xs">
+                                <a href="{{ route('admin.verifikasi.show', $pendaftaran->id) }}" class="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-emerald-600 font-medium border border-gray-200 px-3 py-1.5 rounded-md shadow-sm transition-colors text-xs">
                                     <i class="fi fi-rs-eye mr-1.5"></i> Detail
                                 </a>
                             </td>

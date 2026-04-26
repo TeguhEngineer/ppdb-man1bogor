@@ -4,17 +4,17 @@
     </x-slot>
 
     <div class="mb-6">
-        <div class="bg-indigo-600 rounded-xl shadow-lg overflow-hidden text-white">
+        <div class="bg-emerald-600 rounded-xl shadow-lg overflow-hidden text-white">
             <div class="p-6 md:p-8 flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
                 <div class="absolute -right-10 -top-10 opacity-10">
                     <i class="fi fi-rs-graduation-cap text-9xl"></i>
                 </div>
                 <div class="z-10 text-center md:text-left mb-4 md:mb-0">
                     <h3 class="text-2xl font-bold mb-1">Selamat Datang, {{ Auth::user()->name }}!</h3>
-                    <p class="text-indigo-100">Jalur Pendaftaran: <span class="font-bold text-yellow-300">{{ $pendaftaran->jalur->nama_jalur }}</span></p>
+                    <p class="text-emerald-100">Jalur Pendaftaran: <span class="font-bold text-yellow-300">{{ $pendaftaran->jalur->nama_jalur }}</span></p>
                 </div>
                 <div class="z-10 bg-white bg-opacity-20 backdrop-blur-md px-6 py-4 rounded-lg text-center border border-white border-opacity-30">
-                    <p class="text-xs uppercase tracking-wider text-indigo-100 mb-1">No. Pendaftaran</p>
+                    <p class="text-xs uppercase tracking-wider text-emerald-100 mb-1">No. Pendaftaran</p>
                     <p class="text-3xl font-bold tracking-widest font-mono">{{ $pendaftaran->no_pendaftaran }}</p>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         <div class="flex flex-col md:flex-row justify-between items-center w-full relative">
             <div class="absolute hidden md:block top-1/2 left-0 w-full h-1 bg-gray-200 -z-0"></div>
             <!-- Progress Line (Active) -->
-            <div class="absolute hidden md:block top-1/2 left-0 h-1 bg-indigo-600 -z-0" style="width: {{ 
+            <div class="absolute hidden md:block top-1/2 left-0 h-1 bg-emerald-600 -z-0" style="width: {{ 
                 $pendaftaran->status_pendaftaran == 'pending' ? '10%' : 
                 ($pendaftaran->status_pendaftaran == 'verifikasi' ? '40%' : 
                 ($pendaftaran->status_pendaftaran == 'tes' ? '70%' : '100%')) 
@@ -48,7 +48,7 @@
 
             @foreach (['pending', 'verifikasi', 'tes', 'lulus'] as $index => $step)
                 <div class="flex flex-col items-center relative z-10 bg-white px-4 py-2 mb-4 md:mb-0">
-                    <div class="w-10 h-10 rounded-full flex items-center justify-center {{ $index <= $currentIndex ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-400' }} border-4 border-white">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center {{ $index <= $currentIndex ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-400' }} border-4 border-white">
                         @if ($index < $currentIndex)
                             <i class="fi fi-rs-check text-sm"></i>
                         @elseif ($index == $currentIndex && $pendaftaran->status_pendaftaran == 'tidak_lulus')
@@ -89,12 +89,12 @@
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Lengkap
                     </span>
-                    <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="block mt-4 w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi Biodata</a>
+                    <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi Biodata</a>
                 @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Diisi
                     </span>
-                    <a href="{{ route('biodata.create') }}" class="block mt-4 w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi Biodata Sekarang</a>
+                    <a href="{{ route('biodata.create') }}" class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi Biodata Sekarang</a>
                 @endif
             </div>
         </div>
@@ -121,9 +121,9 @@
                         Belum Diupload
                     </span>
                     @if(!$isBiodataComplete)
-                        <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors opacity-50 cursor-not-allowed" disabled title="Lengkapi biodata terlebih dahulu">Upload Berkas</button>
+                        <button class="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors opacity-50 cursor-not-allowed" disabled title="Lengkapi biodata terlebih dahulu">Upload Berkas</button>
                     @else
-                        <a href="{{ route('berkas.create') }}" class="block text-center mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Upload Berkas</a>
+                        <a href="{{ route('berkas.create') }}" class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Upload Berkas</a>
                     @endif
                 @endif
             </div>

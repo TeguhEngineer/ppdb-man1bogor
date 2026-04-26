@@ -17,14 +17,14 @@
 
             <!-- Top Actions & Filter -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-                <a href="{{ route('admin.pengumuman.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm shadow-sm shrink-0 inline-flex items-center">
+                <a href="{{ route('admin.pengumuman.create') }}" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-5 rounded-lg transition-colors text-sm shadow-sm shrink-0 inline-flex items-center">
                     <i class="fi fi-rs-paper-plane mr-2"></i> Buat Pengumuman (Broadcast)
                 </a>
                 
                 <form method="GET" action="{{ route('admin.pengumuman.index') }}" class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
                     <div class="flex-1 md:w-72">
                         <label for="search" class="sr-only">Cari</label>
-                        <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari judul / penerima..." class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                        <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari judul / penerima..." class="w-full rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm">
                     </div>
                     <button type="submit" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors border border-gray-200 text-sm">
                         <i class="fi fi-rs-search mr-1.5"></i> Cari
@@ -49,7 +49,7 @@
                                 {{ $pengumuman->judul }}
                             </td>
                             <td class="p-4">
-                                <span class="text-indigo-600 font-medium">{{ $pengumuman->pendaftaran->user->name ?? 'User Dihapus' }}</span>
+                                <span class="text-emerald-600 font-medium">{{ $pengumuman->pendaftaran->user->name ?? 'User Dihapus' }}</span>
                                 <div class="text-xs text-gray-500 mt-1">No: {{ $pengumuman->pendaftaran->no_pendaftaran ?? '-' }}</div>
                             </td>
                             <td class="p-4 text-gray-500">

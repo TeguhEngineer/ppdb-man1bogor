@@ -62,34 +62,34 @@
                             @if($berka->file_raport)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
                             @endif
-                            <input type="file" name="file_raport" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept=".pdf,image/*">
+                            <input type="file" name="file_raport" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Scan NISN</label>
                             @if($berka->file_nisn)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
                             @endif
-                            <input type="file" name="file_nisn" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept=".pdf,image/*">
+                            <input type="file" name="file_nisn" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Pas Foto</label>
                             @if($berka->file_foto)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
                             @endif
-                            <input type="file" name="file_foto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept=".pdf,image/*">
+                            <input type="file" name="file_foto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Surat Keterangan Aktif / SKL</label>
                             @if($berka->file_surat_keterangan_aktif)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
                             @endif
-                            <input type="file" name="file_surat_keterangan_aktif" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" accept=".pdf,image/*">
+                            <input type="file" name="file_surat_keterangan_aktif" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                         </div>
                     </div>
                 </div>
 
                 <div class="flex justify-end border-t pt-6 mt-8">
-                    <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                    <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
                         Perbarui Berkas
                     </button>
                 </div>
