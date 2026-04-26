@@ -65,22 +65,31 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Biodata Action -->
-        <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $pendaftaran->biodata ? 'green' : 'yellow' }}-500">
+        @php
+            $hasBiodata = $pendaftaran->biodata != null;
+            $isBiodataComplete = $hasBiodata && $pendaftaran->biodata->kartu_keluarga && $pendaftaran->biodata->slip_gaji;
+        @endphp
+        <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataComplete ? 'green' : 'yellow' }}-500">
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Biodata Diri</h3>
                     <p class="text-gray-500 text-sm mt-1">Lengkapi data pribadi dan orang tua.</p>
                 </div>
-                <div class="bg-{{ $pendaftaran->biodata ? 'green' : 'yellow' }}-100 text-{{ $pendaftaran->biodata ? 'green' : 'yellow' }}-600 p-3 rounded-full">
-                    <i class="fi fi-rs-{{ $pendaftaran->biodata ? 'check-circle' : 'exclamation' }} text-xl"></i>
+                <div class="bg-{{ $isBiodataComplete ? 'green' : 'yellow' }}-100 text-{{ $isBiodataComplete ? 'green' : 'yellow' }}-600 p-3 rounded-full">
+                    <i class="fi fi-rs-{{ $isBiodataComplete ? 'check-circle' : 'exclamation' }} text-xl"></i>
                 </div>
             </div>
             <div class="mt-6">
-                @if ($pendaftaran->biodata)
+                @if ($isBiodataComplete)
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Selesai Diisi
                     </span>
                     <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="block mt-4 w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Biodata</a>
+                @elseif ($hasBiodata)
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Belum Lengkap
+                    </span>
+                    <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="block mt-4 w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi Biodata</a>
                 @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Diisi
@@ -111,7 +120,7 @@
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                         Belum Diupload
                     </span>
-                    <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors" {{ !$pendaftaran->biodata ? 'disabled title="Isi biodata terlebih dahulu"' : '' }} style="{{ !$pendaftaran->biodata ? 'opacity: 0.5; cursor: not-allowed;' : '' }}">Upload Berkas</button>
+                    <button class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 rounded-lg shadow transition-colors" {{ !$isBiodataComplete ? 'disabled title="Lengkapi biodata terlebih dahulu"' : '' }} style="{{ !$isBiodataComplete ? 'opacity: 0.5; cursor: not-allowed;' : '' }}">Upload Berkas</button>
                 @endif
             </div>
         </div>
