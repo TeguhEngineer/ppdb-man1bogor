@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Biodata;
 use App\Models\Pendaftaran;
+use App\Models\Jalur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,9 @@ class BiodataController extends Controller
             return redirect()->route('biodata.edit', $pendaftaran->biodata->id);
         }
 
-        return view('biodata.create', compact('pendaftaran'));
+        $jalurs = Jalur::all();
+
+        return view('biodata.create', compact('pendaftaran', 'jalurs'));
     }
 
     public function store(Request $request)
@@ -27,6 +30,9 @@ class BiodataController extends Controller
         $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
 
         $validated = $request->validate([
+            'nisn' => 'nullable|string',
+            'jalur_id' => 'required|exists:jalurs,id',
+            'kampus' => 'required|string',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
@@ -105,6 +111,14 @@ class BiodataController extends Controller
             $validated['sertifikat'] = $request->file('sertifikat')->store('biodata/sertifikat', 'public');
         }
 
+        $pendaftaran->update([
+            'nisn' => $request->nisn,
+            'jalur_id' => $request->jalur_id,
+            'kampus' => $request->kampus,
+        ]);
+
+        unset($validated['nisn'], $validated['jalur_id'], $validated['kampus']);
+
         $validated['pendaftaran_id'] = $pendaftaran->id;
         
         Biodata::create($validated);
@@ -120,7 +134,9 @@ class BiodataController extends Controller
             abort(403);
         }
 
-        return view('biodata.edit', compact('biodatum', 'pendaftaran'));
+        $jalurs = Jalur::all();
+
+        return view('biodata.edit', compact('biodatum', 'pendaftaran', 'jalurs'));
     }
 
     public function update(Request $request, Biodata $biodatum)
@@ -132,6 +148,9 @@ class BiodataController extends Controller
         }
 
         $validated = $request->validate([
+            'nisn' => 'nullable|string',
+            'jalur_id' => 'required|exists:jalurs,id',
+            'kampus' => 'required|string',
             'nama_lengkap' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
@@ -212,6 +231,14 @@ class BiodataController extends Controller
             if ($biodatum->sertifikat) Storage::disk('public')->delete($biodatum->sertifikat);
             $validated['sertifikat'] = $request->file('sertifikat')->store('biodata/sertifikat', 'public');
         }
+
+        $pendaftaran->update([
+            'nisn' => $request->nisn,
+            'jalur_id' => $request->jalur_id,
+            'kampus' => $request->kampus,
+        ]);
+
+        unset($validated['nisn'], $validated['jalur_id'], $validated['kampus']);
 
         $biodatum->update($validated);
 

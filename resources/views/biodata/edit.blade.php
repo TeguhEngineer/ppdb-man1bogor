@@ -53,6 +53,29 @@
                         @csrf
                         @method('PUT')
                         
+                        <!-- Section 0: Data Pendaftaran -->
+                        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+                            <h3 class="text-lg leading-6 font-bold text-blue-900 border-b border-blue-200 pb-2 mb-4">Data Pendaftaran</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Jalur Pendaftaran <span class="text-red-500">*</span></label>
+                                    <select name="jalur_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                                        @foreach($jalurs as $jalur)
+                                            <option value="{{ $jalur->id }}" {{ old('jalur_id', $pendaftaran->jalur_id) == $jalur->id ? 'selected' : '' }}>{{ $jalur->nama_jalur }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">NISN (Opsional)</label>
+                                    <input type="text" name="nisn" value="{{ old('nisn', $pendaftaran->nisn) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Kampus Tujuan <span class="text-red-500">*</span></label>
+                                    <input type="text" name="kampus" value="{{ old('kampus', $pendaftaran->kampus) }}" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 text-gray-600 shadow-sm cursor-not-allowed" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- Section 1: Data Pribadi -->
                         <div>
                             <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">1. Data Pribadi</h3>
