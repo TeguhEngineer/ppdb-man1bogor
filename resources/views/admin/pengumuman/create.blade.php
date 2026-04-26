@@ -20,8 +20,7 @@
                 </h3>
                 <ul class="text-sm text-indigo-700 space-y-3 leading-relaxed">
                     <li><strong class="font-bold block">1. Pilih Target</strong> Tentukan kelompok peserta mana yang akan menerima pesan ini berdasarkan status pendaftarannya.</li>
-                    <li><strong class="font-bold block">2. Status Label</strong> Status akhir yang akan tersemat pada pengumuman ini (Lulus/Tidak Lulus/Pending).</li>
-                    <li><strong class="font-bold block">3. Broadcast Massal</strong> Sistem akan menduplikat pesan secara otomatis ke semua akun yang cocok dengan target.</li>
+                    <li><strong class="font-bold block">2. Broadcast Massal</strong> Sistem akan menduplikat pesan secara otomatis ke semua akun yang cocok dengan target.</li>
                 </ul>
             </div>
         </div>
@@ -51,7 +50,7 @@
                 <form action="{{ route('admin.pengumuman.store') }}" method="POST" class="space-y-6">
                     @csrf
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 gap-6">
                         <!-- Target Status Pendaftaran -->
                         <div>
                             <label for="target_status" class="block text-sm font-bold text-gray-700 mb-1">Target Peserta <span class="text-red-500">*</span></label>
@@ -63,17 +62,6 @@
                                 <option value="tes" {{ old('target_status') == 'tes' ? 'selected' : '' }}>Status Pendaftaran: Tes/Wawancara</option>
                                 <option value="lulus" {{ old('target_status') == 'lulus' ? 'selected' : '' }}>Status Pendaftaran: Lulus</option>
                                 <option value="tidak_lulus" {{ old('target_status') == 'tidak_lulus' ? 'selected' : '' }}>Status Pendaftaran: Tidak Lulus</option>
-                            </select>
-                        </div>
-
-                        <!-- Status Pengumuman -->
-                        <div>
-                            <label for="status" class="block text-sm font-bold text-gray-700 mb-1">Label Status Pengumuman <span class="text-red-500">*</span></label>
-                            <p class="text-xs text-gray-500 mb-2">Status yang akan tertampil pada pengumuman.</p>
-                            <select name="status" id="status" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending (Sekadar Informasi)</option>
-                                <option value="lulus" {{ old('status') == 'lulus' ? 'selected' : '' }}>Lulus Seleksi</option>
-                                <option value="tidak_lulus" {{ old('status') == 'tidak_lulus' ? 'selected' : '' }}>Tidak Lulus Seleksi</option>
                             </select>
                         </div>
                     </div>

@@ -37,7 +37,6 @@ class PengumumanController extends Controller
             'target_status' => 'required|in:semua,pending,verifikasi,tes,lulus,tidak_lulus',
             'judul' => 'required|string|max:255',
             'keterangan' => 'required|string',
-            'status' => 'required|in:lulus,tidak_lulus,pending'
         ]);
 
         $query = Pendaftaran::query();
@@ -58,7 +57,7 @@ class PengumumanController extends Controller
                 'pendaftaran_id' => $pendaftaran->id,
                 'judul' => $request->judul,
                 'keterangan' => $request->keterangan,
-                'status' => $request->status,
+                'status' => 'pending',
                 'created_at' => $now,
                 'updated_at' => $now,
             ];
