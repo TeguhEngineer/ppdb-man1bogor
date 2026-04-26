@@ -28,6 +28,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/verifikasi', [App\Http\Controllers\Admin\VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
         Route::get('/verifikasi/{pendaftaran}', [App\Http\Controllers\Admin\VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
         Route::put('/verifikasi/{pendaftaran}/status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateStatus'])->name('admin.verifikasi.update');
+        
+        Route::resource('pengumuman', App\Http\Controllers\Admin\PengumumanController::class)->names([
+            'index' => 'admin.pengumuman.index',
+            'create' => 'admin.pengumuman.create',
+            'store' => 'admin.pengumuman.store',
+            'destroy' => 'admin.pengumuman.destroy',
+        ])->except(['show', 'edit', 'update']);
     });
 });
 
