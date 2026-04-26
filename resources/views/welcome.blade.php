@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PPDB MAN 1 BOGOR - Sistem Penerimaan Peserta Didik Baru</title>
+  <link rel="icon" type="image/png" href="{{ asset('logo.png') }}">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -134,8 +135,8 @@
         </div>
 
         <p class="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
-          Sistem Penerimaan Peserta Didik Baru (PPDB) yang modern, transparan, dan sepenuhnya online. Masa depan
-          gemilang dimulai dari sini.
+          Wujudkan pendidikan berkualitas melalui sistem pendaftaran yang modern, transparan, dan akuntabel.
+          Bergabunglah bersama MAN 1 BOGOR untuk membangun masa depan gemilang.
         </p>
 
         <!-- CTA Buttons -->
@@ -519,7 +520,8 @@
                 BOGOR</span></span>
           </div>
           <p class="text-gray-400 text-sm leading-relaxed">
-            Portal Layanan Penerimaan Peserta Didik Baru (PPDB) yang modern, transparan, dan terintegrasi secara online.
+            Portal Layanan PPDB Terpadu MAN 1 BOGOR: Mengedepankan transparansi, akuntabilitas, dan kemudahan akses
+            menuju pendidikan berkualitas.
           </p>
         </div>
 
@@ -535,9 +537,8 @@
             </svg>
             <div>
               <p class="text-gray-400 text-sm leading-relaxed mb-2">
-                Jl. Raya Ciracas No.123, Kel. Suka Maju, Kec. Cibinong, Kabupaten Bogor, Jawa Barat.
+                Jl. Lingkungan Kayu Manis No. 30, Desa Cirimekar, Kecamatan Cibinong, Kabupaten Bogor. Kode Pos 16917
               </p>
-              <p class="text-gray-400 text-sm font-medium">Kode Pos: 16911</p>
             </div>
           </div>
         </div>
