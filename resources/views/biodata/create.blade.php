@@ -59,8 +59,8 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700">NISN (Opsional)</label>
-                                    <input type="text" name="nisn" value="{{ old('nisn', $pendaftaran->nisn) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <label class="block text-sm font-medium text-gray-700">NISN <span class="text-red-500">*</span></label>
+                                    <input type="text" name="nisn" value="{{ old('nisn', $pendaftaran->nisn) }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700">Kampus Tujuan <span class="text-red-500">*</span></label>

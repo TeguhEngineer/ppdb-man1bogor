@@ -30,7 +30,7 @@ class BiodataController extends Controller
         $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
 
         $validated = $request->validate([
-            'nisn' => 'nullable|string',
+            'nisn' => 'required|string|max:20',
             'jalur_id' => 'required|exists:jalurs,id',
             'kampus' => 'required|string',
             'nama_lengkap' => 'required|string|max:255',
@@ -123,7 +123,7 @@ class BiodataController extends Controller
         
         Biodata::create($validated);
 
-        return redirect()->route('dashboard')->with('success', 'Biodata berhasil disimpan!');
+        return redirect()->back()->with('success', 'Biodata berhasil disimpan!');
     }
 
     public function edit(Biodata $biodatum)
@@ -148,7 +148,7 @@ class BiodataController extends Controller
         }
 
         $validated = $request->validate([
-            'nisn' => 'nullable|string',
+            'nisn' => 'required|string|max:20',
             'jalur_id' => 'required|exists:jalurs,id',
             'kampus' => 'required|string',
             'nama_lengkap' => 'required|string|max:255',
@@ -242,6 +242,6 @@ class BiodataController extends Controller
 
         $biodatum->update($validated);
 
-        return redirect()->route('dashboard')->with('success', 'Biodata berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Biodata berhasil diperbarui!');
     }
 }
