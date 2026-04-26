@@ -17,6 +17,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::middleware('auth')->group(function () {
     Route::resource('biodata', BiodataController::class);
     Route::resource('berkas', BerkasController::class);
+    Route::get('pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman.index');
     
     // Profile routes (all authenticated users)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.index');
