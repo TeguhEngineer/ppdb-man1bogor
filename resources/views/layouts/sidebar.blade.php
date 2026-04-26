@@ -49,7 +49,7 @@
     @elseif (Auth::user()->role === 'administrator' || Auth::user()->role === 'admin')
         <!-- Menu Admin -->
         <div class="flex items-center mr-4">
-            <a href="#" class="flex items-center flex-1 px-4 py-3 text-gray-500 hover:bg-gray-50 rounded-lg ml-3">
+            <a href="{{ route('admin.verifikasi.index') }}" class="flex items-center flex-1 px-4 py-3 {{ request()->is('admin/verifikasi*') ? 'bg-indigo-100 text-indigo-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3">
                 <i class="fi fi-rs-users text-lg leading-none relative top-0.5"></i>
                 <span class="ml-3 font-medium">Data Pendaftar</span>
             </a>
