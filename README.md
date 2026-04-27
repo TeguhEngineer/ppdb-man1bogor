@@ -150,7 +150,6 @@ id
 pendaftaran_id
 
 <!-- Data Pribadi -->
-foto_profil(upload file png/jpg/jpeg max.1mb)
 nama_lengkap
 tempat_lahir
 tanggal_lahir
@@ -187,10 +186,6 @@ jumlah_juz
 tingkat_prestasi
 jenis_prestasi
 nama_lomba
-sertifikat(upload file jpg/jpeg/png/pdf max.2mb)
-
-<!-- Data Slip Gaji -->
-slip_gaji(upload file jpg/jpeg/png/pdf max.2mb)
 
 <!-- Data Ayah -->
 nama_ayah
@@ -211,7 +206,6 @@ pendidikan_terakhir_ibu
 pekerjaan_ibu
 penghasilan_ibu
 no_hp_ibu
-kartu_keluarga(upload file)
 
 <!-- Data Wali -->
 nama_wali
@@ -225,7 +219,7 @@ no_hp_wali
 created_at
 updated_at
 
-### 5.5 Tabel:  berkas (jpg/pdf max 1mb)
+### 5.5 Tabel: berkas (jpg/pdf max 1mb/2mb)
 
 id
 pendaftaran_id
@@ -233,6 +227,11 @@ file_raport
 file_nisn
 file_foto
 file_surat_keterangan_aktif
+file_slip_gaji
+file_kk
+file_sertifikat (Khusus Prestasi)
+file_sktm (Khusus Afirmasi)
+file_kip (Khusus Afirmasi - Opsional)
 created_at
 updated_at
 
@@ -254,7 +253,6 @@ id
 pendaftaran_id
 judul
 keterangan
-status (lulus / tidak_lulus)
 created_at
 updated_at
 
