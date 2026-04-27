@@ -18,7 +18,7 @@ class BerkasController extends Controller
             return redirect()->route('berkas.edit', $pendaftaran->berkas->id);
         }
 
-        if (!$pendaftaran->biodata || !$pendaftaran->biodata->kartu_keluarga || !$pendaftaran->biodata->slip_gaji) {
+        if (!$pendaftaran->biodata) {
             return redirect()->route('dashboard')->with('error', 'Silakan lengkapi biodata Anda terlebih dahulu.');
         }
 
@@ -34,6 +34,8 @@ class BerkasController extends Controller
             'file_nisn' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_foto' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_surat_keterangan_aktif' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
+            'file_slip_gaji' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'file_kk' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'file_sertifikat' => $pendaftaran->jalur->nama_jalur == 'Prestasi' ? 'required|file|mimes:pdf,jpg,jpeg,png|max:2048' : 'nullable',
             'file_sktm' => $pendaftaran->jalur->nama_jalur == 'Afirmasi' ? 'required|file|mimes:pdf,jpg,jpeg,png|max:1024' : 'nullable',
             'file_kip' => $pendaftaran->jalur->nama_jalur == 'Afirmasi' ? 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024' : 'nullable',
@@ -52,6 +54,12 @@ class BerkasController extends Controller
         }
         if ($request->hasFile('file_surat_keterangan_aktif')) {
             $berkasData['file_surat_keterangan_aktif'] = $request->file('file_surat_keterangan_aktif')->store('berkas/skl', 'public');
+        }
+        if ($request->hasFile('file_slip_gaji')) {
+            $berkasData['file_slip_gaji'] = $request->file('file_slip_gaji')->store('berkas/slip', 'public');
+        }
+        if ($request->hasFile('file_kk')) {
+            $berkasData['file_kk'] = $request->file('file_kk')->store('berkas/kk', 'public');
         }
         if ($request->hasFile('file_sertifikat')) {
             $berkasData['file_sertifikat'] = $request->file('file_sertifikat')->store('berkas/sertifikat', 'public');
@@ -92,6 +100,8 @@ class BerkasController extends Controller
             'file_nisn' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_foto' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_surat_keterangan_aktif' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
+            'file_slip_gaji' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'file_kk' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'file_sktm' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_kip' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
@@ -112,6 +122,14 @@ class BerkasController extends Controller
         if ($request->hasFile('file_surat_keterangan_aktif')) {
             if ($berka->file_surat_keterangan_aktif) Storage::disk('public')->delete($berka->file_surat_keterangan_aktif);
             $berka->file_surat_keterangan_aktif = $request->file('file_surat_keterangan_aktif')->store('berkas/skl', 'public');
+        }
+        if ($request->hasFile('file_slip_gaji')) {
+            if ($berka->file_slip_gaji) Storage::disk('public')->delete($berka->file_slip_gaji);
+            $berka->file_slip_gaji = $request->file('file_slip_gaji')->store('berkas/slip', 'public');
+        }
+        if ($request->hasFile('file_kk')) {
+            if ($berka->file_kk) Storage::disk('public')->delete($berka->file_kk);
+            $berka->file_kk = $request->file('file_kk')->store('berkas/kk', 'public');
         }
         if ($request->hasFile('file_sertifikat')) {
             if ($berka->file_sertifikat) Storage::disk('public')->delete($berka->file_sertifikat);

@@ -40,7 +40,7 @@ class Pendaftaran extends Model
         $berkas = $this->berkas;
         
         // Berkas wajib dasar
-        if (!$berkas->file_raport || !$berkas->file_nisn || !$berkas->file_foto || !$berkas->file_surat_keterangan_aktif) {
+        if (!$berkas->file_raport || !$berkas->file_nisn || !$berkas->file_foto || !$berkas->file_surat_keterangan_aktif || !$berkas->file_slip_gaji || !$berkas->file_kk) {
             return false;
         }
 

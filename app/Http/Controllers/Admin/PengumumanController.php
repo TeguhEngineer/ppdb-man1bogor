@@ -57,7 +57,6 @@ class PengumumanController extends Controller
                 'pendaftaran_id' => $pendaftaran->id,
                 'judul' => $request->judul,
                 'keterangan' => $request->keterangan,
-                'status' => 'pending',
                 'created_at' => $now,
                 'updated_at' => $now,
             ];

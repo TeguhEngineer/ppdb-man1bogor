@@ -67,7 +67,7 @@
         <!-- Biodata Action -->
         @php
             $hasBiodata = $pendaftaran->biodata != null;
-            $isBiodataComplete = $hasBiodata && $pendaftaran->biodata->kartu_keluarga && $pendaftaran->biodata->slip_gaji;
+            $isBiodataComplete = $hasBiodata;
         @endphp
         <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataComplete ? 'green' : 'yellow' }}-500">
             <div class="flex items-start justify-between">

@@ -16,8 +16,8 @@
                 <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
                     <li>Isi data diri Anda dengan benar dan sesuai dokumen resmi.</li>
                     <li>Kolom bertanda bintang merah (<span class="text-red-500">*</span>) wajib diisi.</li>
-                    <li>Ukuran maksimal untuk setiap file unggahan (Foto, KK, Slip Gaji) adalah 2MB.</li>
                     <li>Kosongkan bagian yang berlabel (Opsional) jika tidak ada data terkait.</li>
+                    <li>Berkas dokumen (KK, Slip Gaji, dll) akan diunggah pada halaman khusus berkas setelah biodata disimpan.</li>
                 </ul>
             </div>
             <div class="shrink-0 bg-gray-50 px-6 py-4 rounded-lg border border-gray-100 text-center w-full md:w-auto">
@@ -485,34 +485,7 @@
                     </div>
                 </div>
 
-                <!-- Section 6: File Pendukung -->
-                <div>
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">6. File Dokumen Identitas
-                        (Max 2MB)</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-                        <div class="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center bg-gray-50">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Scan Kartu Keluarga (KK) <span
-                                    class="text-red-500">*</span></label>
-                            <input type="file" name="kartu_keluarga" accept=".pdf,image/*"
-                                class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-gray-700 hover:file:bg-gray-100"
-                                required>
-                        </div>
-                        <div class="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center bg-gray-50">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Slip Gaji Orang Tua <span
-                                    class="text-red-500">*</span></label>
-                            <input type="file" name="slip_gaji" accept=".pdf,image/*"
-                                class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-gray-700 hover:file:bg-gray-100"
-                                required>
-                        </div>
-                        <div class="border-2 border-dashed border-gray-300 p-4 rounded-lg text-center bg-gray-50">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Sertifikat Prestasi
-                                Lomba/Hafalan Al-Qur'an (jika ada)</label>
-                            <input type="file" name="sertifikat" accept=".pdf,image/*"
-                                class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-gray-700 hover:file:bg-gray-100">
-                        </div>
-                    </div>
-                </div>
 
                 <div class="flex items-center justify-end pt-6 border-t mt-8">
                     <button type="submit"

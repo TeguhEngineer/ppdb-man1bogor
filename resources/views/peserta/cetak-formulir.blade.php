@@ -188,8 +188,8 @@
             </table>
         </div>
 
-        @if($pendaftaran->biodata->foto_profil)
-            <div class="photo-box" style="background-image: url('{{ Storage::url($pendaftaran->biodata->foto_profil) }}')">
+        @if($pendaftaran->berkas && $pendaftaran->berkas->file_foto)
+            <div class="photo-box" style="background-image: url('{{ Storage::url($pendaftaran->berkas->file_foto) }}')">
             </div>
         @else
             <div class="photo-box">
@@ -301,6 +301,7 @@
                 <td>{{ $pendaftaran->berkas && $pendaftaran->berkas->file_kip ? 'Sudah Diupload' : 'Belum Diupload' }}</td>
             </tr>
             @endif
+
         </table>
         @endif
 

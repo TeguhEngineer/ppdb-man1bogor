@@ -66,7 +66,6 @@ class BiodataController extends Controller
             'tingkat_prestasi' => 'nullable|string',
             'jenis_prestasi' => 'nullable|string',
             'nama_lomba' => 'nullable|string',
-            'sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             
             'nama_ayah' => 'nullable|string',
             'nik_ayah' => 'nullable|string',
@@ -94,22 +93,10 @@ class BiodataController extends Controller
             'pekerjaan_wali' => 'nullable|string',
             'penghasilan_wali' => 'nullable|string',
             'no_hp_wali' => 'nullable|string',
-
-
-            'slip_gaji' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'kartu_keluarga' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
 
-        if ($request->hasFile('slip_gaji')) {
-            $validated['slip_gaji'] = $request->file('slip_gaji')->store('biodata/slip', 'public');
-        }
-        if ($request->hasFile('kartu_keluarga')) {
-            $validated['kartu_keluarga'] = $request->file('kartu_keluarga')->store('biodata/kk', 'public');
-        }
-        if ($request->hasFile('sertifikat')) {
-            $validated['sertifikat'] = $request->file('sertifikat')->store('biodata/sertifikat', 'public');
-        }
+
 
         $pendaftaran->update([
             'nisn' => $request->nisn,
@@ -184,7 +171,6 @@ class BiodataController extends Controller
             'tingkat_prestasi' => 'nullable|string',
             'jenis_prestasi' => 'nullable|string',
             'nama_lomba' => 'nullable|string',
-            'sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             
             'nama_ayah' => 'nullable|string',
             'nik_ayah' => 'nullable|string',
@@ -212,25 +198,10 @@ class BiodataController extends Controller
             'pekerjaan_wali' => 'nullable|string',
             'penghasilan_wali' => 'nullable|string',
             'no_hp_wali' => 'nullable|string',
-
-
-            'slip_gaji' => $biodatum->slip_gaji ? 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048' : 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
-            'kartu_keluarga' => $biodatum->kartu_keluarga ? 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048' : 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
 
-        if ($request->hasFile('slip_gaji')) {
-            if ($biodatum->slip_gaji) Storage::disk('public')->delete($biodatum->slip_gaji);
-            $validated['slip_gaji'] = $request->file('slip_gaji')->store('biodata/slip', 'public');
-        }
-        if ($request->hasFile('kartu_keluarga')) {
-            if ($biodatum->kartu_keluarga) Storage::disk('public')->delete($biodatum->kartu_keluarga);
-            $validated['kartu_keluarga'] = $request->file('kartu_keluarga')->store('biodata/kk', 'public');
-        }
-        if ($request->hasFile('sertifikat')) {
-            if ($biodatum->sertifikat) Storage::disk('public')->delete($biodatum->sertifikat);
-            $validated['sertifikat'] = $request->file('sertifikat')->store('biodata/sertifikat', 'public');
-        }
+
 
         $pendaftaran->update([
             'nisn' => $request->nisn,

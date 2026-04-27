@@ -252,7 +252,7 @@
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Diwajibkan mengikuti Ujian Tes Tertulis.</li>
+                      </svg> Diwajibkan mengikuti Ujian Tes CBT.</li>
                   </ul>
                 </div>
                 <div>
@@ -318,7 +318,7 @@
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Diwajibkan mengikuti Ujian Tes Tertulis.</li>
+                      </svg> Diwajibkan mengikuti uji kompetensi sesuai bidang prestasi yang didaftarkan.</li>
                   </ul>
                 </div>
                 <div>
@@ -379,10 +379,6 @@
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                       </svg> Mengunggah Kartu KIP / PKH (Bila Ada).</li>
-                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Bersedia menerima survey langsung oleh panitia ke lokasi domisili.</li>
                   </ul>
                 </div>
                 <div>
