@@ -43,32 +43,34 @@ class BerkasController extends Controller
 
         $berkasData = ['pendaftaran_id' => $pendaftaran->id];
 
+        $path = 'berkas/' . $pendaftaran->no_pendaftaran;
+
         if ($request->hasFile('file_raport')) {
-            $berkasData['file_raport'] = $request->file('file_raport')->store('berkas/raport', 'public');
+            $berkasData['file_raport'] = $request->file('file_raport')->store($path, 'public');
         }
         if ($request->hasFile('file_nisn')) {
-            $berkasData['file_nisn'] = $request->file('file_nisn')->store('berkas/nisn', 'public');
+            $berkasData['file_nisn'] = $request->file('file_nisn')->store($path, 'public');
         }
         if ($request->hasFile('file_foto')) {
-            $berkasData['file_foto'] = $request->file('file_foto')->store('berkas/foto', 'public');
+            $berkasData['file_foto'] = $request->file('file_foto')->store($path, 'public');
         }
         if ($request->hasFile('file_surat_keterangan_aktif')) {
-            $berkasData['file_surat_keterangan_aktif'] = $request->file('file_surat_keterangan_aktif')->store('berkas/skl', 'public');
+            $berkasData['file_surat_keterangan_aktif'] = $request->file('file_surat_keterangan_aktif')->store($path, 'public');
         }
         if ($request->hasFile('file_slip_gaji')) {
-            $berkasData['file_slip_gaji'] = $request->file('file_slip_gaji')->store('berkas/slip', 'public');
+            $berkasData['file_slip_gaji'] = $request->file('file_slip_gaji')->store($path, 'public');
         }
         if ($request->hasFile('file_kk')) {
-            $berkasData['file_kk'] = $request->file('file_kk')->store('berkas/kk', 'public');
+            $berkasData['file_kk'] = $request->file('file_kk')->store($path, 'public');
         }
         if ($request->hasFile('file_sertifikat')) {
-            $berkasData['file_sertifikat'] = $request->file('file_sertifikat')->store('berkas/sertifikat', 'public');
+            $berkasData['file_sertifikat'] = $request->file('file_sertifikat')->store($path, 'public');
         }
         if ($request->hasFile('file_sktm')) {
-            $berkasData['file_sktm'] = $request->file('file_sktm')->store('berkas/sktm', 'public');
+            $berkasData['file_sktm'] = $request->file('file_sktm')->store($path, 'public');
         }
         if ($request->hasFile('file_kip')) {
-            $berkasData['file_kip'] = $request->file('file_kip')->store('berkas/kip', 'public');
+            $berkasData['file_kip'] = $request->file('file_kip')->store($path, 'public');
         }
 
         $berkas = Berkas::create($berkasData);
@@ -107,41 +109,43 @@ class BerkasController extends Controller
             'file_kip' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
         ]);
 
+        $path = 'berkas/' . $pendaftaran->no_pendaftaran;
+
         if ($request->hasFile('file_raport')) {
             if ($berka->file_raport) Storage::disk('public')->delete($berka->file_raport);
-            $berka->file_raport = $request->file('file_raport')->store('berkas/raport', 'public');
+            $berka->file_raport = $request->file('file_raport')->store($path, 'public');
         }
         if ($request->hasFile('file_nisn')) {
             if ($berka->file_nisn) Storage::disk('public')->delete($berka->file_nisn);
-            $berka->file_nisn = $request->file('file_nisn')->store('berkas/nisn', 'public');
+            $berka->file_nisn = $request->file('file_nisn')->store($path, 'public');
         }
         if ($request->hasFile('file_foto')) {
             if ($berka->file_foto) Storage::disk('public')->delete($berka->file_foto);
-            $berka->file_foto = $request->file('file_foto')->store('berkas/foto', 'public');
+            $berka->file_foto = $request->file('file_foto')->store($path, 'public');
         }
         if ($request->hasFile('file_surat_keterangan_aktif')) {
             if ($berka->file_surat_keterangan_aktif) Storage::disk('public')->delete($berka->file_surat_keterangan_aktif);
-            $berka->file_surat_keterangan_aktif = $request->file('file_surat_keterangan_aktif')->store('berkas/skl', 'public');
+            $berka->file_surat_keterangan_aktif = $request->file('file_surat_keterangan_aktif')->store($path, 'public');
         }
         if ($request->hasFile('file_slip_gaji')) {
             if ($berka->file_slip_gaji) Storage::disk('public')->delete($berka->file_slip_gaji);
-            $berka->file_slip_gaji = $request->file('file_slip_gaji')->store('berkas/slip', 'public');
+            $berka->file_slip_gaji = $request->file('file_slip_gaji')->store($path, 'public');
         }
         if ($request->hasFile('file_kk')) {
             if ($berka->file_kk) Storage::disk('public')->delete($berka->file_kk);
-            $berka->file_kk = $request->file('file_kk')->store('berkas/kk', 'public');
+            $berka->file_kk = $request->file('file_kk')->store($path, 'public');
         }
         if ($request->hasFile('file_sertifikat')) {
             if ($berka->file_sertifikat) Storage::disk('public')->delete($berka->file_sertifikat);
-            $berka->file_sertifikat = $request->file('file_sertifikat')->store('berkas/sertifikat', 'public');
+            $berka->file_sertifikat = $request->file('file_sertifikat')->store($path, 'public');
         }
         if ($request->hasFile('file_sktm')) {
             if ($berka->file_sktm) Storage::disk('public')->delete($berka->file_sktm);
-            $berka->file_sktm = $request->file('file_sktm')->store('berkas/sktm', 'public');
+            $berka->file_sktm = $request->file('file_sktm')->store($path, 'public');
         }
         if ($request->hasFile('file_kip')) {
             if ($berka->file_kip) Storage::disk('public')->delete($berka->file_kip);
-            $berka->file_kip = $request->file('file_kip')->store('berkas/kip', 'public');
+            $berka->file_kip = $request->file('file_kip')->store($path, 'public');
         }
 
         $berka->save();
