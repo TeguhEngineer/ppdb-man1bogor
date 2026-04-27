@@ -19,16 +19,16 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        DB::table('users')->insert([
+        DB::table('users')->updateOrInsert(
+            ['email' => 'administrator@gmail.com'],
             [
                 'name' => 'Administrator',
-                'email' => 'administrator@gmail.com',
                 'password' => bcrypt('password'),
                 'role' => 'administrator',
                 'created_at' => now(),
                 'updated_at' => now()
             ]
-        ]);
+        );
 
         $this->call([
             JalurSeeder::class,

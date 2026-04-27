@@ -31,7 +31,13 @@ class JalurSeeder extends Seeder
         ];
 
         foreach ($jalurs as $jalur) {
-            Jalur::create($jalur);
+            Jalur::firstOrCreate(
+                ['nama_jalur' => $jalur['nama_jalur']],
+                [
+                    'total_kuota' => $jalur['total_kuota'],
+                    'deskripsi' => $jalur['deskripsi']
+                ]
+            );
         }
     }
 }
