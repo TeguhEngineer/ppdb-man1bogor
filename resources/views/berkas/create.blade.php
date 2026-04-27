@@ -65,6 +65,26 @@
                             <label class="block text-sm font-medium text-gray-700">Surat Keterangan Aktif / SKL <span class="text-red-500">*</span></label>
                             <input type="file" name="file_surat_keterangan_aktif" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*" required>
                         </div>
+
+                        {{-- Berkas Khusus Jalur Prestasi --}}
+                        @if($pendaftaran->jalur->nama_jalur == 'Prestasi')
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Piagam/Sertifikat Kejuaraan <span class="text-red-500">*</span></label>
+                            <input type="file" name="file_sertifikat" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*" required>
+                        </div>
+                        @endif
+
+                        {{-- Berkas Khusus Jalur Afirmasi --}}
+                        @if($pendaftaran->jalur->nama_jalur == 'Afirmasi')
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Surat Keterangan Tidak Mampu (SKTM) <span class="text-red-500">*</span></label>
+                            <input type="file" name="file_sktm" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Kartu KIP (Optional)</label>
+                            <input type="file" name="file_kip" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
+                        </div>
+                        @endif
                     </div>
                 </div>
 

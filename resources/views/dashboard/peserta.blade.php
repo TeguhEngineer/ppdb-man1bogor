@@ -107,22 +107,31 @@
         </div>
 
         <!-- Berkas Action -->
-        <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $pendaftaran->berkas ? 'green' : 'red' }}-500">
+        @php
+            $isBerkasComplete = $pendaftaran->isBerkasLengkap();
+            $hasBerkas = $pendaftaran->berkas != null;
+        @endphp
+        <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-500">
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Upload Berkas</h3>
                     <p class="text-gray-500 text-sm mt-1">Unggah dokumen persyaratan jalur {{ $pendaftaran->jalur->nama_jalur }}.</p>
                 </div>
-                <div class="bg-{{ $pendaftaran->berkas ? 'green' : 'red' }}-100 text-{{ $pendaftaran->berkas ? 'green' : 'red' }}-600 p-3 rounded-full">
-                    <i class="fi fi-rs-{{ $pendaftaran->berkas ? 'check-circle' : 'document' }} text-xl"></i>
+                <div class="bg-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-100 text-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-600 p-3 rounded-full">
+                    <i class="fi fi-rs-{{ $isBerkasComplete ? 'check-circle' : ($hasBerkas ? 'exclamation' : 'document') }} text-xl"></i>
                 </div>
             </div>
             <div class="mt-6">
-                @if ($pendaftaran->berkas)
+                @if ($isBerkasComplete)
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Selesai Diupload
                     </span>
                     <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}" class="block text-center mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Berkas</a>
+                @elseif ($hasBerkas)
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Belum Lengkap
+                    </span>
+                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}" class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi Berkas</a>
                 @else
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
                         Belum Diupload

@@ -34,6 +34,9 @@ class BerkasController extends Controller
             'file_nisn' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_foto' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_surat_keterangan_aktif' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
+            'file_sertifikat' => $pendaftaran->jalur->nama_jalur == 'Prestasi' ? 'required|file|mimes:pdf,jpg,jpeg,png|max:2048' : 'nullable',
+            'file_sktm' => $pendaftaran->jalur->nama_jalur == 'Afirmasi' ? 'required|file|mimes:pdf,jpg,jpeg,png|max:1024' : 'nullable',
+            'file_kip' => $pendaftaran->jalur->nama_jalur == 'Afirmasi' ? 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024' : 'nullable',
         ]);
 
         $berkasData = ['pendaftaran_id' => $pendaftaran->id];
@@ -49,6 +52,15 @@ class BerkasController extends Controller
         }
         if ($request->hasFile('file_surat_keterangan_aktif')) {
             $berkasData['file_surat_keterangan_aktif'] = $request->file('file_surat_keterangan_aktif')->store('berkas/skl', 'public');
+        }
+        if ($request->hasFile('file_sertifikat')) {
+            $berkasData['file_sertifikat'] = $request->file('file_sertifikat')->store('berkas/sertifikat', 'public');
+        }
+        if ($request->hasFile('file_sktm')) {
+            $berkasData['file_sktm'] = $request->file('file_sktm')->store('berkas/sktm', 'public');
+        }
+        if ($request->hasFile('file_kip')) {
+            $berkasData['file_kip'] = $request->file('file_kip')->store('berkas/kip', 'public');
         }
 
         $berkas = Berkas::create($berkasData);
@@ -80,6 +92,9 @@ class BerkasController extends Controller
             'file_nisn' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_foto' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_surat_keterangan_aktif' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
+            'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'file_sktm' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
+            'file_kip' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
         ]);
 
         if ($request->hasFile('file_raport')) {
@@ -97,6 +112,18 @@ class BerkasController extends Controller
         if ($request->hasFile('file_surat_keterangan_aktif')) {
             if ($berka->file_surat_keterangan_aktif) Storage::disk('public')->delete($berka->file_surat_keterangan_aktif);
             $berka->file_surat_keterangan_aktif = $request->file('file_surat_keterangan_aktif')->store('berkas/skl', 'public');
+        }
+        if ($request->hasFile('file_sertifikat')) {
+            if ($berka->file_sertifikat) Storage::disk('public')->delete($berka->file_sertifikat);
+            $berka->file_sertifikat = $request->file('file_sertifikat')->store('berkas/sertifikat', 'public');
+        }
+        if ($request->hasFile('file_sktm')) {
+            if ($berka->file_sktm) Storage::disk('public')->delete($berka->file_sktm);
+            $berka->file_sktm = $request->file('file_sktm')->store('berkas/sktm', 'public');
+        }
+        if ($request->hasFile('file_kip')) {
+            if ($berka->file_kip) Storage::disk('public')->delete($berka->file_kip);
+            $berka->file_kip = $request->file('file_kip')->store('berkas/kip', 'public');
         }
 
         $berka->save();

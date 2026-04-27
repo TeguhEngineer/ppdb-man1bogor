@@ -279,6 +279,31 @@
             </tr>
         </table>
 
+        @if($pendaftaran->jalur->nama_jalur != 'Reguler')
+        <div class="section-title">IV. BERKAS KHUSUS</div>
+        <table class="data-table">
+            @if($pendaftaran->jalur->nama_jalur == 'Prestasi')
+            <tr>
+                <td class="label">Sertifikat/Piagam</td>
+                <td class="separator">:</td>
+                <td>{{ $pendaftaran->berkas && $pendaftaran->berkas->file_sertifikat ? 'Sudah Diupload' : 'Belum Diupload' }}</td>
+            </tr>
+            @endif
+            @if($pendaftaran->jalur->nama_jalur == 'Afirmasi')
+            <tr>
+                <td class="label">SKTM</td>
+                <td class="separator">:</td>
+                <td>{{ $pendaftaran->berkas && $pendaftaran->berkas->file_sktm ? 'Sudah Diupload' : 'Belum Diupload' }}</td>
+            </tr>
+            <tr>
+                <td class="label">Kartu KIP</td>
+                <td class="separator">:</td>
+                <td>{{ $pendaftaran->berkas && $pendaftaran->berkas->file_kip ? 'Sudah Diupload' : 'Belum Diupload' }}</td>
+            </tr>
+            @endif
+        </table>
+        @endif
+
         <div class="footer">
             <div class="signature-box">
                 <p>Panitia PPDB,</p>
