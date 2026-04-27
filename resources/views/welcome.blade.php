@@ -239,16 +239,32 @@
                 <div>
                   <h5
                     class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
-                    Persyaratan Wajib</h5>
+                    PERSYARATAN</h5>
                   <ul class="text-sm text-gray-700 space-y-3 font-medium">
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                      </svg> Scan Raport Terakhir.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib memiliki Kartu Keluarga (KK)</li>
+                      </svg> Scan NISN.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Pas Foto 3x4 (Latar Merah/Biru).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Surat Keterangan Aktif / SKL.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Scan Kartu Keluarga (KK).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Slip Gaji Orang Tua.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -297,28 +313,36 @@
                 <div>
                   <h5
                     class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
-                    Persyaratan Khusus</h5>
+                    PERSYARATAN</h5>
                   <ul class="text-sm text-gray-700 space-y-3 font-medium">
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                      </svg> Scan Raport Terakhir.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib memiliki Kartu Keluarga (KK)</li>
+                      </svg> Scan NISN.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Memiliki nilai rata-rata Raport Minimal 85.</li>
+                      </svg> Pas Foto 3x4 (Latar Merah/Biru).</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib melampirkan Sertifikat/Piagam Kejuaraan (Minimal Juara 3 Kabupaten).</li>
+                      </svg> Surat Keterangan Aktif / SKL.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Diwajibkan mengikuti uji kompetensi sesuai bidang prestasi yang didaftarkan.</li>
+                      </svg> Scan Kartu Keluarga (KK).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Slip Gaji Orang Tua.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Sertifikat/Piagam Kejuaraan (Minimal Juara 3 Kabupaten).</li>
                   </ul>
                 </div>
                 <div>
@@ -361,24 +385,40 @@
                 <div>
                   <h5
                     class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 border-b border-gray-100 pb-2">
-                    Persyaratan Tambahan</h5>
+                    PERSYARATAN</h5>
                   <ul class="text-sm text-gray-700 space-y-3 font-medium">
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                      </svg> Scan Raport Terakhir.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib memiliki Kartu Keluarga (KK)</li>
+                      </svg> Scan NISN.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Mengunggah Surat Keterangan Tidak Mampu (SKTM) Asli.</li>
+                      </svg> Pas Foto 3x4 (Latar Merah/Biru).</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Mengunggah Kartu KIP / PKH (Bila Ada).</li>
+                      </svg> Surat Keterangan Aktif / SKL.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Scan Kartu Keluarga (KK).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Slip Gaji Orang Tua.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Surat Keterangan Tidak Mampu (SKTM).</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Kartu KIP / PKH (Opsional).</li>
                   </ul>
                 </div>
                 <div>
