@@ -113,7 +113,7 @@
 
   <!-- Hero Banner Section -->
   <section id="beranda" class="mt-20 w-full bg-white flex justify-center border-b border-gray-50">
-    <img src="/poster-ppdb.jpeg" alt="Hero Poster PPDB MAN 1 Bogor" class="w-full h-auto max-h-[85vh] object-contain">
+    <img src="/poster-ppdb.png" alt="Hero Poster PPDB MAN 1 Bogor" class="w-full h-auto max-h-[85vh] object-contain">
   </section>
 
   <!-- Welcome / Intro Section -->
@@ -423,14 +423,19 @@
             Pastikan Anda memilih jalur yang paling sesuai dengan kondisi Anda.</p>
         </div>
         <div class="border border-gray-100 rounded-xl p-6 bg-gray-50">
-          <h4 class="font-bold text-gray-900 mb-2">Bagaimana jika salah input data raport?</h4>
+          <h4 class="font-bold text-gray-900 mb-2">Bagaimana jika salah input berkas?</h4>
           <p class="text-gray-600 text-sm">Anda masih dapat mengubah data selama status Anda belum 'Diverifikasi' oleh
             Panitia. Jika sudah diverifikasi, harap hubungi Kontak Panitia.</p>
         </div>
         <div class="border border-gray-100 rounded-xl p-6 bg-gray-50">
-          <h4 class="font-bold text-gray-900 mb-2">Kapan ujian atau tes wawancara dilaksanakan?</h4>
-          <p class="text-gray-600 text-sm">Jadwal akan muncul di Dashboard Anda masing-masing setelah berkas & biodata
-            Anda disetujui (diverifikasi) oleh panitia.</p>
+          <h4 class="font-bold text-gray-900 mb-2">Apakah bisa mendaftar tanpa datang ke sekolah?</h4>
+          <p class="text-gray-600 text-sm">Ya, seluruh proses pendaftaran dapat dilakukan secara online melalui website
+            PPDB tanpa harus datang langsung ke sekolah, kecuali jika diminta untuk verifikasi berkas tertentu.</p>
+        </div>
+        <div class="border border-gray-100 rounded-xl p-6 bg-gray-50">
+          <h4 class="font-bold text-gray-900 mb-2">Siapa yang bisa dihubungi jika mengalami kendala?</h4>
+          <p class="text-gray-600 text-sm">Jika mengalami kendala saat pendaftaran, peserta dapat menghubungi panitia
+            melalui menu “Kontak” yang tersedia pada website PPDB.</p>
         </div>
       </div>
     </div>
