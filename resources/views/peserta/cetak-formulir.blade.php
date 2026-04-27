@@ -11,7 +11,7 @@
         }
         body {
             font-family: 'Arial', sans-serif;
-            line-height: 1.4;
+            line-height: 1.2;
             color: #333;
             margin: 0;
             padding: 0;
@@ -20,14 +20,14 @@
         .container {
             width: 190mm;
             margin: 0 auto;
-            padding: 10mm;
+            padding: 5mm;
         }
         .header {
             display: flex;
             align-items: center;
             border-bottom: 3px solid #22690f;
             padding-bottom: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .logo {
             width: 80px;
@@ -40,32 +40,32 @@
         }
         .header-text h1 {
             margin: 0;
-            font-size: 18px;
+            font-size: 16px;
             text-transform: uppercase;
             color: #22690f;
         }
         .header-text h2 {
-            margin: 5px 0;
-            font-size: 22px;
+            margin: 2px 0;
+            font-size: 20px;
             text-transform: uppercase;
         }
         .header-text p {
             margin: 0;
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
         }
         .form-title {
             text-align: center;
             text-decoration: underline;
             font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 20px;
+            font-size: 14px;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
         .registration-box {
             border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 20px;
+            padding: 8px;
+            margin-bottom: 10px;
             background-color: #f9f9f9;
         }
         .registration-box table {
@@ -77,20 +77,20 @@
         .section-title {
             background-color: #22690f;
             color: #white;
-            padding: 5px 10px;
+            padding: 4px 10px;
             font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-size: 13px;
+            margin-top: 6px;
+            margin-bottom: 4px;
+            font-size: 12px;
             color: #fff;
         }
         table.data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 11px;
         }
         table.data-table td {
-            padding: 6px 5px;
+            padding: 3px 5px;
             vertical-align: top;
         }
         table.data-table td.label {
@@ -101,8 +101,8 @@
             width: 2%;
         }
         .photo-box {
-            width: 3cm;
-            height: 4cm;
+            width: 2cm;
+            height: 3cm;
             border: 1px solid #000;
             display: flex;
             align-items: center;
@@ -115,17 +115,17 @@
             background-position: center;
         }
         .footer {
-            margin-top: 40px;
+            margin-top: 10px;
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
         }
         .signature-box {
             width: 200px;
             text-align: center;
         }
         .signature-space {
-            height: 60px;
+            height: 40px;
         }
         .print-btn-container {
             position: fixed;
@@ -168,7 +168,7 @@
         <div class="form-title">Formulir Pendaftaran Peserta Didik Baru</div>
 
         <div class="registration-box">
-            <table>
+            <table style="font-size: 11px;">
                 <tr>
                     <td width="20%">No. Pendaftaran</td>
                     <td width="2%">:</td>
@@ -319,7 +319,7 @@
             </div>
         </div>
 
-        <div style="margin-top: 50px; font-size: 10px; color: #888; font-style: italic; border-top: 1px dashed #ccc; padding-top: 5px;">
+        <div style="margin-top: 10px; font-size: 10px; color: #888; font-style: italic; border-top: 1px dashed #ccc; padding-top: 5px;">
             * Dokumen ini dicetak secara otomatis melalui Sistem PPDB MAN 1 BOGOR pada {{ date('d/m/Y H:i:s') }}.
         </div>
     </div>
