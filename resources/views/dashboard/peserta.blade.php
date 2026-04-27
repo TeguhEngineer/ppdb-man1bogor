@@ -84,7 +84,14 @@
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         Selesai Diisi
                     </span>
-                    <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="block mt-4 w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat Biodata</a>
+                    <div class="grid grid-cols-2 gap-3 mt-4">
+                        <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}" class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors text-sm">
+                            <i class="fi fi-rs-eye mr-2"></i> Lihat Data
+                        </a>
+                        <a href="{{ route('pendaftaran.cetak') }}" target="_blank" class="flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors text-sm">
+                            <i class="fi fi-rs-print mr-2"></i> Cetak Formulir
+                        </a>
+                    </div>
                 @elseif ($hasBiodata)
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Lengkap

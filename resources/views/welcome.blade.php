@@ -227,8 +227,7 @@
           <!-- REGULER TAB -->
           <div id="tab-content-reguler" class="tab-content flex flex-col">
             <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
-              <img src="/poster-ppdb.jpeg" alt="Poster PPDB Reguler"
-                class="absolute inset-0 w-full h-full object-cover">
+              <img src="/poster-ppdb.png" alt="Poster PPDB Reguler" class="absolute inset-0 w-full h-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
               <div class="absolute bottom-6 left-6 md:left-10 text-white">
                 <h4 class="font-extrabold text-3xl mb-1 drop-shadow-md">Jalur Reguler</h4>
@@ -245,11 +244,11 @@
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib memiliki Kartu Keluarga (KK) & Akta Lahir.</li>
+                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                      </svg> Wajib memiliki Kartu Keluarga (KK)</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-main shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -282,7 +281,7 @@
           <!-- PRESTASI TAB -->
           <div id="tab-content-prestasi" class="tab-content flex flex-col hidden">
             <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
-              <img src="/poster-ppdb.jpeg" alt="Poster PPDB Prestasi"
+              <img src="/poster-ppdb.png" alt="Poster PPDB Prestasi"
                 class="absolute inset-0 w-full h-full object-cover">
               <div class="absolute inset-0 bg-main/40 mix-blend-multiply"></div>
               <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
@@ -303,6 +302,14 @@
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Wajib memiliki Kartu Keluarga (KK)</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                       </svg> Memiliki nilai rata-rata Raport Minimal 85.</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
@@ -311,11 +318,7 @@
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib Kartu Keluarga (KK) & Akta Lahir.</li>
-                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-secondary shrink-0" fill="none"
-                        stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Seleksi via Portofolio (Bebas Tes Tulis).</li>
+                      </svg> Diwajibkan mengikuti Ujian Tes Tertulis.</li>
                   </ul>
                 </div>
                 <div>
@@ -344,7 +347,7 @@
           <!-- AFIRMASI TAB -->
           <div id="tab-content-afirmasi" class="tab-content flex flex-col hidden">
             <div class="h-48 md:h-64 w-full bg-gray-200 relative overflow-hidden">
-              <img src="/poster-ppdb.jpeg" alt="Poster PPDB Afirmasi"
+              <img src="/poster-ppdb.png" alt="Poster PPDB Afirmasi"
                 class="absolute inset-0 w-full h-full object-cover">
               <div class="absolute inset-0 bg-blue-900/30 mix-blend-multiply"></div>
               <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
@@ -363,7 +366,11 @@
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                      </svg> Wajib KK & Akta Lahir.</li>
+                      </svg> Usia maksimal 21 tahun per 1 Juli 2026.</li>
+                    <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg> Wajib memiliki Kartu Keluarga (KK)</li>
                     <li class="flex items-start gap-2"><svg class="w-5 h-5 text-blue-600 shrink-0" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>

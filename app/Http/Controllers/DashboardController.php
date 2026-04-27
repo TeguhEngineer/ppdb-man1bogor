@@ -30,7 +30,24 @@ class DashboardController extends Controller
 
             return view('dashboard.admin', compact('totalPendaftar', 'pendaftarBaru', 'menungguVerifikasi', 'recentRegistrations'));
         }
+    }
 
-        abort(403, 'Unauthorized action.');
+    public function cetakFormulir()
+    {
+        $user = Auth::user();
+
+        if ($user->role !== 'peserta') {
+            abort(403);
+        }
+
+        $pendaftaran = Pendaftaran::with(['jalur', 'biodata', 'user'])
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$pendaftaran || !$pendaftaran->biodata) {
+            return redirect()->route('dashboard')->with('error', 'Silakan lengkapi biodata terlebih dahulu sebelum mencetak formulir.');
+        }
+
+        return view('peserta.cetak-formulir', compact('pendaftaran'));
     }
 }

@@ -14,6 +14,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('/pendaftaran/cetak', [DashboardController::class, 'cetakFormulir'])
+    ->middleware(['auth'])
+    ->name('pendaftaran.cetak');
+
 Route::middleware('auth')->group(function () {
     Route::resource('biodata', BiodataController::class);
     Route::resource('berkas', BerkasController::class);
