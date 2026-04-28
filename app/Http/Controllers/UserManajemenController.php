@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\UsersExport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use Maatwebsite\Excel\Facades\Excel;
-
 class UserManajemenController extends Controller
 {
     /**
@@ -142,8 +139,4 @@ class UserManajemenController extends Controller
         return back()->with('success', 'Data user ' . "$nama" . ' berhasil dihapus.');
     }
 
-    public function exportExcel()
-    {
-        return Excel::download(new UsersExport, 'users.xlsx');
-    }
 }

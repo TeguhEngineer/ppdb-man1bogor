@@ -62,13 +62,6 @@
                             Add User
                         </span>
                     </button>
-                    <a href="{{ route('user.export-xls') }}"
-                        class="flex items-center py-2.5 px-2 md:py-2 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition-colors duration-300 rounded-md">
-                        <i class="fi fi-rs-file-excel md:mr-2 leading-none relative top-0.5"></i>
-                        <span class="hidden md:block">
-                            Export Excel
-                        </span>
-                    </a>
                 </div>
             </div>
         </div>
