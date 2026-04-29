@@ -39,6 +39,11 @@ class BerkasController extends Controller
             'file_sertifikat' => $pendaftaran->jalur->nama_jalur == 'Prestasi' ? 'required|file|mimes:pdf,jpg,jpeg,png|max:2048' : 'nullable',
             'file_sktm' => $pendaftaran->jalur->nama_jalur == 'Afirmasi' ? 'required|file|mimes:pdf,jpg,jpeg,png|max:1024' : 'nullable',
             'file_kip' => $pendaftaran->jalur->nama_jalur == 'Afirmasi' ? 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024' : 'nullable',
+        ], [
+            'required' => 'Berkas :attribute wajib diunggah.',
+            'file' => 'Berkas :attribute harus berupa file.',
+            'mimes' => 'Format berkas :attribute harus berupa: :values.',
+            'max' => 'Ukuran berkas :attribute maksimal :max KB.',
         ]);
 
         $berkasData = ['pendaftaran_id' => $pendaftaran->id];
@@ -107,6 +112,10 @@ class BerkasController extends Controller
             'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
             'file_sktm' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_kip' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:1024',
+        ], [
+            'file' => 'Berkas :attribute harus berupa file.',
+            'mimes' => 'Format berkas :attribute harus berupa: :values.',
+            'max' => 'Ukuran berkas :attribute maksimal :max KB.',
         ]);
 
         $path = 'berkas/' . $pendaftaran->no_pendaftaran;
