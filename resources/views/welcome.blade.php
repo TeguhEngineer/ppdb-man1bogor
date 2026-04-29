@@ -282,15 +282,31 @@
                     <p class="text-xs text-gray-500 mb-1">Jadwal Ujian & Status Daftar Ulang:</p>
                     <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
 
+                    <p class="text-xs text-gray-500 mb-1">Total Kuota:</p>
+                    @php
+                        $jalurReguler = $jalurs->where('nama_jalur', 'Reguler')->first();
+                        $isRegulerFull = $jalurReguler && $jalurReguler->pendaftarans_count >= $jalurReguler->total_kuota;
+                    @endphp
+                    @if($isRegulerFull)
+                        <p class="text-sm font-bold text-red-600 mb-4">Penuh</p>
+                    @else
+                        <p class="text-sm font-bold text-gray-900 mb-4">{{ $jalurReguler->total_kuota ?? 0 }} Kursi</p>
+                    @endif
+
                     <p class="text-xs text-gray-400">Pastikan sering memantau <span
                         class="font-bold text-gray-600">Dashboard Akun</span> Anda untuk melihat pengumuman kelulusan.
                     </p>
                   </div>
                 </div>
               </div>
-              <a href="/register?jalur=reguler"
-                class="w-full text-center bg-gray-900 border-2 border-gray-900 text-white hover:bg-main hover:border-main transition-all duration-300 py-4 rounded-xl font-bold shadow-lg">Daftar
-                Jalur Reguler</a>
+              @if($isRegulerFull)
+                <button disabled
+                    class="w-full text-center bg-gray-400 border-2 border-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">Pendaftaran Penuh</button>
+              @else
+                <a href="/register?jalur=reguler"
+                    class="w-full text-center bg-gray-900 border-2 border-gray-900 text-white hover:bg-main hover:border-main transition-all duration-300 py-4 rounded-xl font-bold shadow-lg">Daftar
+                    Jalur Reguler</a>
+              @endif
             </div>
           </div>
 
@@ -356,15 +372,31 @@
                     <p class="text-xs text-gray-500 mb-1">Cek Lulus & Info Wawancara:</p>
                     <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
 
+                    <p class="text-xs text-gray-500 mb-1">Total Kuota:</p>
+                    @php
+                        $jalurPrestasi = $jalurs->where('nama_jalur', 'Prestasi')->first();
+                        $isPrestasiFull = $jalurPrestasi && $jalurPrestasi->pendaftarans_count >= $jalurPrestasi->total_kuota;
+                    @endphp
+                    @if($isPrestasiFull)
+                        <p class="text-sm font-bold text-red-600 mb-4">Penuh</p>
+                    @else
+                        <p class="text-sm font-bold text-gray-900 mb-4">{{ $jalurPrestasi->total_kuota ?? 0 }} Kursi</p>
+                    @endif
+
                     <p class="text-xs text-gray-400">Pendaftar jalur ini dimohon rajin mengecek <span
                         class="font-bold text-gray-600">Dashboard</span>, karena jadwal wawancara dapat berubah
                       sewaktu-waktu.</p>
                   </div>
                 </div>
               </div>
-              <a href="/register?jalur=prestasi"
-                class="w-full text-center bg-secondary text-main hover:bg-[#e0b605] py-4 rounded-xl font-bold shadow-lg transition-all duration-300">Daftar
-                Jalur Prestasi</a>
+              @if($isPrestasiFull)
+                <button disabled
+                    class="w-full text-center bg-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">Pendaftaran Penuh</button>
+              @else
+                <a href="/register?jalur=prestasi"
+                    class="w-full text-center bg-secondary text-main hover:bg-[#e0b605] py-4 rounded-xl font-bold shadow-lg transition-all duration-300">Daftar
+                    Jalur Prestasi</a>
+              @endif
             </div>
           </div>
 
@@ -432,15 +464,31 @@
                     <p class="text-xs text-gray-500 mb-1">Proses Survey & Status:</p>
                     <p class="text-sm font-bold text-main mb-3">Diumumkan via Akun Peserta</p>
 
+                    <p class="text-xs text-gray-500 mb-1">Total Kuota:</p>
+                    @php
+                        $jalurAfirmasi = $jalurs->where('nama_jalur', 'Afirmasi')->first();
+                        $isAfirmasiFull = $jalurAfirmasi && $jalurAfirmasi->pendaftarans_count >= $jalurAfirmasi->total_kuota;
+                    @endphp
+                    @if($isAfirmasiFull)
+                        <p class="text-sm font-bold text-red-600 mb-4">Penuh</p>
+                    @else
+                        <p class="text-sm font-bold text-gray-900 mb-4">{{ $jalurAfirmasi->total_kuota ?? 0 }} Kursi</p>
+                    @endif
+
                     <p class="text-xs text-gray-400">Notifikasi detail mengenai jadwal survey faktual akan dikirim ke
                       <span class="font-bold text-gray-600">Dashboard Akun</span>.
                     </p>
                   </div>
                 </div>
               </div>
-              <a href="/register?jalur=afirmasi"
-                class="w-full text-center bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 transition py-4 rounded-xl font-bold shadow-lg">Daftar
-                Jalur Afirmasi</a>
+              @if($isAfirmasiFull)
+                <button disabled
+                    class="w-full text-center bg-gray-400 border-2 border-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">Pendaftaran Penuh</button>
+              @else
+                <a href="/register?jalur=afirmasi"
+                    class="w-full text-center bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 transition py-4 rounded-xl font-bold shadow-lg">Daftar
+                    Jalur Afirmasi</a>
+              @endif
             </div>
           </div>
 

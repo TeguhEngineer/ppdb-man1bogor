@@ -7,7 +7,8 @@ use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $jalurs = \App\Models\Jalur::withCount('pendaftarans')->get();
+    return view('welcome', compact('jalurs'));
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -35,6 +36,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/verifikasi/{pendaftaran}', [App\Http\Controllers\Admin\VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
         Route::put('/verifikasi/{pendaftaran}/status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateStatus'])->name('admin.verifikasi.update');
         
+        // Jalur/Quota routes
+        Route::post('/jalur/update-quota', [App\Http\Controllers\Admin\JalurController::class, 'updateQuota'])->name('admin.jalur.update-quota');
+
         Route::get('/pengumuman/search-participants', [App\Http\Controllers\Admin\PengumumanController::class, 'searchParticipants'])->name('admin.pengumuman.search');
         Route::resource('pengumuman', App\Http\Controllers\Admin\PengumumanController::class)->names([
             'index' => 'admin.pengumuman.index',

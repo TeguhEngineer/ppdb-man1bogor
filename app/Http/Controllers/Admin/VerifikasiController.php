@@ -28,8 +28,9 @@ class VerifikasiController extends Controller
         }
 
         $pendaftarans = $query->paginate(15)->withQueryString();
+        $jalurs = \App\Models\Jalur::all();
 
-        return view('admin.verifikasi.index', compact('pendaftarans'));
+        return view('admin.verifikasi.index', compact('pendaftarans', 'jalurs'));
     }
 
     public function show(Pendaftaran $pendaftaran)
