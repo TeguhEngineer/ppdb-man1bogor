@@ -69,4 +69,54 @@ class VerifikasiController extends Controller
 
         return redirect()->back()->with('success', 'Status pendaftaran berhasil diperbarui.');
     }
+    public function export(Request $request)
+    {
+        $type = $request->get('type', 'csv');
+        $query = Pendaftaran::with(['user', 'jalur', 'biodata', 'berkas'])->latest();
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status_pendaftaran', $request->status);
+        }
+
+        $pendaftarans = $query->get();
+
+        $fileName = 'data_pendaftar_' . now()->format('YmdHis') . '.' . ($type == 'excel' ? 'xls' : 'csv');
+        
+        $headers = [
+            "Content-type"        => $type == 'excel' ? "application/vnd.ms-excel" : "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['No. Pendaftaran', 'Nama', 'NISN', 'Jenis Kelamin', 'Tempat Lahir', 'Tanggal Lahir', 'Jalur', 'Status', 'Tanggal Daftar'];
+
+        $callback = function() use($pendaftarans, $columns) {
+            $file = fopen('php://output', 'w');
+            
+            // Add BOM for Excel UTF-8 support
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            
+            fputcsv($file, $columns, ';'); // Use semicolon for better Excel compatibility in some regions
+
+            foreach ($pendaftarans as $p) {
+                fputcsv($file, [
+                    $p->no_pendaftaran,
+                    $p->user->name,
+                    $p->nisn,
+                    $p->biodata->jenis_kelamin ?? '-',
+                    $p->biodata->tempat_lahir ?? '-',
+                    $p->biodata->tanggal_lahir ?? '-',
+                    $p->jalur->nama_jalur,
+                    ucfirst($p->status_pendaftaran),
+                    $p->created_at->format('d-m-Y')
+                ], ';');
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

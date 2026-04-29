@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     // Admin routes
     Route::prefix('admin')->middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function () {
         Route::get('/verifikasi', [App\Http\Controllers\Admin\VerifikasiController::class, 'index'])->name('admin.verifikasi.index');
+        Route::get('/verifikasi/export', [App\Http\Controllers\Admin\VerifikasiController::class, 'export'])->name('admin.verifikasi.export');
         Route::get('/verifikasi/{pendaftaran}', [App\Http\Controllers\Admin\VerifikasiController::class, 'show'])->name('admin.verifikasi.show');
         Route::put('/verifikasi/{pendaftaran}/status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateStatus'])->name('admin.verifikasi.update');
         
