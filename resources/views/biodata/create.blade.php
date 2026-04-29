@@ -70,6 +70,9 @@
                             <input type="text" name="nisn" value="{{ old('nisn', $pendaftaran->nisn) }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
+                            @error('nisn')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Kampus Tujuan <span
@@ -98,6 +101,9 @@
                             <input type="text" name="nik" value="{{ old('nik') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
+                            @error('nik')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">No. Kartu Keluarga <span
@@ -105,6 +111,9 @@
                             <input type="text" name="no_kk" value="{{ old('no_kk') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
+                            @error('no_kk')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Tempat Lahir <span
@@ -155,38 +164,41 @@
                             <input type="text" name="no_whatsapp" value="{{ old('no_whatsapp') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
+                            @error('no_whatsapp')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Tinggi Badan (cm)</label>
+                            <label class="block text-sm font-medium text-gray-700">Tinggi Badan (cm) <span class="text-red-500">*</span></label>
                             <input type="number" name="tinggi_badan" value="{{ old('tinggi_badan') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Berat Badan (kg)</label>
+                            <label class="block text-sm font-medium text-gray-700">Berat Badan (kg) <span class="text-red-500">*</span></label>
                             <input type="number" name="berat_badan" value="{{ old('berat_badan') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Anak Ke</label>
+                            <label class="block text-sm font-medium text-gray-700">Anak Ke <span class="text-red-500">*</span></label>
                             <input type="number" name="anak_ke" value="{{ old('anak_ke') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Jumlah Saudara</label>
+                            <label class="block text-sm font-medium text-gray-700">Jumlah Saudara <span class="text-red-500">*</span></label>
                             <input type="number" name="jumlah_saudara" value="{{ old('jumlah_saudara') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Status Dalam Keluarga</label>
+                            <label class="block text-sm font-medium text-gray-700">Status Dalam Keluarga <span class="text-red-500">*</span></label>
                             <input type="text" name="status_dalam_keluarga" placeholder="Anak Kandung / Anak Tiri / dll"
                                 value="{{ old('status_dalam_keluarga') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Tinggal Bersama</label>
+                            <label class="block text-sm font-medium text-gray-700">Tinggal Bersama <span class="text-red-500">*</span></label>
                             <input type="text" name="tinggal_bersama" placeholder="Orang Tua / Wali / Asrama"
                                 value="{{ old('tinggal_bersama') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                     </div>
                 </div>
@@ -202,6 +214,9 @@
                             <textarea name="alamat" rows="3"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>{{ old('alamat') }}</textarea>
+                            @error('alamat')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Desa/Kelurahan <span
@@ -237,17 +252,20 @@
                             <input type="text" name="kode_pos" value="{{ old('kode_pos') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
+                            @error('kode_pos')
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Jarak ke Sekolah (km)</label>
+                            <label class="block text-sm font-medium text-gray-700">Jarak ke Sekolah (km) <span class="text-red-500">*</span></label>
                             <input type="text" name="jarak_ke_sekolah" value="{{ old('jarak_ke_sekolah') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Waktu Tempuh (menit)</label>
+                            <label class="block text-sm font-medium text-gray-700">Waktu Tempuh (menit) <span class="text-red-500">*</span></label>
                             <input type="text" name="waktu_tempuh_ke_sekolah"
                                 value="{{ old('waktu_tempuh_ke_sekolah') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                     </div>
                 </div>
@@ -277,9 +295,9 @@
                                 required>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">NPSN</label>
+                            <label class="block text-sm font-medium text-gray-700">NPSN <span class="text-red-500">*</span></label>
                             <input type="text" name="npsn" value="{{ old('npsn') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                         </div>
                     </div>
                 </div>
@@ -294,9 +312,9 @@
                             <h4 class="font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-2">Data Ayah</h4>
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-700">Nama Ayah</label>
+                                    <label class="block text-xs font-medium text-gray-700">Nama Ayah <span class="text-red-500">*</span></label>
                                     <input type="text" name="nama_ayah" value="{{ old('nama_ayah') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">NIK Ayah</label>
@@ -315,27 +333,27 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">Pendidikan Terakhir
-                                        Ayah</label>
+                                        Ayah <span class="text-red-500">*</span></label>
                                     <input type="text" name="pendidikan_terakhir_ayah"
                                         value="{{ old('pendidikan_terakhir_ayah') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-700">Pekerjaan Ayah</label>
+                                    <label class="block text-xs font-medium text-gray-700">Pekerjaan Ayah <span class="text-red-500">*</span></label>
                                     <input type="text" name="pekerjaan_ayah" value="{{ old('pekerjaan_ayah') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">Penghasilan Ayah
-                                        /Bulan</label>
+                                        /Bulan <span class="text-red-500">*</span></label>
                                     <input type="text" name="penghasilan_ayah" value="{{ old('penghasilan_ayah') }}"
                                         placeholder="Contoh: 3.000.000"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-700">No HP Ayah</label>
+                                    <label class="block text-xs font-medium text-gray-700">No HP Ayah <span class="text-red-500">*</span></label>
                                     <input type="text" name="no_hp_ayah" value="{{ old('no_hp_ayah') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                             </div>
                         </div>
@@ -344,9 +362,9 @@
                             <h4 class="font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-2">Data Ibu</h4>
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-700">Nama Ibu</label>
+                                    <label class="block text-xs font-medium text-gray-700">Nama Ibu <span class="text-red-500">*</span></label>
                                     <input type="text" name="nama_ibu" value="{{ old('nama_ibu') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">NIK Ibu</label>
@@ -365,43 +383,42 @@
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">Pendidikan Terakhir
-                                        Ibu</label>
+                                        Ibu <span class="text-red-500">*</span></label>
                                     <input type="text" name="pendidikan_terakhir_ibu"
                                         value="{{ old('pendidikan_terakhir_ibu') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-700">Pekerjaan Ibu</label>
+                                    <label class="block text-xs font-medium text-gray-700">Pekerjaan Ibu <span class="text-red-500">*</span></label>
                                     <input type="text" name="pekerjaan_ibu" value="{{ old('pekerjaan_ibu') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">Penghasilan Ibu
-                                        /Bulan</label>
+                                        /Bulan <span class="text-red-500">*</span></label>
                                     <input type="text" name="penghasilan_ibu" value="{{ old('penghasilan_ibu') }}"
                                         placeholder="Contoh: 3.000.000"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-medium text-gray-700">No HP Ibu</label>
+                                    <label class="block text-xs font-medium text-gray-700">No HP Ibu <span class="text-red-500">*</span></label>
                                     <input type="text" name="no_hp_ibu" value="{{ old('no_hp_ibu') }}"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500" required>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section 5: Data Wali & Prestasi (Opsional) -->
+                <!-- Section 5: Data Wali (Opsional) -->
                 <div>
-                    <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">5. Data Wali & Prestasi
-                        (Opsional)</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">5. Data Wali (Opsional)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
                         <!-- Wali -->
                         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <h4 class="font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-2">Data Wali
                                 (Kosongkan jika tinggal dengan orang tua)</h4>
-                            <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">Nama Wali</label>
                                     <input type="text" name="nama_wali" value="{{ old('nama_wali') }}"
@@ -447,11 +464,17 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Section 6: Data Prestasi (Opsional) -->
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">6. Data Prestasi Hafalan Al-Qur'an (Opsional)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
                         <!-- Prestasi -->
                         <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                            <h4 class="font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-2">Data Prestasi /
-                                Hafalan Al-Quran</h4>
-                            <div class="space-y-4">
+                            <h4 class="font-semibold text-gray-700 mb-3 border-b border-gray-200 pb-2">Informasi Prestasi / Tahfidz</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-medium text-gray-700">Kategori Prestasi</label>
                                     <input type="text" name="kategori_prestasi" value="{{ old('kategori_prestasi') }}"
@@ -475,7 +498,7 @@
                                         placeholder="Kabupaten / Provinsi / Nasional"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
                                 </div>
-                                <div>
+                                <div class="md:col-span-2">
                                     <label class="block text-xs font-medium text-gray-700">Nama Lomba / Prestasi</label>
                                     <input type="text" name="nama_lomba" value="{{ old('nama_lomba') }}"
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">

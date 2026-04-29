@@ -23,6 +23,12 @@
         <p class="text-sm text-gray-500 mt-2 font-medium">Lengkapi data akun di bawah ini dengan valid.</p>
     </div>
 
+    @if($errors->has('error'))
+        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl relative" role="alert">
+            <span class="block sm:inline text-sm font-medium">{{ $errors->first('error') }}</span>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
