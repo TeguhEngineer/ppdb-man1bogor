@@ -31,8 +31,8 @@
                     <i class="fi fi-rs-exclamation text-yellow-500 text-xl"></i>
                 </div>
                 <div class="ml-3">
-                    <h3 class="text-sm font-bold text-red-800 uppercase tracking-wider">Peringatan Penting!</h3>
-                    <p class="text-xs text-red-700 mt-1 leading-relaxed">
+                    <h3 class="text-sm font-bold text-yellow-800 uppercase tracking-wider">Peringatan Penting!</h3>
+                    <p class="text-xs text-yellow-700 mt-1 leading-relaxed">
                         Data Anda tidak akan diverifikasi oleh Admin selama <strong>Biodata</strong> dan <strong>Berkas
                             Wajib</strong> belum diisi lengkap. Silakan lengkapi seluruh data Anda segera agar dapat
                         diproses ke tahap selanjutnya.
@@ -152,7 +152,8 @@
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Upload Berkas</h3>
                     <p class="text-gray-500 text-sm mt-1">Unggah dokumen persyaratan jalur
-                        {{ $pendaftaran->jalur->nama_jalur }}.</p>
+                        {{ $pendaftaran->jalur->nama_jalur }}.
+                    </p>
                 </div>
                 <div
                     class="bg-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-100 text-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-600 p-3 rounded-full">

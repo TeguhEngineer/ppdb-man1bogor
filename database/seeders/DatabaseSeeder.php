@@ -19,14 +19,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        DB::table('users')->updateOrInsert(
+        \App\Models\User::updateOrCreate(
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin',
-                'password' => bcrypt('password'),
+                'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'admin',
-                'created_at' => now(),
-                'updated_at' => now()
             ]
         );
 
