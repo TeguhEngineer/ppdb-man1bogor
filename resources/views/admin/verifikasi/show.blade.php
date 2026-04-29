@@ -302,23 +302,52 @@
                         <div class="mb-4">
                             <label for="status_pendaftaran" class="block text-sm font-medium text-gray-700 mb-1">Ubah
                                 Status Menjadi:</label>
+                            @php
+                                $statuses = [
+                                    'pending' => 'Pending',
+                                    'verifikasi' => 'Verifikasi',
+                                    'tes' => 'Tes / Wawancara',
+                                    'lulus' => 'Lulus',
+                                    'tidak_lulus' => 'Tidak Lulus',
+                                ];
+
+                                $statusLevel = [
+                                    'pending' => 1,
+                                    'verifikasi' => 2,
+                                    'tes' => 3,
+                                    'lulus' => 4,
+                                    'tidak_lulus' => 4,
+                                ];
+
+                                $currentLevel = $statusLevel[$pendaftaran->status_pendaftaran];
+                            @endphp
                             <select name="status_pendaftaran" id="status_pendaftaran"
                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
-                                <option value="pending" {{ $pendaftaran->status_pendaftaran == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="verifikasi" {{ $pendaftaran->status_pendaftaran == 'verifikasi' ? 'selected' : '' }}>Verifikasi</option>
-                                <option value="tes" {{ $pendaftaran->status_pendaftaran == 'tes' ? 'selected' : '' }}>Tes
-                                    / Wawancara</option>
-                                <option value="lulus" {{ $pendaftaran->status_pendaftaran == 'lulus' ? 'selected' : '' }}>
-                                    Lulus</option>
-                                <option value="tidak_lulus" {{ $pendaftaran->status_pendaftaran == 'tidak_lulus' ? 'selected' : '' }}>Tidak Lulus</option>
+                                @foreach ($statuses as $value => $label)
+                                    @if ($statusLevel[$value] >= $currentLevel)
+                                        <option value="{{ $value }}"
+                                            {{ $pendaftaran->status_pendaftaran == $value ? 'selected' : '' }}>
+                                            {{ $label }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                             @error('status_pendaftaran')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+                        @if (!$pendaftaran->isLengkap())
+                            <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                <p class="text-xs text-red-700 font-medium leading-relaxed">
+                                    <i class="fi fi-rs-exclamation mr-1"></i>
+                                    Peserta belum melengkapi biodata atau berkas wajib. Perubahan status dinonaktifkan.
+                                </p>
+                            </div>
+                        @endif
+
                         <button type="submit"
-                            class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors">
+                            class="w-full {{ $pendaftaran->isLengkap() ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-gray-400 cursor-not-allowed' }} text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors"
+                            {{ $pendaftaran->isLengkap() ? '' : 'disabled' }}>
                             Simpan Perubahan Status
                         </button>
                     </form>

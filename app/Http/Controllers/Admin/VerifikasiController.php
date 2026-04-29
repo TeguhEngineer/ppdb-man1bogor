@@ -44,6 +44,25 @@ class VerifikasiController extends Controller
             'status_pendaftaran' => 'required|in:pending,verifikasi,tes,lulus,tidak_lulus'
         ]);
 
+        $statusLevel = [
+            'pending' => 1,
+            'verifikasi' => 2,
+            'tes' => 3,
+            'lulus' => 4,
+            'tidak_lulus' => 4,
+        ];
+
+        $currentLevel = $statusLevel[$pendaftaran->status_pendaftaran];
+        $newLevel = $statusLevel[$request->status_pendaftaran];
+
+        if ($newLevel < $currentLevel) {
+            return redirect()->back()->withErrors(['status_pendaftaran' => 'Status pendaftaran tidak dapat dikembalikan ke tahap sebelumnya.']);
+        }
+
+        if (!$pendaftaran->isLengkap()) {
+            return redirect()->back()->withErrors(['status_pendaftaran' => 'Status tidak dapat diubah karena peserta belum melengkapi biodata atau berkas wajib.']);
+        }
+
         $pendaftaran->update([
             'status_pendaftaran' => $request->status_pendaftaran
         ]);
