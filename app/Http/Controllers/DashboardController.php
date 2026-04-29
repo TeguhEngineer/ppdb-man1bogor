@@ -30,11 +30,17 @@ class DashboardController extends Controller
             $lulus = Pendaftaran::where('status_pendaftaran', 'lulus')->count();
             $tidakLulus = Pendaftaran::where('status_pendaftaran', 'tidak_lulus')->count();
             
+            // Counts by Jalur
+            $regulerCount = Pendaftaran::whereHas('jalur', function($q) { $q->where('nama_jalur', 'Reguler'); })->count();
+            $prestasiCount = Pendaftaran::whereHas('jalur', function($q) { $q->where('nama_jalur', 'Prestasi'); })->count();
+            $afirmasiCount = Pendaftaran::whereHas('jalur', function($q) { $q->where('nama_jalur', 'Afirmasi'); })->count();
+            
             $recentRegistrations = Pendaftaran::with(['user', 'jalur'])->latest()->take(20)->get();
 
             return view('dashboard.admin', compact(
                 'totalPendaftar', 'pendaftarBaru', 'menungguVerifikasi', 
                 'terverifikasi', 'tahapTes', 'lulus', 'tidakLulus', 
+                'regulerCount', 'prestasiCount', 'afirmasiCount',
                 'recentRegistrations'
             ));
         }

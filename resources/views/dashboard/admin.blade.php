@@ -80,6 +80,50 @@
         </div>
     </div>
 
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-5 text-white">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-emerald-100 text-xs font-bold uppercase tracking-wider">Jalur Reguler</p>
+                    <p class="text-3xl font-extrabold mt-1">{{ $regulerCount }}</p>
+                </div>
+                <div class="bg-white/20 p-2.5 rounded-lg backdrop-blur-sm">
+                    <i class="fi fi-rs-graduation-cap text-xl"></i>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/10 text-xs text-emerald-50">
+                Total pendaftar jalur umum
+            </div>
+        </div>
+        <div class="bg-gradient-to-br from-amber-400 to-amber-500 rounded-xl shadow-lg p-5 text-white">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-amber-50 text-xs font-bold uppercase tracking-wider">Jalur Prestasi</p>
+                    <p class="text-3xl font-extrabold mt-1">{{ $prestasiCount }}</p>
+                </div>
+                <div class="bg-white/20 p-2.5 rounded-lg backdrop-blur-sm">
+                    <i class="fi fi-rs-trophy text-xl"></i>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/10 text-xs text-amber-50">
+                Total pendaftar jalur prestasi
+            </div>
+        </div>
+        <div class="bg-gradient-to-br from-sky-500 to-sky-600 rounded-xl shadow-lg p-5 text-white">
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="text-sky-100 text-xs font-bold uppercase tracking-wider">Jalur Afirmasi</p>
+                    <p class="text-3xl font-extrabold mt-1">{{ $afirmasiCount }}</p>
+                </div>
+                <div class="bg-white/20 p-2.5 rounded-lg backdrop-blur-sm">
+                    <i class="fi fi-rs-heart text-xl"></i>
+                </div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/10 text-xs text-sky-50">
+                Total pendaftar jalur afirmasi
+            </div>
+        </div>
+    </div>
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
             <h3 class="font-bold text-gray-800">Pendaftar Terbaru</h3>
