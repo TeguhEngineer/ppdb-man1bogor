@@ -57,7 +57,7 @@
                 <span class="ml-3 font-medium">Pengumuman</span>
             </a>
         </div>
-    @elseif (Auth::user()->role === 'administrator' || Auth::user()->role === 'admin')
+    @elseif (Auth::user()->role === 'admin')
         <!-- Menu Admin -->
         <div class="flex items-center mr-4">
             @if (request()->is('admin/verifikasi*'))

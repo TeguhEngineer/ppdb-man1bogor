@@ -44,7 +44,7 @@ Agar tabel database beserta data awal (seperti Akun Admin dan Data Jalur) terbua
 php artisan migrate:fresh --seed
 ```
 *Catatan: `--seed` akan memasukkan akun Admin default:*
-- **Email:** `administrator@gmail.com`
+- **Email:** `admin@gmail.com`
 - **Password:** `password`
 
 ### Langkah 4: Generate Storage Link

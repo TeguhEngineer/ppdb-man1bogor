@@ -21,7 +21,7 @@ class DashboardController extends Controller
             return view('dashboard.peserta', compact('pendaftaran'));
         }
 
-        if ($user->role === 'administrator' || $user->role === 'admin') {
+        if ($user->role === 'admin') {
             $totalPendaftar = Pendaftaran::count();
             $pendaftarBaru = Pendaftaran::whereDate('created_at', today())->count();
             $menungguVerifikasi = Pendaftaran::where('status_pendaftaran', 'pending')->count();

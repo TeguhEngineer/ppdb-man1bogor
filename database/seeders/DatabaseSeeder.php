@@ -20,11 +20,11 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         DB::table('users')->updateOrInsert(
-            ['email' => 'administrator@gmail.com'],
+            ['email' => 'admin@gmail.com'],
             [
-                'name' => 'Administrator',
+                'name' => 'Admin',
                 'password' => bcrypt('password'),
-                'role' => 'administrator',
+                'role' => 'admin',
                 'created_at' => now(),
                 'updated_at' => now()
             ]

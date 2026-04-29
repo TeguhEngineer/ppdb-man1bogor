@@ -17,7 +17,7 @@ class AdminMiddleware
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        if (!in_array(auth()->user()->role, ['administrator', 'admin'])) {
+        if (auth()->user()->role !== 'admin') {
             abort(403, 'Unauthorized. Hanya admin yang dapat mengakses halaman ini.');
         }
 
