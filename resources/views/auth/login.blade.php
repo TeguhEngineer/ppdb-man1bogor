@@ -17,8 +17,10 @@
         <!-- Email Address -->
         <div>
             <label for="email" class="block font-medium text-sm text-gray-700 mb-1">Email Saat Mendaftar</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
-                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white" placeholder="contoh@gmail.com" />
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                autocomplete="username"
+                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white"
+                placeholder="contoh@gmail.com" />
             @error('email')
                 <p class="mt-2 text-sm text-red-600 font-medium">{{ $message }}</p>
             @enderror
@@ -28,34 +30,22 @@
         <div>
             <label for="password" class="block font-medium text-sm text-gray-700 mb-1">Password</label>
             <input id="password" type="password" name="password" required autocomplete="current-password"
-                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white" placeholder="********" />
+                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white"
+                placeholder="********" />
             @error('password')
                 <p class="mt-2 text-sm text-red-600 font-medium">{{ $message }}</p>
             @enderror
         </div>
 
-        <!-- Remember Me & Forgot Password -->
-        <div class="flex items-center justify-between mt-4">
-            <label for="remember_me" class="inline-flex items-center cursor-pointer">
-                <input id="remember_me" type="checkbox" name="remember"
-                    class="rounded border-gray-300 text-[#22690f] shadow-sm focus:ring focus:ring-[#22690f] focus:ring-opacity-20">
-                <span class="ms-2 text-sm text-gray-600 font-medium hover:text-gray-900 transition">Ingat saya</span>
-            </label>
-
-            @if (Route::has('password.request'))
-                <a class="text-sm font-semibold text-[#22690f] hover:text-[#1a500b] transition" href="{{ route('password.request') }}">
-                    Lupa Password?
-                </a>
-            @endif
-        </div>
-
         <div class="pt-4 flex flex-col gap-4">
-            <button type="submit" class="w-full bg-[#22690f] hover:bg-[#1a500b] text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+            <button type="submit"
+                class="w-full bg-[#22690f] hover:bg-[#1a500b] text-white px-6 py-3.5 rounded-xl font-bold transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                 Masuk Sekarang
             </button>
             <p class="text-center text-sm text-gray-500">
-                Belum punya akun? 
-                <a href="/#jalur-pendaftaran-section" class="font-bold text-[#22690f] hover:text-[#fdce06] transition-colors">Daftar di sini</a>
+                Belum punya akun?
+                <a href="/#jalur-pendaftaran-section"
+                    class="font-bold text-[#22690f] hover:text-[#fdce06] transition-colors">Daftar di sini</a>
             </p>
         </div>
     </form>

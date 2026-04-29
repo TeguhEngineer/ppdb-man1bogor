@@ -34,10 +34,22 @@ class RegisteredUserController extends Controller
         try {
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
-                'nisn' => ['required', 'string', 'max:20'],
+                'nisn' => ['required', 'numeric', 'digits:10'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
                 'jalur' => ['nullable', 'string']
+            ], [
+                'name.required' => 'Nama lengkap wajib diisi.',
+                'name.max' => 'Nama maksimal 255 karakter.',
+                'nisn.required' => 'NISN wajib diisi.',
+                'nisn.numeric' => 'NISN harus berupa angka.',
+                'nisn.digits' => 'NISN harus berjumlah tepat 10 digit.',
+                'email.required' => 'Email wajib diisi.',
+                'email.email' => 'Format email tidak valid.',
+                'email.unique' => 'Email tersebut sudah terdaftar.',
+                'password.required' => 'Password wajib diisi.',
+                'password.confirmed' => 'Konfirmasi password tidak cocok.',
+                'password.min' => 'Password minimal 8 karakter.',
             ]);
 
             // 1. Create User as Peserta
@@ -86,6 +98,8 @@ class RegisteredUserController extends Controller
             Auth::login($user);
 
             return redirect(route('dashboard', absolute: false));
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
         } catch (\Throwable $th) {
             return back()
                 ->withInput()
