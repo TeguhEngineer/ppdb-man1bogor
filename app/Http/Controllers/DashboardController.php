@@ -25,10 +25,18 @@ class DashboardController extends Controller
             $totalPendaftar = Pendaftaran::count();
             $pendaftarBaru = Pendaftaran::whereDate('created_at', today())->count();
             $menungguVerifikasi = Pendaftaran::where('status_pendaftaran', 'pending')->count();
+            $terverifikasi = Pendaftaran::where('status_pendaftaran', 'verifikasi')->count();
+            $tahapTes = Pendaftaran::where('status_pendaftaran', 'tes')->count();
+            $lulus = Pendaftaran::where('status_pendaftaran', 'lulus')->count();
+            $tidakLulus = Pendaftaran::where('status_pendaftaran', 'tidak_lulus')->count();
             
-            $recentRegistrations = Pendaftaran::with(['user', 'jalur'])->latest()->take(5)->get();
+            $recentRegistrations = Pendaftaran::with(['user', 'jalur'])->latest()->take(20)->get();
 
-            return view('dashboard.admin', compact('totalPendaftar', 'pendaftarBaru', 'menungguVerifikasi', 'recentRegistrations'));
+            return view('dashboard.admin', compact(
+                'totalPendaftar', 'pendaftarBaru', 'menungguVerifikasi', 
+                'terverifikasi', 'tahapTes', 'lulus', 'tidakLulus', 
+                'recentRegistrations'
+            ));
         }
     }
 
