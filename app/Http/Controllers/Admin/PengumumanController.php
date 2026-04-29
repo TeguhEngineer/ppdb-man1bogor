@@ -34,20 +34,27 @@ class PengumumanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'target_status' => 'required|in:semua,pending,verifikasi,tes,lulus,tidak_lulus',
+            'target_status' => 'required|in:semua,pending,verifikasi,tes,lulus,tidak_lulus,personal',
+            'pendaftaran_id' => 'required_if:target_status,personal|nullable|exists:pendaftarans,id',
             'judul' => 'required|string|max:255',
             'keterangan' => 'required|string',
         ]);
 
-        $query = Pendaftaran::query();
-        if ($request->target_status !== 'semua') {
-            $query->where('status_pendaftaran', $request->target_status);
+        $pendaftarans = collect();
+
+        if ($request->target_status === 'personal') {
+            $pendaftaran = Pendaftaran::findOrFail($request->pendaftaran_id);
+            $pendaftarans->push($pendaftaran);
+        } else {
+            $query = Pendaftaran::query();
+            if ($request->target_status !== 'semua') {
+                $query->where('status_pendaftaran', $request->target_status);
+            }
+            $pendaftarans = $query->get();
         }
         
-        $pendaftarans = $query->get();
-        
         if ($pendaftarans->isEmpty()) {
-            return redirect()->back()->with('error', 'Tidak ada peserta yang ditemukan dengan target status tersebut. Pesan tidak dikirim.')->withInput();
+            return redirect()->back()->with('error', 'Tidak ada peserta yang ditemukan dengan target tersebut. Pesan tidak dikirim.')->withInput();
         }
 
         $insertData = [];
@@ -64,7 +71,27 @@ class PengumumanController extends Controller
 
         Pengumuman::insert($insertData);
 
-        return redirect()->route('admin.pengumuman.index')->with('success', 'Berhasil menyiarkan pengumuman kepada ' . count($insertData) . ' peserta!');
+        return redirect()->route('admin.pengumuman.index')->with('success', 'Berhasil mengirim pengumuman kepada ' . count($insertData) . ' peserta!');
+    }
+
+    public function searchParticipants(Request $request)
+    {
+        $search = $request->q;
+        $participants = Pendaftaran::with('user')
+            ->where('no_pendaftaran', 'like', "%{$search}%")
+            ->orWhereHas('user', function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->limit(10)
+            ->get()
+            ->map(function($p) {
+                return [
+                    'id' => $p->id,
+                    'text' => $p->no_pendaftaran . ' - ' . $p->user->name
+                ];
+            });
+
+        return response()->json($participants);
     }
 
     public function destroy(Pengumuman $pengumuman)

@@ -77,7 +77,26 @@
                                     Pendaftaran: Lulus</option>
                                 <option value="tidak_lulus" {{ old('target_status') == 'tidak_lulus' ? 'selected' : '' }}>
                                     Status Pendaftaran: Tidak Lulus</option>
+                                <option value="personal" {{ old('target_status') == 'personal' ? 'selected' : '' }}>Personal (Kirim ke 1 Peserta)</option>
                             </select>
+                        </div>
+
+                        <!-- Search Participant (Hidden by default) -->
+                        <div id="personal_search_container" class="{{ old('target_status') == 'personal' ? '' : 'hidden' }} mt-4">
+                            <label for="participant_search" class="block text-sm font-bold text-gray-700 mb-1">Cari Peserta <span class="text-red-500">*</span></label>
+                            <div class="relative">
+                                <input type="text" id="participant_search" autocomplete="off" placeholder="Ketik Nama atau No. Pendaftaran..."
+                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                <input type="hidden" name="pendaftaran_id" id="pendaftaran_id" value="{{ old('pendaftaran_id') }}">
+                                
+                                <!-- Search Results Dropdown -->
+                                <div id="search_results" class="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg hidden max-h-60 overflow-y-auto">
+                                    <!-- Results will be injected here -->
+                                </div>
+                            </div>
+                            <p id="selected_participant_text" class="mt-2 text-sm text-emerald-600 font-medium {{ old('pendaftaran_id') ? '' : 'hidden' }}">
+                                Terpilih: <span id="participant_name"></span>
+                            </p>
                         </div>
                     </div>
 
@@ -104,8 +123,8 @@
                     <div class="flex justify-end pt-4 border-t border-gray-100">
                         <button type="submit"
                             class="inline-flex justify-center items-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
-                            onclick="return confirm('Pengumuman ini akan disiarkan ke seluruh peserta sesuai target. Lanjutkan?');">
-                            <i class="fi fi-rs-paper-plane mr-2"></i> Siarkan Pengumuman
+                            onclick="return confirm('Pengumuman ini akan dikirimkan. Lanjutkan?');">
+                            <i class="fi fi-rs-paper-plane mr-2"></i> Kirim Pengumuman
                         </button>
                     </div>
                 </form>
@@ -114,4 +133,75 @@
         </div>
 
     </div>
+
+    @push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const targetStatus = document.getElementById('target_status');
+            const personalSearchContainer = document.getElementById('personal_search_container');
+            const participantSearch = document.getElementById('participant_search');
+            const searchResults = document.getElementById('search_results');
+            const pendaftaranId = document.getElementById('pendaftaran_id');
+            const selectedParticipantText = document.getElementById('selected_participant_text');
+            const participantName = document.getElementById('participant_name');
+
+            // Toggle Personal Search field
+            targetStatus.addEventListener('change', function() {
+                if (this.value === 'personal') {
+                    personalSearchContainer.classList.remove('hidden');
+                } else {
+                    personalSearchContainer.classList.add('hidden');
+                    pendaftaranId.value = '';
+                    selectedParticipantText.classList.add('hidden');
+                }
+            });
+
+            // AJAX Search
+            let debounceTimer;
+            participantSearch.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                const query = this.value;
+
+                if (query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+
+                debounceTimer = setTimeout(() => {
+                    fetch(`{{ route('admin.pengumuman.search') }}?q=${query}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            searchResults.innerHTML = '';
+                            if (data.length > 0) {
+                                data.forEach(item => {
+                                    const div = document.createElement('div');
+                                    div.className = 'px-4 py-2 hover:bg-emerald-50 cursor-pointer text-sm border-b last:border-0';
+                                    div.textContent = item.text;
+                                    div.addEventListener('click', () => {
+                                        pendaftaranId.value = item.id;
+                                        participantSearch.value = item.text;
+                                        participantName.textContent = item.text;
+                                        selectedParticipantText.classList.remove('hidden');
+                                        searchResults.classList.add('hidden');
+                                    });
+                                    searchResults.appendChild(div);
+                                });
+                                searchResults.classList.remove('hidden');
+                            } else {
+                                searchResults.innerHTML = '<div class="px-4 py-2 text-sm text-gray-500">Tidak ada hasil ditemukan</div>';
+                                searchResults.classList.remove('hidden');
+                            }
+                        });
+                }, 300);
+            });
+
+            // Close results on outside click
+            document.addEventListener('click', function(e) {
+                if (!personalSearchContainer.contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+    @endpush
 </x-app-layout>
