@@ -32,6 +32,13 @@
                 <div class="grid grid-cols-1 gap-6">
                     @foreach($pengumumans as $pengumuman)
                         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden relative">
+                            @if(!$pengumuman->sudah_dibaca)
+                                <div class="absolute top-0 right-0">
+                                    <div class="bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                                        Baru / Belum Dibaca
+                                    </div>
+                                </div>
+                            @endif
 
                             <div class="p-6 sm:p-8">
                                 <div class="flex items-center space-x-3 mb-4">
@@ -46,6 +53,22 @@
                                 
                                 <div class="mt-4 prose prose-sm max-w-none text-gray-700 bg-gray-50 p-6 rounded-lg border border-gray-100 whitespace-pre-line">
                                     {{ $pengumuman->keterangan }}
+                                </div>
+
+                                <div class="mt-6 flex items-center justify-between border-t border-gray-100 pt-6">
+                                    @if(!$pengumuman->sudah_dibaca)
+                                        <form action="{{ route('pengumuman.dibaca', $pengumuman->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg transition-colors shadow-sm">
+                                                <i class="fi fi-rs-check-circle mr-2"></i> Tandai Telah Dibaca
+                                            </button>
+                                        </form>
+                                    @else
+                                        <div class="flex items-center text-gray-500 text-xs italic">
+                                            <i class="fi fi-rs-check-double text-emerald-500 mr-2"></i>
+                                            Sudah dibaca pada {{ \Carbon\Carbon::parse($pengumuman->dibaca_pada)->format('d M Y, H:i') }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

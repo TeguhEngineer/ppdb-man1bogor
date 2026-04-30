@@ -23,4 +23,24 @@ class PengumumanController extends Controller
 
         return view('pengumuman.index', compact('pengumumans', 'pendaftaran'));
     }
+
+    public function tandaiDibaca($id)
+    {
+        $pendaftaran = Pendaftaran::where('user_id', Auth::id())->first();
+        
+        if (!$pendaftaran) {
+            abort(404);
+        }
+
+        $pengumuman = Pengumuman::where('id', $id)
+            ->where('pendaftaran_id', $pendaftaran->id)
+            ->firstOrFail();
+
+        $pengumuman->update([
+            'sudah_dibaca' => true,
+            'dibaca_pada' => now(),
+        ]);
+
+        return back()->with('success', 'Pengumuman telah ditandai sebagai dibaca.');
+    }
 }

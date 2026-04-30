@@ -51,10 +51,22 @@
             @if (request()->is('pengumuman*'))
                 <div class="w-[5px] h-12 bg-emerald-700 rounded-r-md"></div>
             @endif
+            @php
+                $unreadCount = \App\Models\Pengumuman::whereHas('pendaftaran', function($q) {
+                    $q->where('user_id', Auth::id());
+                })->where('sudah_dibaca', false)->count();
+            @endphp
             <a href="{{ route('pengumuman.index') }}"
-                class="flex items-center flex-1 px-4 py-3 {{ request()->is('pengumuman*') ? 'bg-emerald-100 text-emerald-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3">
+                class="flex items-center flex-1 px-4 py-3 {{ request()->is('pengumuman*') ? 'bg-emerald-100 text-emerald-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3 relative">
                 <i class="fi fi-rs-megaphone text-lg leading-none relative top-0.5"></i>
                 <span class="ml-3 font-medium">Pengumuman</span>
+                
+                @if($unreadCount > 0)
+                    <span class="absolute right-4 flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                @endif
             </a>
         </div>
     @elseif (Auth::user()->role === 'admin')
