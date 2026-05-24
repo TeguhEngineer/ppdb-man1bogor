@@ -88,20 +88,66 @@
                                     </button>
                                 </div>
 
-                                <div class="space-y-4">
+                                <div class="space-y-5">
                                     @foreach($jalurs as $jalur)
-                                        <div>
-                                            <label class="block text-sm font-bold text-gray-700 mb-1">
-                                                Kuota Jalur {{ $jalur->nama_jalur }}
-                                            </label>
-                                            <div class="relative">
-                                                <div
-                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                    <i class="fi fi-rs-users-alt text-gray-400"></i>
+                                        <div class="border border-gray-200 rounded-lg p-4">
+                                            <div class="mb-4">
+                                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                                    Kuota Jalur {{ $jalur->nama_jalur }}
+                                                </label>
+                                                <div class="relative">
+                                                    <div
+                                                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                        <i class="fi fi-rs-users-alt text-gray-400"></i>
+                                                    </div>
+                                                    <input type="number" name="quotas[{{ $jalur->id }}]"
+                                                        value="{{ $jalur->total_kuota }}" min="0"
+                                                        class="pl-10 w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm">
                                                 </div>
-                                                <input type="number" name="quotas[{{ $jalur->id }}]"
-                                                    value="{{ $jalur->total_kuota }}" min="0"
-                                                    class="pl-10 w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm">
+                                            </div>
+
+                                            <div class="grid grid-cols-2 gap-3">
+                                                <div>
+                                                    <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                                        Tanggal Buka
+                                                    </label>
+                                                    <input type="datetime-local" name="tgl_buka[{{ $jalur->id }}]"
+                                                        value="{{ $jalur->tgl_buka ? $jalur->tgl_buka->format('Y-m-d\TH:i') : '' }}"
+                                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm"
+                                                        placeholder="Belum diatur">
+                                                    <p class="text-xs text-gray-500 mt-1">
+                                                        {{ $jalur->tgl_buka ? 'Dibuka: ' . $jalur->getFormattedTglBuka() : 'Belum diatur' }}
+                                                    </p>
+                                                </div>
+
+                                                <div>
+                                                    <label class="block text-sm font-semibold text-gray-700 mb-1">
+                                                        Tanggal Tutup
+                                                    </label>
+                                                    <input type="datetime-local" name="tgl_tutup[{{ $jalur->id }}]"
+                                                        value="{{ $jalur->tgl_tutup ? $jalur->tgl_tutup->format('Y-m-d\TH:i') : '' }}"
+                                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm"
+                                                        placeholder="Belum diatur">
+                                                    <p class="text-xs text-gray-500 mt-1">
+                                                        {{ $jalur->tgl_tutup ? 'Ditutup: ' . $jalur->getFormattedTglTutup() : 'Belum diatur' }}
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 flex items-center gap-2 p-2 bg-blue-50 rounded-md">
+                                                <i class="fi fi-rs-info text-blue-600"></i>
+                                                <p class="text-xs text-blue-700">
+                                                    <span class="font-semibold">Status:</span> 
+                                                    <span class="capitalize">
+                                                        @if($jalur->getStatus() === 'belum_dibuka')
+                                                            <span class="text-orange-600">Belum dibuka</span>
+                                                        @elseif($jalur->getStatus() === 'ditutup')
+                                                            <span class="text-red-600">Telah ditutup</span>
+                                                        @else
+                                                            <span class="text-green-600">Terbuka</span>
+                                                        @endif
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
                                     @endforeach

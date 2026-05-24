@@ -302,6 +302,11 @@
               @if($isRegulerFull)
                 <button disabled
                     class="w-full text-center bg-gray-400 border-2 border-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">Pendaftaran Penuh</button>
+              @elseif($jalurReguler && !$jalurReguler->isOpen())
+                <button disabled
+                    class="w-full text-center bg-gray-400 border-2 border-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">
+                    {{ $jalurReguler->getStatusMessage() }}
+                </button>
               @else
                 <a href="/register?jalur=reguler"
                     class="w-full text-center bg-gray-900 border-2 border-gray-900 text-white hover:bg-main hover:border-main transition-all duration-300 py-4 rounded-xl font-bold shadow-lg">Daftar
@@ -392,6 +397,11 @@
               @if($isPrestasiFull)
                 <button disabled
                     class="w-full text-center bg-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">Pendaftaran Penuh</button>
+              @elseif($jalurPrestasi && !$jalurPrestasi->isOpen())
+                <button disabled
+                    class="w-full text-center bg-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">
+                    {{ $jalurPrestasi->getStatusMessage() }}
+                </button>
               @else
                 <a href="/register?jalur=prestasi"
                     class="w-full text-center bg-secondary text-main hover:bg-[#e0b605] py-4 rounded-xl font-bold shadow-lg transition-all duration-300">Daftar
@@ -484,6 +494,11 @@
               @if($isAfirmasiFull)
                 <button disabled
                     class="w-full text-center bg-gray-400 border-2 border-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">Pendaftaran Penuh</button>
+              @elseif($jalurAfirmasi && !$jalurAfirmasi->isOpen())
+                <button disabled
+                    class="w-full text-center bg-gray-400 border-2 border-gray-400 text-white cursor-not-allowed py-4 rounded-xl font-bold shadow-none">
+                    {{ $jalurAfirmasi->getStatusMessage() }}
+                </button>
               @else
                 <a href="/register?jalur=afirmasi"
                     class="w-full text-center bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 transition py-4 rounded-xl font-bold shadow-lg">Daftar

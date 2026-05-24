@@ -13,6 +13,10 @@ class JalurController extends Controller
         $request->validate([
             'quotas' => 'required|array',
             'quotas.*' => 'required|integer|min:0',
+            'tgl_buka' => 'nullable|array',
+            'tgl_buka.*' => 'nullable|date_format:Y-m-d\TH:i',
+            'tgl_tutup' => 'nullable|array',
+            'tgl_tutup.*' => 'nullable|date_format:Y-m-d\TH:i',
         ]);
 
         foreach ($request->quotas as $id => $quota) {
@@ -22,7 +26,18 @@ class JalurController extends Controller
                 return redirect()->back()->with('error', "Kuota Jalur {$jalur->nama_jalur} tidak bisa kurang dari jumlah pendaftar saat ini ({$jalur->pendaftarans_count} pendaftar).");
             }
 
-            Jalur::where('id', $id)->update(['total_kuota' => $quota]);
+            $updateData = ['total_kuota' => $quota];
+
+            // Add schedule fields if provided
+            if (isset($request->tgl_buka[$id]) && !empty($request->tgl_buka[$id])) {
+                $updateData['tgl_buka'] = $request->tgl_buka[$id];
+            }
+
+            if (isset($request->tgl_tutup[$id]) && !empty($request->tgl_tutup[$id])) {
+                $updateData['tgl_tutup'] = $request->tgl_tutup[$id];
+            }
+
+            Jalur::where('id', $id)->update($updateData);
         }
 
         return redirect()->back()->with('success', 'Kuota jalur pendaftaran berhasil diperbarui.');
