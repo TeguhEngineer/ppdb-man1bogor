@@ -40,17 +40,28 @@ class Pendaftaran extends Model
         $berkas = $this->berkas;
         
         // Berkas wajib dasar
-        if (!$berkas->file_raport || !$berkas->file_nisn || !$berkas->file_foto || !$berkas->file_surat_keterangan_aktif || !$berkas->file_slip_gaji || !$berkas->file_kk) {
-            return false;
+        $requiredFiles = [
+            'file_raport',
+            'file_nisn',
+            'file_foto',
+            'file_surat_keterangan_aktif',
+            'file_slip_gaji',
+            'file_kk',
+        ];
+
+        foreach ($requiredFiles as $field) {
+            if (!isset($berkas->$field) || trim((string) $berkas->$field) === '') {
+                return false;
+            }
         }
 
         // Berkas khusus jalur
         $namaJalur = $this->jalur->nama_jalur;
-        if ($namaJalur == 'Prestasi' && !$berkas->file_sertifikat) {
+        if ($namaJalur == 'Prestasi' && (!isset($berkas->file_sertifikat) || trim((string) $berkas->file_sertifikat) === '')) {
             return false;
         }
 
-        if ($namaJalur == 'Afirmasi' && !$berkas->file_sktm) {
+        if ($namaJalur == 'Afirmasi' && (!isset($berkas->file_sktm) || trim((string) $berkas->file_sktm) === '')) {
             return false;
         }
 
@@ -76,7 +87,19 @@ class Pendaftaran extends Model
         ];
 
         foreach ($requiredFields as $field) {
-            if (empty($b->$field)) return false;
+            if (!isset($b->$field)) {
+                return false;
+            }
+
+            $value = $b->$field;
+
+            if (is_string($value) && trim($value) === '') {
+                return false;
+            }
+
+            if (is_null($value)) {
+                return false;
+            }
         }
 
         return true;
