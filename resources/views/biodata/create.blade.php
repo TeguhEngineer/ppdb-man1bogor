@@ -45,8 +45,19 @@
                 </div>
             @endif
 
+            @php $isVerified = isset($pendaftaran) && $pendaftaran->status_pendaftaran === 'verifikasi'; @endphp
+
             <form action="{{ route('biodata.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 @csrf
+
+                @if($isVerified)
+                    <div class="mb-4 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">Data sudah diverifikasi.</strong>
+                        <span class="block">Biodata tidak dapat diubah lagi.</span>
+                    </div>
+                @endif
+
+                <fieldset @if($isVerified) disabled @endif class="space-y-8">
 
                 <!-- Section 0: Data Pendaftaran -->
                 <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
@@ -510,11 +521,17 @@
 
 
 
+                </fieldset>
+
                 <div class="flex items-center justify-end pt-6 border-t mt-8">
-                    <button type="submit"
-                        class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors w-full md:w-auto text-lg flex items-center justify-center">
-                        <i class="fi fi-rs-disk mr-2"></i> Simpan Biodata
-                    </button>
+                    @if(!$isVerified)
+                        <button type="submit"
+                            class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors w-full md:w-auto text-lg flex items-center justify-center">
+                            <i class="fi fi-rs-disk mr-2"></i> Simpan Biodata
+                        </button>
+                    @else
+                        <div class="text-sm text-gray-700">Data sudah diverifikasi dan tidak dapat diubah.</div>
+                    @endif
                 </div>
             </form>
         </div>

@@ -43,8 +43,19 @@
                 </div>
             @endif
 
+            @php $isVerified = isset($pendaftaran) && $pendaftaran->status_pendaftaran === 'verifikasi'; @endphp
+
             <form action="{{ route('berkas.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 @csrf
+
+                @if($isVerified)
+                    <div class="mb-4 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">Data sudah diverifikasi.</strong>
+                        <span class="block">Berkas tidak dapat diubah lagi.</span>
+                    </div>
+                @endif
+
+                <fieldset @if($isVerified) disabled @endif>
                 
                 <div>
                     <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">Dokumen Persyaratan</h3>
@@ -123,10 +134,16 @@
                     </div>
                 </div>
 
+                </fieldset>
+
                 <div class="flex justify-end border-t pt-6 mt-8">
-                    <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
-                        Unggah Berkas
-                    </button>
+                    @if(!$isVerified)
+                        <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
+                            Unggah Berkas
+                        </button>
+                    @else
+                        <div class="text-sm text-gray-700">Data sudah diverifikasi dan tidak dapat diubah.</div>
+                    @endif
                 </div>
             </form>
         </div>

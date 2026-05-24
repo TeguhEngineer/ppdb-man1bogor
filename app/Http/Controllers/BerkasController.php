@@ -29,6 +29,10 @@ class BerkasController extends Controller
     {
         $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
 
+        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
+            return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
+        }
+
         $request->validate([
             'file_raport' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
             'file_nisn' => 'required|file|mimes:pdf,jpg,jpeg,png|max:1024',
@@ -100,6 +104,10 @@ class BerkasController extends Controller
         
         if ($berka->pendaftaran_id !== $pendaftaran->id) {
             abort(403);
+        }
+
+        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
+            return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
         }
 
         $request->validate([

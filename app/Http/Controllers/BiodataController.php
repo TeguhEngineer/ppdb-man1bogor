@@ -29,6 +29,10 @@ class BiodataController extends Controller
     {
         $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
 
+        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
+            return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
+        }
+
         $validated = $request->validate([
             'nisn' => 'required|numeric|digits:10',
             'jalur_id' => 'required|exists:jalurs,id',
@@ -181,6 +185,10 @@ class BiodataController extends Controller
         
         if ($biodatum->pendaftaran_id !== $pendaftaran->id) {
             abort(403);
+        }
+
+        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
+            return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
         }
 
         $validated = $request->validate([
