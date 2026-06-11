@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'nisn' => ['required', 'digits:10'],
             'password' => ['required', 'string'],
         ];
     }
@@ -35,9 +35,8 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Email wajib diisi.',
-            'email.string' => 'Email harus berupa teks.',
-            'email.email' => 'Format email tidak valid.',
+            'nisn.required' => 'NISN wajib diisi.',
+            'nisn.digits' => 'NISN harus berjumlah tepat 10 digit.',
             'password.required' => 'Password wajib diisi.',
             'password.string' => 'Password harus berupa teks.',
         ];
@@ -52,11 +51,11 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('nisn', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => 'Email atau password yang Anda masukkan salah.',
+                'nisn' => 'NISN atau password yang Anda masukkan salah.',
             ]);
         }
 
@@ -79,7 +78,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => 'Terlalu banyak percobaan login. Silakan coba lagi dalam ' . $seconds . ' detik.',
+            'nisn' => 'Terlalu banyak percobaan login. Silakan coba lagi dalam ' . $seconds . ' detik.',
         ]);
     }
 
@@ -88,6 +87,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('nisn')).'|'.$this->ip());
     }
 }

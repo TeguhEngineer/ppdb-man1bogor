@@ -11,7 +11,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -36,7 +35,7 @@ class RegisteredUserController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'nisn' => ['required', 'numeric', 'digits:10'],
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                'password' => ['required', 'digits:10', 'same:nisn'],
                 'jalur' => ['nullable', 'string']
             ], [
                 'name.required' => 'Nama lengkap wajib diisi.',
@@ -48,13 +47,14 @@ class RegisteredUserController extends Controller
                 'email.email' => 'Format email tidak valid.',
                 'email.unique' => 'Email tersebut sudah terdaftar.',
                 'password.required' => 'Password wajib diisi.',
-                'password.confirmed' => 'Konfirmasi password tidak cocok.',
-                'password.min' => 'Password minimal 8 karakter.',
+                'password.digits' => 'Password harus sama dengan NISN dan berjumlah 10 digit.',
+                'password.same' => 'Password harus sama dengan NISN.',
             ]);
 
             // 1. Create User as Peserta
             $user = User::create([
                 'name' => $validated['name'],
+                'nisn' => $validated['nisn'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
                 'role' => 'peserta',

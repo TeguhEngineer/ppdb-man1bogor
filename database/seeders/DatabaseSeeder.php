@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin',
+                'nisn' => '0000000000',
                 'password' => \Illuminate\Support\Facades\Hash::make('password'),
                 'role' => 'admin',
             ]

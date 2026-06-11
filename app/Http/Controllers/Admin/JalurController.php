@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Jalur;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class JalurController extends Controller
 {
@@ -28,14 +29,17 @@ class JalurController extends Controller
 
             $updateData = ['total_kuota' => $quota];
 
-            // Add schedule fields if provided
-            if (isset($request->tgl_buka[$id]) && !empty($request->tgl_buka[$id])) {
-                $updateData['tgl_buka'] = $request->tgl_buka[$id];
-            }
+            $tglBuka = $request->input("tgl_buka.$id");
+            $tglTutup = $request->input("tgl_tutup.$id");
 
-            if (isset($request->tgl_tutup[$id]) && !empty($request->tgl_tutup[$id])) {
-                $updateData['tgl_tutup'] = $request->tgl_tutup[$id];
-            }
+            // Normalize HTML datetime-local values before saving to DATETIME columns.
+            $updateData['tgl_buka'] = filled($tglBuka)
+                ? Carbon::createFromFormat('Y-m-d\TH:i', $tglBuka)->format('Y-m-d H:i:s')
+                : null;
+
+            $updateData['tgl_tutup'] = filled($tglTutup)
+                ? Carbon::createFromFormat('Y-m-d\TH:i', $tglTutup)->format('Y-m-d H:i:s')
+                : null;
 
             Jalur::where('id', $id)->update($updateData);
         }

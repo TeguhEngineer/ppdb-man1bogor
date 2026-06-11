@@ -233,10 +233,13 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr>
-                                <td colspan="6" class="p-8 text-center text-gray-500">
-                                    Tidak ada data pendaftar.
-                                </td>
+                            <tr class="bg-white text-gray-500">
+                                <td class="p-8 text-center font-medium">Tidak ada data pendaftar.</td>
+                                <td class="p-8">&nbsp;</td>
+                                <td class="p-8">&nbsp;</td>
+                                <td class="p-8">&nbsp;</td>
+                                <td class="p-8">&nbsp;</td>
+                                <td class="p-8">&nbsp;</td>
                             </tr>
                         @endforelse
                     </tbody>

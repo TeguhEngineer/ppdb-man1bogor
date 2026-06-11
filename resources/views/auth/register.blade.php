@@ -68,20 +68,10 @@
 
         <!-- Password -->
         <div>
-            <label for="password" class="block font-medium text-sm text-gray-700 mb-1">Buat Password</label>
+            <label for="password" class="block font-medium text-sm text-gray-700 mb-1">Password (isi sama dengan NISN)</label>
             <input id="password" type="password" name="password" required autocomplete="new-password"
-                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white" placeholder="Minimal 8 karakter" />
+                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white" placeholder="Masukkan 10 digit NISN" />
             @error('password')
-                <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <!-- Confirm Password -->
-        <div>
-            <label for="password_confirmation" class="block font-medium text-sm text-gray-700 mb-1">Ulangi Password</label>
-            <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password"
-                class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white" placeholder="Ketik ulang password" />
-            @error('password_confirmation')
                 <p class="mt-1 text-sm text-red-600 font-medium">{{ $message }}</p>
             @enderror
         </div>
