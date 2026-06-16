@@ -48,40 +48,63 @@
         <div class="flex flex-col md:flex-row justify-between items-center w-full relative">
             <div class="absolute hidden md:block top-1/2 left-0 w-full h-1 bg-gray-200 -z-0"></div>
             <!-- Progress Line (Active) -->
-            <div class="absolute hidden md:block top-1/2 left-0 h-1 bg-emerald-600 -z-0" style="width: {{ 
-                $pendaftaran->status_pendaftaran == 'pending' ? '10%' :
-    ($pendaftaran->status_pendaftaran == 'verifikasi' ? '40%' :
-        ($pendaftaran->status_pendaftaran == 'tes' ? '70%' : '100%')) 
-            }}"></div>
+            @php
+                $statusStage = in_array($pendaftaran->status_pendaftaran, ['lulus', 'tidak_lulus'])
+                    ? 'pengumuman'
+                    : $pendaftaran->status_pendaftaran;
+
+                $statusStageWidths = [
+                    'pending' => '15%',
+                    'verifikasi' => '45%',
+                    'tes' => '75%',
+                    'pengumuman' => '100%',
+                ];
+
+                $timelineSteps = [
+                    'pending' => 'Registrasi',
+                    'verifikasi' => 'Verifikasi Berkas',
+                    'tes' => 'Seleksi Tes',
+                    'pengumuman' => 'Pengumuman',
+                ];
+
+                $timelineOrder = array_keys($timelineSteps);
+                $currentIndex = array_search($statusStage, $timelineOrder, true);
+                $currentIndex = $currentIndex === false ? 0 : $currentIndex;
+
+                $statusColors = [
+                    'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
+                    'verifikasi' => 'bg-blue-100 text-blue-800 border-blue-200',
+                    'tes' => 'bg-purple-100 text-purple-800 border-purple-200',
+                    'lulus' => 'bg-green-100 text-green-800 border-green-200',
+                    'tidak_lulus' => 'bg-red-100 text-red-800 border-red-200',
+                ];
+
+                $statusLabels = [
+                    'pending' => 'Registrasi',
+                    'verifikasi' => 'Verifikasi Berkas',
+                    'tes' => 'Seleksi Tes',
+                    'lulus' => 'Pengumuman',
+                    'tidak_lulus' => 'Pengumuman',
+                ];
+            @endphp
+            <div class="absolute hidden md:block top-1/2 left-0 h-1 bg-emerald-600 -z-0" style="width: {{ $statusStageWidths[$statusStage] }}"></div>
 
             <!-- Steps -->
-            @php
-                $steps = [
-                    'pending' => 'Menunggu Verifikasi',
-                    'verifikasi' => 'Terverifikasi',
-                    'tes' => 'Seleksi Tes',
-                    'lulus' => 'Lulus',
-                    'tidak_lulus' => 'Tidak Lulus'
-                ];
-                $statuses = array_keys($steps);
-                $currentIndex = array_search($pendaftaran->status_pendaftaran == 'tidak_lulus' ? 'lulus' : $pendaftaran->status_pendaftaran, $statuses);
-            @endphp
-
-            @foreach (['pending', 'verifikasi', 'tes', 'lulus'] as $index => $step)
+            @foreach ($timelineSteps as $stepKey => $stepLabel)
+                @php $index = array_search($stepKey, $timelineOrder, true); @endphp
                 <div class="flex flex-col items-center relative z-10 bg-white px-4 py-2 mb-4 md:mb-0">
                     <div
                         class="w-10 h-10 rounded-full flex items-center justify-center {{ $index <= $currentIndex ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-400' }} border-4 border-white">
                         @if ($index < $currentIndex)
                             <i class="fi fi-rs-check text-sm"></i>
-                        @elseif ($index == $currentIndex && $pendaftaran->status_pendaftaran == 'tidak_lulus')
+                        @elseif ($stepKey === 'pengumuman' && $pendaftaran->status_pendaftaran == 'tidak_lulus')
                             <i
                                 class="fi fi-rs-cross text-sm bg-red-500 text-white w-full h-full rounded-full flex items-center justify-center"></i>
                         @else
                             <span class="font-bold text-sm">{{ $index + 1 }}</span>
                         @endif
                     </div>
-                    <span
-                        class="mt-2 text-sm font-medium {{ $index <= $currentIndex ? 'text-gray-800' : 'text-gray-400' }}">{{ $steps[$step] }}</span>
+                    <span class="mt-2 text-sm font-medium {{ $index <= $currentIndex ? 'text-gray-800' : 'text-gray-400' }}">{{ $stepLabel }}</span>
                 </div>
             @endforeach
         </div>
@@ -97,8 +120,8 @@
             class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataComplete ? 'green' : 'yellow' }}-500">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="text-lg font-bold text-gray-800">Biodata Diri</h3>
-                    <p class="text-gray-500 text-sm mt-1">Lengkapi data pribadi dan orang tua.</p>
+                        class="px-4 py-3 border rounded-lg {{ $statusColors[$pendaftaran->status_pendaftaran] }} font-bold text-center uppercase tracking-wide">
+                        {{ $statusLabels[$pendaftaran->status_pendaftaran] }}
                 </div>
                 <div
                     class="bg-{{ $isBiodataComplete ? 'green' : 'yellow' }}-100 text-{{ $isBiodataComplete ? 'green' : 'yellow' }}-600 p-3 rounded-full">

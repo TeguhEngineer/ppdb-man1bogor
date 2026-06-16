@@ -12,6 +12,7 @@
         href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
     <link rel='stylesheet'
         href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    <style>[x-cloak]{display:none!important;}</style>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

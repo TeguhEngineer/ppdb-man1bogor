@@ -79,6 +79,10 @@
                             <label class="block text-sm font-medium text-gray-700">Scan Raport Terakhir <span class="text-red-500">*</span></label>
                             @if($berka->file_raport)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_raport) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_raport" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_raport')
@@ -89,6 +93,10 @@
                             <label class="block text-sm font-medium text-gray-700">Scan NISN <span class="text-red-500">*</span></label>
                             @if($berka->file_nisn)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_nisn) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_nisn" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_nisn')
@@ -99,6 +107,10 @@
                             <label class="block text-sm font-medium text-gray-700">Pas Foto <span class="text-red-500">*</span></label>
                             @if($berka->file_foto)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_foto) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_foto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_foto')
@@ -109,6 +121,10 @@
                             <label class="block text-sm font-medium text-gray-700">Surat Keterangan Aktif / SKL <span class="text-red-500">*</span></label>
                             @if($berka->file_surat_keterangan_aktif)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_surat_keterangan_aktif) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_surat_keterangan_aktif" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_surat_keterangan_aktif')
@@ -119,6 +135,10 @@
                             <label class="block text-sm font-medium text-gray-700">Scan Kartu Keluarga (KK) <span class="text-red-500">*</span></label>
                             @if($berka->file_kk)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_kk) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_kk" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_kk')
@@ -129,6 +149,10 @@
                             <label class="block text-sm font-medium text-gray-700">Slip Gaji Orang Tua <span class="text-red-500">*</span></label>
                             @if($berka->file_slip_gaji)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_slip_gaji) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_slip_gaji" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_slip_gaji')
@@ -142,6 +166,10 @@
                             <label class="block text-sm font-medium text-gray-700">Piagam/Sertifikat Kejuaraan <span class="text-red-500">*</span></label>
                             @if($berka->file_sertifikat)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_sertifikat) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_sertifikat" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_sertifikat')
@@ -156,6 +184,10 @@
                             <label class="block text-sm font-medium text-gray-700">Surat Keterangan Tidak Mampu (SKTM) <span class="text-red-500">*</span></label>
                             @if($berka->file_sktm)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_sktm) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_sktm" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_sktm')
@@ -166,6 +198,10 @@
                             <label class="block text-sm font-medium text-gray-700">Kartu KIP (Optional)</label>
                             @if($berka->file_kip)
                                 <span class="text-xs text-green-600 block mt-1"><i class="fi fi-rs-check-circle"></i> File sudah diunggah. Pilih file baru untuk mengganti.</span>
+                                <a href="{{ Storage::url($berka->file_kip) }}" target="_blank"
+                                    class="inline-flex items-center mt-2 px-3 py-1.5 rounded-md bg-gray-100 text-gray-700 text-xs font-semibold hover:bg-gray-200 transition-colors">
+                                    <i class="fi fi-rs-eye mr-1.5"></i> View Berkas
+                                </a>
                             @endif
                             <input type="file" name="file_kip" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100" accept=".pdf,image/*">
                             @error('file_kip')

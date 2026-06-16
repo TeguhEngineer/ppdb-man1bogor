@@ -176,6 +176,7 @@
                             <th class="p-4 font-semibold">Nama Peserta</th>
                             <th class="p-4 font-semibold">Jalur</th>
                             <th class="p-4 font-semibold text-center">Data</th>
+                            <th class="p-4 font-semibold text-center">Status Berkas</th>
                             <th class="p-4 font-semibold text-center">Status</th>
                             <th class="p-4 font-semibold text-right">Aksi</th>
                         </tr>
@@ -201,6 +202,34 @@
                                             title="{{ $pendaftaran->isBerkasLengkap() ? 'Berkas Lengkap' : 'Berkas Belum Lengkap' }}">
                                             <i class="fi fi-rs-folder-upload"></i>
                                         </span>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    @php
+                                        $berkasStatus = optional($pendaftaran->berkas)->status_berkas;
+                                        $berkasBadge = [
+                                            'terima' => 'bg-green-100 text-green-800',
+                                            'tolak' => 'bg-red-100 text-red-800',
+                                            null => 'bg-gray-100 text-gray-700',
+                                        ];
+                                        $berkasLabel = [
+                                            'terima' => 'Diterima',
+                                            'tolak' => 'Ditolak',
+                                            null => 'Belum Diverifikasi',
+                                        ];
+                                    @endphp
+                                    <div class="space-y-2">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold {{ $berkasBadge[$berkasStatus] }}">
+                                            {{ $berkasLabel[$berkasStatus] }}
+                                        </span>
+                                        @if($pendaftaran->berkas && $pendaftaran->berkas->pesan)
+                                            <p class="text-[11px] text-gray-500 leading-snug">
+                                                {{ $pendaftaran->berkas->pesan }}
+                                            </p>
+                                        @endif
+                                        @if(!$pendaftaran->berkas)
+                                            <span class="text-xs text-gray-400">Belum ada berkas</span>
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="p-4 text-center">
@@ -240,6 +269,7 @@
                                 <td class="p-8">&nbsp;</td>
                                 <td class="p-8">&nbsp;</td>
                                 <td class="p-8">&nbsp;</td>
+                                <td class="p-8">&nbsp;</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -264,7 +294,7 @@
                     "info": false,
                     "order": [], // Disable initial sort
                     "columnDefs": [
-                        { "orderable": false, "targets": [3, 5] }
+                        { "orderable": false, "targets": [3, 4, 6] }
                     ],
                     "language": {
                         "emptyTable": "Tidak ada data yang tersedia"
@@ -273,4 +303,5 @@
             });
         </script>
     @endpush
+
 </x-app-layout>

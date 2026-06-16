@@ -42,33 +42,61 @@ class VerifikasiController extends Controller
     public function updateStatus(Request $request, Pendaftaran $pendaftaran)
     {
         $request->validate([
-            'status_pendaftaran' => 'required|in:pending,verifikasi,tes,lulus,tidak_lulus'
+            'status_pendaftaran' => 'required|in:lulus,tidak_lulus'
         ]);
-
-        $statusLevel = [
-            'pending' => 1,
-            'verifikasi' => 2,
-            'tes' => 3,
-            'lulus' => 4,
-            'tidak_lulus' => 4,
-        ];
-
-        $currentLevel = $statusLevel[$pendaftaran->status_pendaftaran];
-        $newLevel = $statusLevel[$request->status_pendaftaran];
-
-        if ($newLevel < $currentLevel) {
-            return redirect()->back()->withErrors(['status_pendaftaran' => 'Status pendaftaran tidak dapat dikembalikan ke tahap sebelumnya.']);
-        }
 
         if (!$pendaftaran->isLengkap()) {
             return redirect()->back()->withErrors(['status_pendaftaran' => 'Status tidak dapat diubah karena peserta belum melengkapi biodata atau berkas wajib.']);
+        }
+
+        if (!$pendaftaran->berkas || $pendaftaran->berkas->status_berkas !== 'terima') {
+            return redirect()->back()->withErrors([
+                'status_pendaftaran' => 'Hasil seleksi tidak dapat diubah karena berkas belum diterima.',
+            ]);
         }
 
         $pendaftaran->update([
             'status_pendaftaran' => $request->status_pendaftaran
         ]);
 
-        return redirect()->back()->with('success', 'Status pendaftaran berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Hasil seleksi berhasil diperbarui.');
+    }
+
+    public function updateBerkasStatus(Request $request, Pendaftaran $pendaftaran)
+    {
+        $request->validate([
+            'status_berkas' => 'required|in:terima,tolak',
+            'pesan' => 'nullable|string|max:1000',
+        ]);
+
+        if (!$pendaftaran->berkas) {
+            return redirect()->back()->withErrors([
+                'status_berkas' => 'Peserta belum mengunggah berkas.',
+            ]);
+        }
+
+        if ($request->status_berkas === 'tolak' && trim((string) $request->pesan) === '') {
+            return redirect()->back()->withErrors([
+                'pesan' => 'Catatan penolakan wajib diisi saat status berkas ditolak.',
+            ]);
+        }
+
+        $pendaftaran->berkas->update([
+            'status_berkas' => $request->status_berkas,
+            'pesan' => $request->status_berkas === 'terima' ? null : $request->pesan,
+        ]);
+
+        if ($request->status_berkas === 'terima') {
+            $pendaftaran->update([
+                'status_pendaftaran' => 'verifikasi',
+            ]);
+        }
+
+        $message = $request->status_berkas === 'terima'
+            ? 'Status berkas berhasil diterima.'
+            : 'Status berkas berhasil ditolak.';
+
+        return redirect()->back()->with('success', $message);
     }
     public function export(Request $request)
     {

@@ -12,7 +12,7 @@
         </div>
     </x-slot>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10" x-data="{ openBerkasModal: false }">
         <!-- Main Content: Biodata & Berkas (Span 2 cols) -->
         <div class="lg:col-span-2 space-y-6">
 
@@ -140,55 +140,45 @@
                 @if($pendaftaran->berkas)
                     <div class="p-6">
                         <ul class="space-y-3">
-                            <li
-                                class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                <div class="flex items-center">
-                                    <i class="fi fi-rs-document-signed text-emerald-500 text-xl mr-3"></i>
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-900">Raport Terakhir</p>
+                            @php
+                                $dokumenBerkas = [
+                                    ['label' => 'Raport Terakhir', 'field' => 'file_raport', 'icon' => 'fi-rs-document-signed'],
+                                    ['label' => 'Scan NISN', 'field' => 'file_nisn', 'icon' => 'fi-rs-id-badge'],
+                                    ['label' => 'Pas Foto', 'field' => 'file_foto', 'icon' => 'fi-rs-picture'],
+                                    ['label' => 'Surat Keterangan Aktif / SKL', 'field' => 'file_surat_keterangan_aktif', 'icon' => 'fi-rs-memo'],
+                                    ['label' => 'Kartu Keluarga', 'field' => 'file_kk', 'icon' => 'fi-rs-users'],
+                                    ['label' => 'Slip Gaji Orang Tua', 'field' => 'file_slip_gaji', 'icon' => 'fi-rs-money-bill-wave'],
+                                ];
+
+                                if ($pendaftaran->jalur->nama_jalur === 'Prestasi') {
+                                    $dokumenBerkas[] = ['label' => 'Piagam/Sertifikat Kejuaraan', 'field' => 'file_sertifikat', 'icon' => 'fi-rs-diploma'];
+                                }
+
+                                if ($pendaftaran->jalur->nama_jalur === 'Afirmasi') {
+                                    $dokumenBerkas[] = ['label' => 'Surat Keterangan Tidak Mampu (SKTM)', 'field' => 'file_sktm', 'icon' => 'fi-rs-document'];
+                                    $dokumenBerkas[] = ['label' => 'Kartu KIP', 'field' => 'file_kip', 'icon' => 'fi-rs-credit-card'];
+                                }
+                            @endphp
+                            @foreach($dokumenBerkas as $dokumen)
+                                @php $filePath = $pendaftaran->berkas->{$dokumen['field']}; @endphp
+                                <li
+                                    class="flex items-center justify-between gap-3 p-3 border rounded-lg hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-center">
+                                        <i class="fi {{ $dokumen['icon'] }} text-emerald-500 text-xl mr-3"></i>
+                                        <div>
+                                            <p class="font-medium text-sm text-gray-900">{{ $dokumen['label'] }}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <a href="{{ Storage::url($pendaftaran->berkas->file_raport) }}" target="_blank"
-                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                    / Unduh</a>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                <div class="flex items-center">
-                                    <i class="fi fi-rs-id-badge text-emerald-500 text-xl mr-3"></i>
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-900">Scan NISN</p>
-                                    </div>
-                                </div>
-                                <a href="{{ Storage::url($pendaftaran->berkas->file_nisn) }}" target="_blank"
-                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                    / Unduh</a>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                <div class="flex items-center">
-                                    <i class="fi fi-rs-picture text-emerald-500 text-xl mr-3"></i>
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-900">Pas Foto</p>
-                                    </div>
-                                </div>
-                                <a href="{{ Storage::url($pendaftaran->berkas->file_foto) }}" target="_blank"
-                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                    / Unduh</a>
-                            </li>
-                            <li
-                                class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                <div class="flex items-center">
-                                    <i class="fi fi-rs-memo text-emerald-500 text-xl mr-3"></i>
-                                    <div>
-                                        <p class="font-medium text-sm text-gray-900">Surat Keterangan Aktif / SKL</p>
-                                    </div>
-                                </div>
-                                <a href="{{ Storage::url($pendaftaran->berkas->file_surat_keterangan_aktif) }}"
-                                    target="_blank"
-                                    class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                    / Unduh</a>
-                            </li>
+                                    @if($filePath)
+                                        <a href="{{ Storage::url($filePath) }}" target="_blank"
+                                            class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md whitespace-nowrap">
+                                            Lihat / Unduh
+                                        </a>
+                                    @else
+                                        <span class="text-xs font-medium text-gray-400 whitespace-nowrap">Belum diunggah</span>
+                                    @endif
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 @else
@@ -256,14 +246,13 @@
 
         </div>
 
-        <!-- Sidebar Content: Status Update (Span 1 col) -->
+        <!-- Sidebar Content: Berkas Verification & Selection Result (Span 1 col) -->
         <div class="space-y-6">
             <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
-                    <h3 class="font-bold text-lg text-gray-800">Verifikasi & Status</h3>
+                    <h3 class="font-bold text-lg text-gray-800">Verifikasi Berkas</h3>
                 </div>
                 <div class="p-6">
-
                     @if (session('success'))
                         <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-sm"
                             role="alert">
@@ -272,28 +261,89 @@
                         </div>
                     @endif
 
-                    <div class="mb-6">
-                        <p class="text-sm text-gray-500 font-medium mb-1">Status Saat Ini:</p>
+                    @if($pendaftaran->berkas)
                         @php
-                            $statusColors = [
-                                'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
-                                'verifikasi' => 'bg-blue-100 text-blue-800 border-blue-200',
-                                'tes' => 'bg-purple-100 text-purple-800 border-purple-200',
-                                'lulus' => 'bg-green-100 text-green-800 border-green-200',
-                                'tidak_lulus' => 'bg-red-100 text-red-800 border-red-200',
+                            $statusBerkas = $pendaftaran->berkas->status_berkas;
+                            $statusBerkasStyles = [
+                                'terima' => 'bg-green-100 text-green-800 border-green-200',
+                                'tolak' => 'bg-red-100 text-red-800 border-red-200',
+                                null => 'bg-gray-100 text-gray-800 border-gray-200',
                             ];
-                            $statusLabels = [
-                                'pending' => 'Pending (Belum Diproses)',
-                                'verifikasi' => 'Sedang / Selesai Verifikasi',
-                                'tes' => 'Tahap Tes / Wawancara',
-                                'lulus' => 'Lulus',
-                                'tidak_lulus' => 'Tidak Lulus',
+                            $statusBerkasLabels = [
+                                'terima' => 'Berkas Diterima',
+                                'tolak' => 'Berkas Ditolak',
+                                null => 'Berkas Belum Diverifikasi',
                             ];
                         @endphp
-                        <div
-                            class="px-4 py-3 border rounded-lg {{ $statusColors[$pendaftaran->status_pendaftaran] }} font-bold text-center uppercase tracking-wide">
-                            {{ $statusLabels[$pendaftaran->status_pendaftaran] }}
+                        <div class="mb-4 p-4 rounded-lg border {{ $statusBerkasStyles[$statusBerkas] }}">
+                            <p class="text-sm font-semibold uppercase tracking-wide">
+                                {{ $statusBerkasLabels[$statusBerkas] }}
+                            </p>
+                            @if($pendaftaran->berkas->pesan)
+                                <p class="mt-1 text-sm">
+                                    {{ $pendaftaran->berkas->pesan }}
+                                </p>
+                            @endif
                         </div>
+
+                        @error('status_berkas')
+                            <p class="mb-3 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+
+                        <div class="flex items-center gap-2">
+                            <form action="{{ route('admin.verifikasi.berkas-status', $pendaftaran->id) }}" method="POST" class="flex-1">
+                                @csrf
+                                <input type="hidden" name="status_berkas" value="terima">
+                                <button type="submit"
+                                    class="w-full inline-flex justify-center items-center px-3 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold hover:bg-green-700 transition-colors">
+                                    <i class="fi fi-rs-check mr-1.5"></i> Terima
+                                </button>
+                            </form>
+                            <button type="button" @click="openBerkasModal = true"
+                                class="flex-1 inline-flex justify-center items-center px-3 py-2 rounded-lg bg-red-600 text-white text-sm font-semibold hover:bg-red-700 transition-colors">
+                                <i class="fi fi-rs-cross-small mr-1.5"></i> Tolak
+                            </button>
+                        </div>
+                    @else
+                        <div class="p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                            Peserta belum mengunggah berkas.
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100">
+                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
+                    <h3 class="font-bold text-lg text-gray-800">Hasil Seleksi</h3>
+                </div>
+                <div class="p-6">
+                    @php
+                        $hasilSeleksiColors = [
+                            'lulus' => 'bg-green-100 text-green-800 border-green-200',
+                            'tidak_lulus' => 'bg-red-100 text-red-800 border-red-200',
+                        ];
+                        $hasilSeleksiLabels = [
+                            'lulus' => 'Lulus',
+                            'tidak_lulus' => 'Tidak Lulus',
+                        ];
+                        $hasilSeleksi = in_array($pendaftaran->status_pendaftaran, ['lulus', 'tidak_lulus'], true)
+                            ? $pendaftaran->status_pendaftaran
+                            : null;
+                    @endphp
+
+                    <div class="mb-6">
+                        <p class="text-sm text-gray-500 font-medium mb-1">Status Hasil:</p>
+                        @if($hasilSeleksi)
+                            <div
+                                class="px-4 py-3 border rounded-lg {{ $hasilSeleksiColors[$hasilSeleksi] }} font-bold text-center uppercase tracking-wide">
+                                {{ $hasilSeleksiLabels[$hasilSeleksi] }}
+                            </div>
+                        @else
+                            <div
+                                class="px-4 py-3 border rounded-lg bg-gray-100 text-gray-800 border-gray-200 font-bold text-center uppercase tracking-wide">
+                                Belum Ditentukan
+                            </div>
+                        @endif
                     </div>
 
                     <form action="{{ route('admin.verifikasi.update', $pendaftaran->id) }}" method="POST">
@@ -301,36 +351,12 @@
                         @method('PUT')
                         <div class="mb-4">
                             <label for="status_pendaftaran" class="block text-sm font-medium text-gray-700 mb-1">Ubah
-                                Status Menjadi:</label>
-                            @php
-                                $statuses = [
-                                    'pending' => 'Pending',
-                                    'verifikasi' => 'Verifikasi',
-                                    'tes' => 'Tes / Wawancara',
-                                    'lulus' => 'Lulus',
-                                    'tidak_lulus' => 'Tidak Lulus',
-                                ];
-
-                                $statusLevel = [
-                                    'pending' => 1,
-                                    'verifikasi' => 2,
-                                    'tes' => 3,
-                                    'lulus' => 4,
-                                    'tidak_lulus' => 4,
-                                ];
-
-                                $currentLevel = $statusLevel[$pendaftaran->status_pendaftaran];
-                            @endphp
+                                Hasil Menjadi:</label>
                             <select name="status_pendaftaran" id="status_pendaftaran"
                                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                                 required>
-                                @foreach ($statuses as $value => $label)
-                                    @if ($statusLevel[$value] >= $currentLevel)
-                                        <option value="{{ $value }}"
-                                            {{ $pendaftaran->status_pendaftaran == $value ? 'selected' : '' }}>
-                                            {{ $label }}</option>
-                                    @endif
-                                @endforeach
+                                <option value="lulus" {{ $pendaftaran->status_pendaftaran == 'lulus' ? 'selected' : '' }}>Lulus</option>
+                                <option value="tidak_lulus" {{ $pendaftaran->status_pendaftaran == 'tidak_lulus' ? 'selected' : '' }}>Tidak Lulus</option>
                             </select>
                             @error('status_pendaftaran')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -344,11 +370,19 @@
                                 </p>
                             </div>
                         @endif
+                        @if (!$pendaftaran->berkas || $pendaftaran->berkas->status_berkas !== 'terima')
+                            <div class="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <p class="text-xs text-yellow-800 font-medium leading-relaxed">
+                                    <i class="fi fi-rs-exclamation mr-1"></i>
+                                    Hasil seleksi dapat disimpan setelah berkas diterima.
+                                </p>
+                            </div>
+                        @endif
 
                         <button type="submit"
-                            class="w-full {{ $pendaftaran->isLengkap() ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-gray-400 cursor-not-allowed' }} text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors"
-                            {{ $pendaftaran->isLengkap() ? '' : 'disabled' }}>
-                            Simpan Perubahan Status
+                            class="w-full {{ $pendaftaran->isLengkap() && $pendaftaran->berkas && $pendaftaran->berkas->status_berkas === 'terima' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-gray-400 cursor-not-allowed' }} text-white font-medium py-2.5 px-4 rounded-lg shadow-sm transition-colors"
+                            {{ $pendaftaran->isLengkap() && $pendaftaran->berkas && $pendaftaran->berkas->status_berkas === 'terima' ? '' : 'disabled' }}>
+                            Simpan Hasil Seleksi
                         </button>
                     </form>
                 </div>
@@ -373,5 +407,66 @@
                 </ul>
             </div>
         </div>
+
+        @if($pendaftaran->berkas)
+            <div x-show="openBerkasModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto">
+                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                    <div x-show="openBerkasModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                        x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity" aria-hidden="true">
+                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                    </div>
+
+                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                    <div x-show="openBerkasModal" x-transition:enter="ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                        <form method="POST" action="{{ route('admin.verifikasi.berkas-status', $pendaftaran->id) }}">
+                            @csrf
+                            <input type="hidden" name="status_berkas" value="tolak">
+                            <div class="bg-white px-6 pt-6 pb-4 sm:p-8 sm:pb-4">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-lg font-bold text-gray-900">Tolak Berkas</h3>
+                                    <button type="button" @click="openBerkasModal = false"
+                                        class="text-gray-400 hover:text-gray-500">
+                                        <i class="fi fi-rs-cross-small text-2xl"></i>
+                                    </button>
+                                </div>
+
+                                <p class="text-sm text-gray-600 mb-4">
+                                    Berkas peserta <span class="font-semibold">{{ $pendaftaran->user->name }}</span> akan ditolak.
+                                </p>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2">Catatan Penolakan</label>
+                                    <textarea name="pesan" rows="4"
+                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 text-sm"
+                                        placeholder="Tuliskan alasan penolakan berkas">{{ old('pesan', $pendaftaran->berkas->pesan) }}</textarea>
+                                    @error('pesan')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse gap-2">
+                                <button type="submit"
+                                    class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm">
+                                    Simpan Penolakan
+                                </button>
+                                <button type="button" @click="openBerkasModal = false"
+                                    class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:w-auto sm:text-sm">
+                                    Batal
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
 </x-app-layout>
