@@ -70,6 +70,10 @@
                 $timelineOrder = array_keys($timelineSteps);
                 $currentIndex = array_search($statusStage, $timelineOrder, true);
                 $currentIndex = $currentIndex === false ? 0 : $currentIndex;
+                $berkasStatus = optional($pendaftaran->berkas)->status_berkas;
+                $berkasDitolak = $berkasStatus === 'tolak';
+                $berkasDiterima = $berkasStatus === 'terima';
+                $berkasPesan = optional($pendaftaran->berkas)->pesan;
 
                 $statusColors = [
                     'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
@@ -86,6 +90,31 @@
                     'lulus' => 'Pengumuman',
                     'tidak_lulus' => 'Pengumuman',
                 ];
+
+                $stepNotes = [
+                    'pending' => [
+                        'text' => 'Selesai',
+                        'class' => 'bg-green-100 text-green-800 border-green-200',
+                    ],
+                    'verifikasi' => [
+                        'text' => $berkasDitolak ? 'Ditolak' : ($berkasDiterima ? 'Diterima' : 'Menunggu'),
+                        'class' => $berkasDitolak
+                            ? 'bg-red-100 text-red-800 border-red-200'
+                            : ($berkasDiterima ? 'bg-green-100 text-green-800 border-green-200' : 'bg-gray-100 text-gray-700 border-gray-200'),
+                    ],
+                    'tes' => [
+                        'text' => 'Menyusul',
+                        'class' => 'bg-gray-100 text-gray-700 border-gray-200',
+                    ],
+                    'pengumuman' => [
+                        'text' => $pendaftaran->status_pendaftaran === 'lulus'
+                            ? 'Lulus'
+                            : ($pendaftaran->status_pendaftaran === 'tidak_lulus' ? 'Tidak Lulus' : 'Menyusul'),
+                        'class' => $pendaftaran->status_pendaftaran === 'lulus'
+                            ? 'bg-green-100 text-green-800 border-green-200'
+                            : ($pendaftaran->status_pendaftaran === 'tidak_lulus' ? 'bg-red-100 text-red-800 border-red-200' : 'bg-gray-100 text-gray-700 border-gray-200'),
+                    ],
+                ];
             @endphp
             <div class="absolute hidden md:block top-1/2 left-0 h-1 bg-emerald-600 -z-0" style="width: {{ $statusStageWidths[$statusStage] }}"></div>
 
@@ -93,9 +122,23 @@
             @foreach ($timelineSteps as $stepKey => $stepLabel)
                 @php $index = array_search($stepKey, $timelineOrder, true); @endphp
                 <div class="flex flex-col items-center relative z-10 bg-white px-4 py-2 mb-4 md:mb-0">
+                    @if($stepKey === 'verifikasi' && $berkasDitolak && $berkasPesan)
+                        <button type="button"
+                            onclick="alert(@js($berkasPesan))"
+                            class="mb-2 inline-flex items-center px-2.5 py-1 rounded-full border text-xs font-semibold {{ $stepNotes[$stepKey]['class'] }} hover:bg-red-200 transition-colors"
+                            title="Klik untuk melihat pesan penolakan">
+                            {{ $stepNotes[$stepKey]['text'] }}
+                        </button>
+                    @else
+                        <span class="mb-2 inline-flex items-center px-2.5 py-1 rounded-full border text-xs font-semibold {{ $stepNotes[$stepKey]['class'] }}">
+                            {{ $stepNotes[$stepKey]['text'] }}
+                        </span>
+                    @endif
                     <div
-                        class="w-10 h-10 rounded-full flex items-center justify-center {{ $index <= $currentIndex ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-400' }} border-4 border-white">
-                        @if ($index < $currentIndex)
+                        class="w-10 h-10 rounded-full flex items-center justify-center {{ $stepKey === 'verifikasi' && $berkasDitolak ? 'bg-red-600 text-white' : ($index <= $currentIndex ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-400') }} border-4 border-white">
+                        @if ($stepKey === 'verifikasi' && $berkasDitolak)
+                            <i class="fi fi-rs-cross text-sm"></i>
+                        @elseif ($index < $currentIndex)
                             <i class="fi fi-rs-check text-sm"></i>
                         @elseif ($stepKey === 'pengumuman' && $pendaftaran->status_pendaftaran == 'tidak_lulus')
                             <i
@@ -104,7 +147,10 @@
                             <span class="font-bold text-sm">{{ $index + 1 }}</span>
                         @endif
                     </div>
-                    <span class="mt-2 text-sm font-medium {{ $index <= $currentIndex ? 'text-gray-800' : 'text-gray-400' }}">{{ $stepLabel }}</span>
+                    <span class="mt-2 text-sm font-medium {{ $stepKey === 'verifikasi' && $berkasDitolak ? 'text-red-700' : ($index <= $currentIndex ? 'text-gray-800' : 'text-gray-400') }}">{{ $stepLabel }}</span>
+                    @if($stepKey === 'verifikasi' && $berkasDitolak && $berkasPesan)
+                        <p class="mt-1 text-[11px] text-red-600 text-center">Klik status ditolak untuk detail.</p>
+                    @endif
                 </div>
             @endforeach
         </div>
@@ -120,8 +166,8 @@
             class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataComplete ? 'green' : 'yellow' }}-500">
             <div class="flex items-start justify-between">
                 <div>
-                        class="px-4 py-3 border rounded-lg {{ $statusColors[$pendaftaran->status_pendaftaran] }} font-bold text-center uppercase tracking-wide">
-                        {{ $statusLabels[$pendaftaran->status_pendaftaran] }}
+                    <h3 class="text-lg font-bold text-gray-800">Biodata</h3>
+                    <p class="text-gray-500 text-sm mt-1">Lengkapi data diri dan data orang tua.</p>
                 </div>
                 <div
                     class="bg-{{ $isBiodataComplete ? 'green' : 'yellow' }}-100 text-{{ $isBiodataComplete ? 'green' : 'yellow' }}-600 p-3 rounded-full">
@@ -168,9 +214,13 @@
         @php
             $isBerkasComplete = $pendaftaran->isBerkasLengkap();
             $hasBerkas = $pendaftaran->berkas != null;
+            $berkasStatus = optional($pendaftaran->berkas)->status_berkas;
+            $berkasRejected = $berkasStatus === 'tolak';
+            $berkasAccepted = $berkasStatus === 'terima';
+            $berkasBorderColor = $berkasRejected ? 'red' : ($isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red'));
         @endphp
         <div
-            class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-500">
+            class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $berkasBorderColor }}-500">
             <div class="flex items-start justify-between">
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Upload Berkas</h3>
@@ -179,16 +229,25 @@
                     </p>
                 </div>
                 <div
-                    class="bg-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-100 text-{{ $isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red') }}-600 p-3 rounded-full">
+                    class="bg-{{ $berkasBorderColor }}-100 text-{{ $berkasBorderColor }}-600 p-3 rounded-full">
                     <i
-                        class="fi fi-rs-{{ $isBerkasComplete ? 'check-circle' : ($hasBerkas ? 'exclamation' : 'document') }} text-xl"></i>
+                        class="fi fi-rs-{{ $berkasRejected ? 'cross' : ($isBerkasComplete ? 'check-circle' : ($hasBerkas ? 'exclamation' : 'document')) }} text-xl"></i>
                 </div>
             </div>
             <div class="mt-6">
-                @if ($isBerkasComplete)
+                @if ($berkasRejected)
+                    <button type="button" onclick="alert(@js($pendaftaran->berkas->pesan ?? 'Berkas ditolak. Silakan perbaiki unggahan Anda.'))"
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 hover:bg-red-200 transition-colors"
+                        title="Klik untuk melihat pesan penolakan">
+                        Ditolak
+                    </button>
+                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
+                        class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Perbaiki
+                        Berkas</a>
+                @elseif ($isBerkasComplete)
                     <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Selesai Diupload
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $berkasAccepted ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                        {{ $berkasAccepted ? 'Diterima' : 'Selesai Diupload' }}
                     </span>
                     <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
                         class="block text-center mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat
