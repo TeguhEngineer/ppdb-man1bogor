@@ -39,8 +39,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/verifikasi/{pendaftaran}/berkas-status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateBerkasStatus'])->name('admin.verifikasi.berkas-status');
         
         // Jalur/Quota routes
-        Route::post('/jalur/update-quota', [App\Http\Controllers\Admin\JalurController::class, 'updateQuota'])->name('admin.jalur.update-quota');
-
+        Route::resource('jalur-pendaftaran', App\Http\Controllers\Admin\JalurController::class)->names([
+            'index' => 'admin.jalur.index',
+            'create' => 'admin.jalur.create',
+            'store' => 'admin.jalur.store',
+            'edit' => 'admin.jalur.edit',
+            'update' => 'admin.jalur.update',
+            'destroy' => 'admin.jalur.destroy',
+        ])->parameters(['jalur-pendaftaran' => 'jalur'])->except(['show']);
         Route::get('/pengumuman/search-participants', [App\Http\Controllers\Admin\PengumumanController::class, 'searchParticipants'])->name('admin.pengumuman.search');
         Route::resource('pengumuman', App\Http\Controllers\Admin\PengumumanController::class)->names([
             'index' => 'admin.pengumuman.index',

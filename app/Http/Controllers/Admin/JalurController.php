@@ -5,45 +5,112 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Jalur;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Carbon\Carbon;
 
 class JalurController extends Controller
 {
-    public function updateQuota(Request $request)
+    public function index()
     {
-        $request->validate([
-            'quotas' => 'required|array',
-            'quotas.*' => 'required|integer|min:0',
-            'tgl_buka' => 'nullable|array',
-            'tgl_buka.*' => 'nullable|date_format:Y-m-d\TH:i',
-            'tgl_tutup' => 'nullable|array',
-            'tgl_tutup.*' => 'nullable|date_format:Y-m-d\TH:i',
-        ]);
+        $jalurs = Jalur::withCount('pendaftarans')->latest()->paginate(10);
 
-        foreach ($request->quotas as $id => $quota) {
-            $jalur = Jalur::withCount('pendaftarans')->find($id);
-            
-            if ($jalur && $quota < $jalur->pendaftarans_count) {
-                return redirect()->back()->with('error', "Kuota Jalur {$jalur->nama_jalur} tidak bisa kurang dari jumlah pendaftar saat ini ({$jalur->pendaftarans_count} pendaftar).");
-            }
+        return view('admin.jalur.index', compact('jalurs'));
+    }
 
-            $updateData = ['total_kuota' => $quota];
+    public function create()
+    {
+        return view('admin.jalur.create');
+    }
 
-            $tglBuka = $request->input("tgl_buka.$id");
-            $tglTutup = $request->input("tgl_tutup.$id");
+    public function store(Request $request)
+    {
+        Jalur::create($this->validatedData($request));
 
-            // Normalize HTML datetime-local values before saving to DATETIME columns.
-            $updateData['tgl_buka'] = filled($tglBuka)
-                ? Carbon::createFromFormat('Y-m-d\TH:i', $tglBuka)->format('Y-m-d H:i:s')
-                : null;
+        return redirect()
+            ->route('admin.jalur.index')
+            ->with('success', 'Jalur pendaftaran berhasil ditambahkan.');
+    }
 
-            $updateData['tgl_tutup'] = filled($tglTutup)
-                ? Carbon::createFromFormat('Y-m-d\TH:i', $tglTutup)->format('Y-m-d H:i:s')
-                : null;
+    public function edit(Jalur $jalur)
+    {
+        $jalur->loadCount('pendaftarans');
 
-            Jalur::where('id', $id)->update($updateData);
+        return view('admin.jalur.edit', compact('jalur'));
+    }
+
+    public function update(Request $request, Jalur $jalur)
+    {
+        $data = $this->validatedData($request);
+
+        $jalur->loadCount('pendaftarans');
+
+        if ($data['total_kuota'] < $jalur->pendaftarans_count) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', "Kuota Jalur {$jalur->nama_jalur} tidak bisa kurang dari jumlah pendaftar saat ini ({$jalur->pendaftarans_count} pendaftar).");
         }
 
-        return redirect()->back()->with('success', 'Kuota jalur pendaftaran berhasil diperbarui.');
+        $jalur->update($data);
+
+        return redirect()
+            ->route('admin.jalur.index')
+            ->with('success', 'Jalur pendaftaran berhasil diperbarui.');
+    }
+
+    public function destroy(Jalur $jalur)
+    {
+        $jalur->loadCount('pendaftarans');
+
+        if ($jalur->pendaftarans_count > 0) {
+            return redirect()
+                ->back()
+                ->with('error', "Jalur {$jalur->nama_jalur} tidak dapat dihapus karena sudah memiliki {$jalur->pendaftarans_count} pendaftar.");
+        }
+
+        $jalur->delete();
+
+        return redirect()
+            ->route('admin.jalur.index')
+            ->with('success', 'Jalur pendaftaran berhasil dihapus.');
+    }
+
+    private function validatedData(Request $request): array
+    {
+        $data = $request->validate([
+            'nama_jalur' => 'required|string|max:255',
+            'total_kuota' => 'required|integer|min:0',
+            'deskripsi' => 'nullable|string',
+            'tgl_buka' => 'nullable|date_format:Y-m-d\TH:i',
+            'tgl_tutup' => 'nullable|date_format:Y-m-d\TH:i',
+        ], [
+            'nama_jalur.required' => 'Nama jalur wajib diisi.',
+            'total_kuota.required' => 'Total kuota wajib diisi.',
+            'total_kuota.integer' => 'Total kuota harus berupa angka.',
+            'total_kuota.min' => 'Total kuota minimal 0.',
+            'tgl_buka.date_format' => 'Format tanggal buka tidak valid.',
+            'tgl_tutup.date_format' => 'Format tanggal tutup tidak valid.',
+        ]);
+
+        if (filled($data['tgl_buka'] ?? null) && filled($data['tgl_tutup'] ?? null)) {
+            $tglBuka = Carbon::createFromFormat('Y-m-d\TH:i', $data['tgl_buka']);
+            $tglTutup = Carbon::createFromFormat('Y-m-d\TH:i', $data['tgl_tutup']);
+
+            if ($tglTutup->lt($tglBuka)) {
+                throw ValidationException::withMessages([
+                    'tgl_tutup' => 'Tanggal tutup tidak boleh lebih awal dari tanggal buka.',
+                ]);
+            }
+        }
+
+        $data['tgl_buka'] = filled($data['tgl_buka'] ?? null)
+            ? Carbon::createFromFormat('Y-m-d\TH:i', $data['tgl_buka'])->format('Y-m-d H:i:s')
+            : null;
+
+        $data['tgl_tutup'] = filled($data['tgl_tutup'] ?? null)
+            ? Carbon::createFromFormat('Y-m-d\TH:i', $data['tgl_tutup'])->format('Y-m-d H:i:s')
+            : null;
+
+        return $data;
     }
 }

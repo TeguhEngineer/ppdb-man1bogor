@@ -82,6 +82,16 @@
             </a>
         </div>
         <div class="flex items-center mr-4">
+            @if (request()->is('admin/jalur-pendaftaran*'))
+                <div class="w-[5px] h-12 bg-emerald-700 rounded-r-md"></div>
+            @endif
+            <a href="{{ route('admin.jalur.index') }}"
+                class="flex items-center flex-1 px-4 py-3 {{ request()->is('admin/jalur-pendaftaran*') ? 'bg-emerald-100 text-emerald-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3">
+                <i class="fi fi-rs-route text-lg leading-none relative top-0.5"></i>
+                <span class="ml-3 font-medium">Jalur Pendaftaran</span>
+            </a>
+        </div>
+        <div class="flex items-center mr-4">
             @if (request()->is('admin/pengumuman*'))
                 <div class="w-[5px] h-12 bg-emerald-700 rounded-r-md"></div>
             @endif

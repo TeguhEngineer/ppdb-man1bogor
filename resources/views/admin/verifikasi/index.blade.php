@@ -6,8 +6,7 @@
     </x-slot>
 
 
-    <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 mb-6"
-        x-data="{ openQuotaModal: false }">
+    <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 mb-6">
         <div class="p-6 md:p-8 text-gray-900">
             <!-- Action Row: Export Buttons (Left) & Search/Filter (Right) -->
             <div class="mb-6 flex flex-col md:flex-row justify-between items-end gap-4">
@@ -21,10 +20,6 @@
                         class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-700 font-bold rounded-lg border border-blue-200 hover:bg-blue-200 transition-colors text-sm">
                         <i class="fi fi-rs-file-excel mr-2"></i> Export Excel
                     </a>
-                    <button @click="openQuotaModal = true"
-                        class="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-700 font-bold rounded-lg border border-purple-200 hover:bg-purple-200 transition-colors text-sm">
-                        <i class="fi fi-rs-settings-sliders mr-2"></i> Setting Kuota
-                    </button>
                 </div>
 
                 <!-- Search & Filter -->
@@ -55,117 +50,6 @@
                         Filter
                     </button>
                 </form>
-            </div>
-
-            <!-- Quota Setting Modal -->
-            <div x-show="openQuotaModal" class="fixed inset-0 z-50 overflow-y-auto" x-cloak>
-                <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-                    <div x-show="openQuotaModal" x-transition:enter="ease-out duration-300"
-                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                        x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100"
-                        x-transition:leave-end="opacity-0" class="fixed inset-0 transition-opacity" aria-hidden="true">
-                        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-                    </div>
-
-                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-                    <div x-show="openQuotaModal" x-transition:enter="ease-out duration-300"
-                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                        x-transition:leave="ease-in duration-200"
-                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        class="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-
-                        <form action="{{ route('admin.jalur.update-quota') }}" method="POST">
-                            @csrf
-                            <div class="bg-white px-6 pt-6 pb-4 sm:p-8 sm:pb-4">
-                                <div class="flex items-center justify-between mb-6">
-                                    <h3 class="text-lg font-bold text-gray-900">Setting Kuota Pendaftaran</h3>
-                                    <button type="button" @click="openQuotaModal = false"
-                                        class="text-gray-400 hover:text-gray-500">
-                                        <i class="fi fi-rs-cross-small text-2xl"></i>
-                                    </button>
-                                </div>
-
-                                <div class="space-y-5">
-                                    @foreach($jalurs as $jalur)
-                                        <div class="border border-gray-200 rounded-lg p-4">
-                                            <div class="mb-4">
-                                                <label class="block text-sm font-bold text-gray-700 mb-2">
-                                                    Kuota Jalur {{ $jalur->nama_jalur }}
-                                                </label>
-                                                <div class="relative">
-                                                    <div
-                                                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                        <i class="fi fi-rs-users-alt text-gray-400"></i>
-                                                    </div>
-                                                    <input type="number" name="quotas[{{ $jalur->id }}]"
-                                                        value="{{ $jalur->total_kuota }}" min="0"
-                                                        class="pl-10 w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm">
-                                                </div>
-                                            </div>
-
-                                            <div class="grid grid-cols-2 gap-3">
-                                                <div>
-                                                    <label class="block text-sm font-semibold text-gray-700 mb-1">
-                                                        Tanggal Buka
-                                                    </label>
-                                                    <input type="datetime-local" name="tgl_buka[{{ $jalur->id }}]"
-                                                        value="{{ $jalur->tgl_buka ? $jalur->tgl_buka->format('Y-m-d\TH:i') : '' }}"
-                                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm"
-                                                        placeholder="Belum diatur">
-                                                    <p class="text-xs text-gray-500 mt-1">
-                                                        {{ $jalur->tgl_buka ? 'Dibuka: ' . $jalur->getFormattedTglBuka() : 'Belum diatur' }}
-                                                    </p>
-                                                </div>
-
-                                                <div>
-                                                    <label class="block text-sm font-semibold text-gray-700 mb-1">
-                                                        Tanggal Tutup
-                                                    </label>
-                                                    <input type="datetime-local" name="tgl_tutup[{{ $jalur->id }}]"
-                                                        value="{{ $jalur->tgl_tutup ? $jalur->tgl_tutup->format('Y-m-d\TH:i') : '' }}"
-                                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500 text-sm"
-                                                        placeholder="Belum diatur">
-                                                    <p class="text-xs text-gray-500 mt-1">
-                                                        {{ $jalur->tgl_tutup ? 'Ditutup: ' . $jalur->getFormattedTglTutup() : 'Belum diatur' }}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div class="mt-3 flex items-center gap-2 p-2 bg-blue-50 rounded-md">
-                                                <i class="fi fi-rs-info text-blue-600"></i>
-                                                <p class="text-xs text-blue-700">
-                                                    <span class="font-semibold">Status:</span> 
-                                                    <span class="capitalize">
-                                                        @if($jalur->getStatus() === 'belum_dibuka')
-                                                            <span class="text-orange-600">Belum dibuka</span>
-                                                        @elseif($jalur->getStatus() === 'ditutup')
-                                                            <span class="text-red-600">Telah ditutup</span>
-                                                        @else
-                                                            <span class="text-green-600">Terbuka</span>
-                                                        @endif
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-6 py-4 sm:px-8 sm:flex sm:flex-row-reverse gap-2">
-                                <button type="submit"
-                                    class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:w-auto sm:text-sm">
-                                    Simpan Perubahan
-                                </button>
-                                <button type="button" @click="openQuotaModal = false"
-                                    class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:mt-0 sm:w-auto sm:text-sm">
-                                    Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
 
             <div class="overflow-x-auto">
