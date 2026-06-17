@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\KartuPesertaUjian;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
@@ -86,6 +87,19 @@ class VerifikasiController extends Controller
 
         if ($request->status_berkas === 'terima') {
             $pendaftaran->update([
+                'status_pendaftaran' => 'tes',
+            ]);
+
+            $pendaftaran->kartuPesertaUjian()->firstOrCreate([
+                'pendaftaran_id' => $pendaftaran->id,
+            ], [
+                'nomor_peserta_ujian' => $this->generateNomorPesertaUjian($pendaftaran),
+                'username_ujian' => $pendaftaran->nisn ?: $pendaftaran->no_pendaftaran,
+                'password_ujian' => $pendaftaran->nisn ?: $pendaftaran->no_pendaftaran,
+                'generated_at' => now(),
+            ]);
+        } else {
+            $pendaftaran->update([
                 'status_pendaftaran' => 'verifikasi',
             ]);
         }
@@ -96,6 +110,20 @@ class VerifikasiController extends Controller
 
         return redirect()->back()->with('success', $message);
     }
+
+    private function generateNomorPesertaUjian(Pendaftaran $pendaftaran): string
+    {
+        $base = 'UJ-' . now()->format('Y') . '-' . str_pad((string) $pendaftaran->id, 5, '0', STR_PAD_LEFT);
+
+        if (! KartuPesertaUjian::where('nomor_peserta_ujian', $base)->exists()) {
+            return $base;
+        }
+
+        $sequence = KartuPesertaUjian::where('nomor_peserta_ujian', 'like', $base . '-%')->count() + 1;
+
+        return $base . '-' . $sequence;
+    }
+
     public function export(Request $request)
     {
         $type = $request->get('type', 'csv');

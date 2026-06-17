@@ -14,7 +14,7 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'peserta') {
-            $pendaftaran = Pendaftaran::with(['jalur', 'biodata', 'berkas', 'pengumumans'])
+            $pendaftaran = Pendaftaran::with(['jalur', 'biodata', 'berkas', 'pengumumans', 'kartuPesertaUjian.ruangan', 'kartuPesertaUjian.jadwalUjian'])
                 ->where('user_id', $user->id)
                 ->first();
 

@@ -33,6 +33,11 @@ class Pendaftaran extends Model
         return $this->hasMany(Pengumuman::class);
     }
 
+    public function kartuPesertaUjian()
+    {
+        return $this->hasOne(KartuPesertaUjian::class);
+    }
+
     public function isBerkasLengkap()
     {
         if (!$this->berkas) return false;

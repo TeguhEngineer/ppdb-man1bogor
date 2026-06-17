@@ -23,6 +23,19 @@ class Jalur extends Model
         return $this->hasOne(Jadwal::class);
     }
 
+    public function mapels()
+    {
+        return $this->belongsToMany(Mapel::class, 'jalur_mapel')
+            ->withPivot('urutan')
+            ->withTimestamps()
+            ->orderByPivot('urutan');
+    }
+
+    public function jadwalUjians()
+    {
+        return $this->hasMany(JadwalUjian::class);
+    }
+
     /**
      * Check if jalur is currently open for registration
      * Returns: 'belum_dibuka', 'terbuka', or 'ditutup'
@@ -87,4 +100,3 @@ class Jalur extends Model
         return $this->tgl_tutup ? $this->tgl_tutup->format('d M Y H:i') : '-';
     }
 }
-

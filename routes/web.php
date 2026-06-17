@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KartuUjianController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::get('/pendaftaran/cetak', [DashboardController::class, 'cetakFormulir'])
     ->middleware(['auth'])
     ->name('pendaftaran.cetak');
+
+Route::get('/kartu-ujian/cetak', [KartuUjianController::class, 'cetakPeserta'])
+    ->middleware(['auth'])
+    ->name('kartu-ujian.cetak');
 
 Route::middleware('auth')->group(function () {
     Route::resource('biodata', BiodataController::class);
@@ -47,6 +52,20 @@ Route::middleware('auth')->group(function () {
             'update' => 'admin.jalur.update',
             'destroy' => 'admin.jalur.destroy',
         ])->parameters(['jalur-pendaftaran' => 'jalur'])->except(['show']);
+
+        Route::get('/seleksi-ujian', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'index'])->name('admin.seleksi-ujian.index');
+        Route::post('/seleksi-ujian/ruangan', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'storeRuangan'])->name('admin.seleksi-ujian.ruangan.store');
+        Route::put('/seleksi-ujian/ruangan/{ruangan}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'updateRuangan'])->name('admin.seleksi-ujian.ruangan.update');
+        Route::delete('/seleksi-ujian/ruangan/{ruangan}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'destroyRuangan'])->name('admin.seleksi-ujian.ruangan.destroy');
+        Route::post('/seleksi-ujian/mapel', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'storeMapel'])->name('admin.seleksi-ujian.mapel.store');
+        Route::put('/seleksi-ujian/mapel/{mapel}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'updateMapel'])->name('admin.seleksi-ujian.mapel.update');
+        Route::delete('/seleksi-ujian/mapel/{mapel}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'destroyMapel'])->name('admin.seleksi-ujian.mapel.destroy');
+        Route::post('/seleksi-ujian/jadwal', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'storeJadwal'])->name('admin.seleksi-ujian.jadwal.store');
+        Route::put('/seleksi-ujian/jadwal/{jadwalUjian}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'updateJadwal'])->name('admin.seleksi-ujian.jadwal.update');
+        Route::delete('/seleksi-ujian/jadwal/{jadwalUjian}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'destroyJadwal'])->name('admin.seleksi-ujian.jadwal.destroy');
+        Route::put('/seleksi-ujian/kartu/{pendaftaran}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'updateKartu'])->name('admin.seleksi-ujian.kartu.update');
+        Route::get('/seleksi-ujian/kartu/{pendaftaran}/cetak', [KartuUjianController::class, 'cetakAdmin'])->name('admin.seleksi-ujian.kartu.cetak');
+
         Route::get('/pengumuman/search-participants', [App\Http\Controllers\Admin\PengumumanController::class, 'searchParticipants'])->name('admin.pengumuman.search');
         Route::resource('pengumuman', App\Http\Controllers\Admin\PengumumanController::class)->names([
             'index' => 'admin.pengumuman.index',

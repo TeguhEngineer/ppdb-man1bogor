@@ -74,6 +74,8 @@
                 $berkasDitolak = $berkasStatus === 'tolak';
                 $berkasDiterima = $berkasStatus === 'terima';
                 $berkasPesan = optional($pendaftaran->berkas)->pesan;
+                $kartuUjian = $pendaftaran->kartuPesertaUjian;
+                $kartuUjianSiap = $kartuUjian && $kartuUjian->ruangan_id && $kartuUjian->jadwal_ujian_id;
 
                 $statusColors = [
                     'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
@@ -103,8 +105,8 @@
                             : ($berkasDiterima ? 'bg-green-100 text-green-800 border-green-200' : 'bg-gray-100 text-gray-700 border-gray-200'),
                     ],
                     'tes' => [
-                        'text' => 'Menyusul',
-                        'class' => 'bg-gray-100 text-gray-700 border-gray-200',
+                        'text' => $kartuUjianSiap ? 'Kartu Siap' : 'Menyusul',
+                        'class' => $kartuUjianSiap ? 'bg-purple-100 text-purple-800 border-purple-200' : 'bg-gray-100 text-gray-700 border-gray-200',
                     ],
                     'pengumuman' => [
                         'text' => $pendaftaran->status_pendaftaran === 'lulus'
@@ -274,6 +276,43 @@
                             class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Upload
                             Berkas</a>
                     @endif
+                @endif
+            </div>
+        </div>
+
+        <!-- Kartu Ujian Action -->
+        <div
+            class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $kartuUjianSiap ? 'purple' : 'gray' }}-500">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Kartu Peserta Ujian</h3>
+                    <p class="text-gray-500 text-sm mt-1">Kartu tersedia setelah berkas diterima dan jadwal ujian ditentukan panitia.</p>
+                </div>
+                <div
+                    class="bg-{{ $kartuUjianSiap ? 'purple' : 'gray' }}-100 text-{{ $kartuUjianSiap ? 'purple' : 'gray' }}-600 p-3 rounded-full">
+                    <i class="fi fi-rs-{{ $kartuUjianSiap ? 'ticket' : 'time-past' }} text-xl"></i>
+                </div>
+            </div>
+            <div class="mt-6">
+                @if ($kartuUjianSiap)
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                        Siap Dicetak
+                    </span>
+                    <a href="{{ route('kartu-ujian.cetak') }}" target="_blank"
+                        class="block text-center mt-4 w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-lg shadow transition-colors">
+                        Cetak Kartu Ujian
+                    </a>
+                @elseif($berkasAccepted)
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Menunggu Jadwal
+                    </span>
+                @else
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                        Belum Tersedia
+                    </span>
                 @endif
             </div>
         </div>
