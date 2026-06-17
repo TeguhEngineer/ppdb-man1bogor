@@ -57,20 +57,40 @@
                 </div>
             @endif
 
-            @php $isVerified = isset($pendaftaran) && $pendaftaran->status_pendaftaran === 'verifikasi'; @endphp
+            @if (session('error'))
+                <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Gagal!</strong>
+                    <span class="block sm:inline">{{ session('error') }}</span>
+                </div>
+            @endif
+
+            @php
+                $isRejected = $berka->status_berkas === 'tolak';
+                $isAccepted = $berka->status_berkas === 'terima';
+                $isWaitingReview = $pendaftaran->status_pendaftaran === 'verifikasi' && !$isRejected;
+                $isLocked = $isAccepted || in_array($pendaftaran->status_pendaftaran, ['tes', 'lulus', 'tidak_lulus'], true) || $isWaitingReview;
+            @endphp
 
             <form action="{{ route('berkas.update', $berka->id) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                 @csrf
                 @method('PUT')
 
-                @if($isVerified)
+                @if($isRejected)
+                    <div class="mb-4 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">Berkas ditolak.</strong>
+                        <span class="block">Silakan perbaiki dokumen sesuai catatan, simpan perubahan, lalu ajukan ulang dari dashboard.</span>
+                        @if($berka->pesan)
+                            <p class="mt-2 text-sm">{{ $berka->pesan }}</p>
+                        @endif
+                    </div>
+                @elseif($isLocked)
                     <div class="mb-4 bg-green-100 border border-green-300 text-green-800 px-4 py-3 rounded relative" role="alert">
-                        <strong class="font-bold">Data sudah diverifikasi.</strong>
-                        <span class="block">Berkas tidak dapat diubah lagi.</span>
+                        <strong class="font-bold">{{ $isAccepted ? 'Berkas sudah diterima.' : 'Berkas sedang diverifikasi.' }}</strong>
+                        <span class="block">Berkas tidak dapat diubah saat ini.</span>
                     </div>
                 @endif
 
-                <fieldset @if($isVerified) disabled @endif>
+                <fieldset @if($isLocked) disabled @endif>
                 
                 <div>
                     <h3 class="text-lg leading-6 font-medium text-gray-900 border-b pb-2 mb-4">Dokumen Persyaratan</h3>
@@ -215,12 +235,12 @@
                 </fieldset>
 
                 <div class="flex justify-end border-t pt-6 mt-8">
-                    @if(!$isVerified)
+                    @if(!$isLocked)
                         <button type="submit" class="inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
                             Perbarui Berkas
                         </button>
                     @else
-                        <div class="text-sm text-gray-700">Data sudah diverifikasi dan tidak dapat diubah.</div>
+                        <div class="text-sm text-gray-700">Berkas tidak dapat diubah saat ini.</div>
                     @endif
                 </div>
             </form>

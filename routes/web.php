@@ -26,6 +26,7 @@ Route::get('/kartu-ujian/cetak', [KartuUjianController::class, 'cetakPeserta'])
 
 Route::middleware('auth')->group(function () {
     Route::resource('biodata', BiodataController::class);
+    Route::post('berkas/{berka}/ajukan-ulang', [BerkasController::class, 'ajukanUlang'])->name('berkas.ajukan-ulang');
     Route::resource('berkas', BerkasController::class);
     Route::get('pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman.index');
     Route::post('pengumuman/{id}/dibaca', [App\Http\Controllers\PengumumanController::class, 'tandaiDibaca'])->name('pengumuman.dibaca');

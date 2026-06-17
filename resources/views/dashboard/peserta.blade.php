@@ -23,6 +23,34 @@
         </div>
     </div>
 
+    @if (session('success'))
+        <div class="mb-6 bg-green-50 border-l-4 border-green-500 p-4 rounded-r-xl shadow-sm">
+            <div class="flex items-center">
+                <div class="shrink-0">
+                    <i class="fi fi-rs-check-circle text-green-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-bold text-green-800 uppercase tracking-wider">Berhasil</h3>
+                    <p class="text-xs text-green-700 mt-1 leading-relaxed">{{ session('success') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm">
+            <div class="flex items-center">
+                <div class="shrink-0">
+                    <i class="fi fi-rs-cross text-red-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-bold text-red-800 uppercase tracking-wider">Gagal</h3>
+                    <p class="text-xs text-red-700 mt-1 leading-relaxed">{{ session('error') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <!-- Informasi Penting Badge -->
     @if (!$pendaftaran->isLengkap())
         <div class="mb-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-xl shadow-sm">
@@ -37,6 +65,43 @@
                             Wajib</strong> belum diisi lengkap. Silakan lengkapi seluruh data Anda segera agar dapat
                         diproses ke tahap selanjutnya.
                     </p>
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @if (optional($pendaftaran->berkas)->status_berkas === 'tolak')
+        <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div class="flex items-start">
+                    <div class="shrink-0">
+                        <i class="fi fi-rs-exclamation text-red-500 text-xl"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-bold text-red-800 uppercase tracking-wider">Verifikasi Berkas Ditolak</h3>
+                        <p class="text-xs text-red-700 mt-1 leading-relaxed">
+                            Admin menolak berkas Anda. Perbaiki dokumen sesuai catatan, lalu klik
+                            <strong>Ajukan Ulang Verifikasi</strong> agar status berkas kembali menunggu pemeriksaan admin.
+                        </p>
+                        @if($pendaftaran->berkas->pesan)
+                            <div class="mt-3 bg-white border border-red-200 rounded-lg px-3 py-2 text-xs text-red-800">
+                                <span class="font-bold">Catatan admin:</span> {{ $pendaftaran->berkas->pesan }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 md:shrink-0">
+                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-white border border-red-200 text-red-700 font-bold rounded-lg hover:bg-red-100 transition-colors text-sm">
+                        Perbaiki Berkas
+                    </a>
+                    <form action="{{ route('berkas.ajukan-ulang', $pendaftaran->berkas->id) }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors text-sm">
+                            Ajukan Ulang Verifikasi
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -246,6 +311,13 @@
                     <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
                         class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Perbaiki
                         Berkas</a>
+                    <form action="{{ route('berkas.ajukan-ulang', $pendaftaran->berkas->id) }}" method="POST" class="mt-3">
+                        @csrf
+                        <button type="submit"
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded-lg shadow transition-colors">
+                            Ajukan Ulang Verifikasi
+                        </button>
+                    </form>
                 @elseif ($isBerkasComplete)
                     <span
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $berkasAccepted ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">

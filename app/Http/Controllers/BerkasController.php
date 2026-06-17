@@ -106,7 +106,7 @@ class BerkasController extends Controller
             abort(403);
         }
 
-        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
+        if (!$this->canUpdateBerkas($pendaftaran, $berka)) {
             return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
         }
 
@@ -168,5 +168,50 @@ class BerkasController extends Controller
         $berka->save();
 
         return redirect()->back()->with('success', 'Berkas berhasil diperbarui!');
+    }
+
+    public function ajukanUlang(Berkas $berka)
+    {
+        $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
+
+        if ($berka->pendaftaran_id !== $pendaftaran->id) {
+            abort(403);
+        }
+
+        if ($berka->status_berkas !== 'tolak') {
+            return redirect()->route('dashboard')->with('error', 'Pengajuan ulang hanya tersedia untuk berkas yang ditolak.');
+        }
+
+        if (!$pendaftaran->isBerkasLengkap()) {
+            return redirect()->route('berkas.edit', $berka->id)->with('error', 'Lengkapi seluruh berkas wajib sebelum mengajukan ulang verifikasi.');
+        }
+
+        $berka->update([
+            'status_berkas' => null,
+            'pesan' => null,
+        ]);
+
+        $pendaftaran->update([
+            'status_pendaftaran' => 'verifikasi',
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Berkas berhasil diajukan ulang dan menunggu verifikasi admin.');
+    }
+
+    private function canUpdateBerkas(Pendaftaran $pendaftaran, Berkas $berkas): bool
+    {
+        if ($berkas->status_berkas === 'terima') {
+            return false;
+        }
+
+        if (in_array($pendaftaran->status_pendaftaran, ['tes', 'lulus', 'tidak_lulus'], true)) {
+            return false;
+        }
+
+        if ($pendaftaran->status_pendaftaran === 'verifikasi' && $berkas->status_berkas !== 'tolak') {
+            return false;
+        }
+
+        return true;
     }
 }
