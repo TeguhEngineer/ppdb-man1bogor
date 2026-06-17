@@ -189,7 +189,7 @@
                     <td>{{ strtoupper($pendaftaran->jalur->nama_jalur) }}</td>
                 </tr>
                 <tr>
-                    <td class="label">Pilihan Kampus</td>
+                    <td class="label">Lokasi</td>
                     <td class="sep">:</td>
                     <td><strong>{{ strtoupper($pendaftaran->kampus) }}</strong></td>
                 </tr>

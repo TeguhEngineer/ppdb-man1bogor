@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-8 text-center">
         <h2 class="text-2xl font-bold text-gray-900">Masuk ke Akun</h2>
-        <p class="text-sm text-gray-500 mt-2">Masukan NISN dan password yang terdaftar.</p>
+        <p class="text-sm text-gray-500 mt-2">Masukkan email dan password yang terdaftar.</p>
     </div>
 
     <!-- Session Status -->
@@ -14,14 +14,14 @@
     <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
-        <!-- NISN -->
+        <!-- Email -->
         <div>
-            <label for="nisn" class="block font-medium text-sm text-gray-700 mb-1">NISN Saat Mendaftar</label>
-            <input id="nisn" type="text" name="nisn" value="{{ old('nisn') }}" required autofocus
+            <label for="email" class="block font-medium text-sm text-gray-700 mb-1">Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
                 autocomplete="username"
                 class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white"
-                placeholder="Masukkan 10 digit NISN" />
-            @error('nisn')
+                placeholder="Masukkan email aktif" />
+            @error('email')
                 <p class="mt-2 text-sm text-red-600 font-medium">{{ $message }}</p>
             @enderror
         </div>
@@ -31,7 +31,7 @@
             <label for="password" class="block font-medium text-sm text-gray-700 mb-1">Password</label>
             <input id="password" type="password" name="password" required autocomplete="current-password"
                 class="w-full border border-gray-300 focus:border-[#22690f] focus:ring focus:ring-[#22690f] focus:ring-opacity-20 rounded-xl shadow-sm px-4 py-3 text-sm transition-all bg-gray-50 hover:bg-white"
-                placeholder="********" />
+                placeholder="Peserta gunakan NISN saat daftar" />
             @error('password')
                 <p class="mt-2 text-sm text-red-600 font-medium">{{ $message }}</p>
             @enderror
