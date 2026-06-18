@@ -70,42 +70,7 @@
         </div>
     @endif
 
-    @if (optional($pendaftaran->berkas)->status_berkas === 'tolak')
-        <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm">
-            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                <div class="flex items-start">
-                    <div class="shrink-0">
-                        <i class="fi fi-rs-exclamation text-red-500 text-xl"></i>
-                    </div>
-                    <div class="ml-3">
-                        <h3 class="text-sm font-bold text-red-800 uppercase tracking-wider">Verifikasi Berkas Ditolak</h3>
-                        <p class="text-xs text-red-700 mt-1 leading-relaxed">
-                            Admin menolak berkas Anda. Perbaiki dokumen sesuai catatan, lalu klik
-                            <strong>Ajukan Ulang Verifikasi</strong> agar status berkas kembali menunggu pemeriksaan admin.
-                        </p>
-                        @if($pendaftaran->berkas->pesan)
-                            <div class="mt-3 bg-white border border-red-200 rounded-lg px-3 py-2 text-xs text-red-800">
-                                <span class="font-bold">Catatan admin:</span> {{ $pendaftaran->berkas->pesan }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-2 md:shrink-0">
-                    <a href="{{ $pendaftaran->biodata ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => 'berkas']) : route('biodata.create', ['tab' => 'berkas']) }}"
-                        class="inline-flex items-center justify-center px-4 py-2 bg-white border border-red-200 text-red-700 font-bold rounded-lg hover:bg-red-100 transition-colors text-sm">
-                        Perbaiki Berkas
-                    </a>
-                    <form action="{{ route('berkas.ajukan-ulang', $pendaftaran->berkas->id) }}" method="POST">
-                        @csrf
-                        <button type="submit"
-                            class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors text-sm">
-                            Ajukan Ulang Verifikasi
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endif
+   
 
     <!-- Status Timeline -->
     <div class="bg-white rounded-xl shadow-md p-6 mb-6">
@@ -222,6 +187,43 @@
             @endforeach
         </div>
     </div>
+    
+     @if (optional($pendaftaran->berkas)->status_berkas === 'tolak')
+        <div class="mb-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl shadow-sm">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div class="flex items-start">
+                    <div class="shrink-0">
+                        <i class="fi fi-rs-exclamation text-red-500 text-xl"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-bold text-red-800 uppercase tracking-wider">Verifikasi Berkas Ditolak</h3>
+                        <p class="text-xs text-red-700 mt-1 leading-relaxed">
+                            Admin menolak berkas Anda. Perbaiki dokumen sesuai catatan, lalu klik
+                            <strong>Ajukan Ulang Verifikasi</strong> agar status berkas kembali menunggu pemeriksaan admin.
+                        </p>
+                        @if($pendaftaran->berkas->pesan)
+                            <div class="mt-3 bg-white border border-red-200 rounded-lg px-3 py-2 text-xs text-red-800">
+                                <span class="font-bold">Catatan admin:</span> {{ $pendaftaran->berkas->pesan }}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 md:shrink-0">
+                    <a href="{{ $pendaftaran->biodata ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => 'berkas']) : route('biodata.create', ['tab' => 'berkas']) }}"
+                        class="inline-flex items-center justify-center px-4 py-2 bg-white border border-red-200 text-red-700 font-bold rounded-lg hover:bg-red-100 transition-colors text-sm">
+                        Perbaiki Berkas
+                    </a>
+                    <form action="{{ route('berkas.ajukan-ulang', $pendaftaran->berkas->id) }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 transition-colors text-sm">
+                            Ajukan Ulang Verifikasi
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Biodata Action -->
