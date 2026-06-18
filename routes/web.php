@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KartuUjianController;
+use App\Http\Controllers\HasilKelulusanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\BerkasController;
 use Illuminate\Support\Facades\Route;
@@ -24,12 +25,17 @@ Route::get('/kartu-ujian/cetak', [KartuUjianController::class, 'cetakPeserta'])
     ->middleware(['auth'])
     ->name('kartu-ujian.cetak');
 
+Route::get('/hasil-kelulusan/cetak', [HasilKelulusanController::class, 'cetak'])
+    ->middleware(['auth'])
+    ->name('hasil-kelulusan.cetak');
+
 Route::middleware('auth')->group(function () {
     Route::post('biodata/tab/{tab}', [BiodataController::class, 'updateTab'])->name('biodata.tab.update');
     Route::resource('biodata', BiodataController::class)->except(['index', 'show', 'destroy']);
     Route::post('berkas/{berka}/ajukan-ulang', [BerkasController::class, 'ajukanUlang'])->name('berkas.ajukan-ulang');
     Route::resource('berkas', BerkasController::class)->except(['index', 'show', 'destroy']);
     Route::get('pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman.index');
+    Route::get('hasil-kelulusan', [HasilKelulusanController::class, 'index'])->name('hasil-kelulusan.index');
     
     // Profile routes (all authenticated users)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.index');
