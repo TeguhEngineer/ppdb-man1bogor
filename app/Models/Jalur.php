@@ -18,11 +18,6 @@ class Jalur extends Model
         return $this->hasMany(Pendaftaran::class);
     }
 
-    public function jadwal()
-    {
-        return $this->hasOne(Jadwal::class);
-    }
-
     public function mapels()
     {
         return $this->belongsToMany(Mapel::class, 'jalur_mapel')
