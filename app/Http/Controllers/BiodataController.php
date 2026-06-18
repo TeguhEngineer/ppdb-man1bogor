@@ -143,7 +143,7 @@ class BiodataController extends Controller
             'anak_ke' => ['required', 'integer'],
             'jumlah_saudara' => ['required', 'integer'],
             'agama' => ['required', 'string', 'max:20'],
-            'no_whatsapp' => ['required', 'string', 'max:20'],
+            'no_whatsapp' => ['bail', 'required', 'string', 'max:20'],
             'alamat' => ['required', 'string'],
             'desa' => ['required', 'string', 'max:100'],
             'kecamatan' => ['required', 'string', 'max:100'],
@@ -219,6 +219,7 @@ class BiodataController extends Controller
             'unique' => ':attribute sudah terdaftar.',
             'string' => ':attribute harus berupa teks.',
             'max' => ':attribute maksimal :max karakter.',
+            'no_whatsapp.max' => 'Nomor WhatsApp maksimal 20 karakter.',
         ];
     }
 

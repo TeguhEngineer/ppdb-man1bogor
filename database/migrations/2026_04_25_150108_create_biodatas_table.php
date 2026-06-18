@@ -30,7 +30,7 @@ return new class extends Migration
             $table->integer('anak_ke')->nullable();
             $table->integer('jumlah_saudara')->nullable();
             $table->string('agama', 20);
-            $table->string('no_whatsapp', 15);
+            $table->string('no_whatsapp', 20);
             
             // Data Alamat
             $table->text('alamat');

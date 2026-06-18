@@ -142,7 +142,7 @@
                                 ] as $name => [$label, $type])
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700">{{ $label }} <span class="text-red-500">*</span></label>
-                                        <input type="{{ $type }}" name="{{ $name }}" value="{{ $field($dataPribadi, $name) }}" class="{{ $inputClass }}" required>
+                                        <input type="{{ $type }}" name="{{ $name }}" value="{{ $field($dataPribadi, $name) }}" class="{{ $inputClass }}" @if($name === 'no_whatsapp') maxlength="20" @endif required>
                                         {!! $fieldError($name) !!}
                                     </div>
                                 @endforeach
