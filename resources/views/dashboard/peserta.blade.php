@@ -226,9 +226,9 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Biodata Action -->
         @php
-            $hasBiodata = $pendaftaran->biodata || $pendaftaran->dataPribadi || $pendaftaran->alamat || $pendaftaran->pendidikan || $pendaftaran->dataAyah || $pendaftaran->dataIbu;
+            $hasBiodata = $pendaftaran->biodata || $pendaftaran->dataPribadi || $pendaftaran->dataOrangtua;
             $isBiodataComplete = $pendaftaran->isBiodataLengkap();
-            $biodataUrl = fn ($tab = 'registrasi') => $pendaftaran->biodata
+            $biodataUrl = fn ($tab = 'pribadi') => $pendaftaran->biodata
                 ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => $tab])
                 : route('biodata.create', ['tab' => $tab]);
         @endphp
@@ -251,7 +251,7 @@
                         Selesai Diisi
                     </span>
                     <div class="grid grid-cols-2 gap-3 mt-4">
-                        <a href="{{ $biodataUrl('registrasi') }}"
+                        <a href="{{ $biodataUrl('pribadi') }}"
                             class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors text-sm">
                             <i class="fi fi-rs-eye mr-2"></i> Lihat Data
                         </a>
@@ -265,7 +265,7 @@
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Lengkap
                     </span>
-                    <a href="{{ $biodataUrl('registrasi') }}"
+                    <a href="{{ $biodataUrl('pribadi') }}"
                         class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi
                         Biodata</a>
                 @else
@@ -273,7 +273,7 @@
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Diisi
                     </span>
-                    <a href="{{ $biodataUrl('registrasi') }}"
+                    <a href="{{ $biodataUrl('pribadi') }}"
                         class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi
                         Biodata Sekarang</a>
                 @endif

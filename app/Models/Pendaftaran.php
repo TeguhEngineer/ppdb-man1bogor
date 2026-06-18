@@ -25,37 +25,12 @@ class Pendaftaran extends Model
 
     public function dataPribadi()
     {
-        return $this->hasOne(BiodataPribadi::class);
+        return $this->hasOne(DataPribadi::class);
     }
 
-    public function alamat()
+    public function dataOrangtua()
     {
-        return $this->hasOne(BiodataAlamat::class);
-    }
-
-    public function pendidikan()
-    {
-        return $this->hasOne(BiodataPendidikan::class);
-    }
-
-    public function penunjangPrestasi()
-    {
-        return $this->hasOne(BiodataPenunjangPrestasi::class);
-    }
-
-    public function dataAyah()
-    {
-        return $this->hasOne(BiodataDataAyah::class);
-    }
-
-    public function dataIbu()
-    {
-        return $this->hasOne(BiodataDataIbu::class);
-    }
-
-    public function dataWali()
-    {
-        return $this->hasOne(BiodataDataWali::class);
+        return $this->hasOne(DataOrangtua::class);
     }
 
     public function berkas()
@@ -105,7 +80,7 @@ class Pendaftaran extends Model
 
     public function isBiodataLengkap()
     {
-        if ($this->dataPribadi || $this->alamat || $this->pendidikan || $this->dataAyah || $this->dataIbu) {
+        if ($this->dataPribadi || $this->dataOrangtua) {
             $requiredGroups = [
                 [
                     'model' => $this->dataPribadi,
@@ -113,30 +88,15 @@ class Pendaftaran extends Model
                         'nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
                         'no_kk', 'tinggi_badan', 'berat_badan', 'status_dalam_keluarga',
                         'tinggal_bersama', 'anak_ke', 'jumlah_saudara', 'agama', 'no_whatsapp',
-                    ],
-                ],
-                [
-                    'model' => $this->alamat,
-                    'fields' => [
                         'alamat', 'desa', 'kecamatan', 'kabupaten', 'provinsi', 'kode_pos',
                         'jarak_ke_sekolah', 'waktu_tempuh_ke_sekolah',
-                    ],
-                ],
-                [
-                    'model' => $this->pendidikan,
-                    'fields' => [
                         'asal_satuan_pendidikan', 'nama_asal_sekolah', 'npsn',
                     ],
                 ],
                 [
-                    'model' => $this->dataAyah,
+                    'model' => $this->dataOrangtua,
                     'fields' => [
                         'nama_ayah', 'pendidikan_terakhir_ayah', 'pekerjaan_ayah', 'penghasilan_ayah', 'no_hp_ayah',
-                    ],
-                ],
-                [
-                    'model' => $this->dataIbu,
-                    'fields' => [
                         'nama_ibu', 'pendidikan_terakhir_ibu', 'pekerjaan_ibu', 'penghasilan_ibu', 'no_hp_ibu',
                     ],
                 ],
@@ -216,12 +176,7 @@ class Pendaftaran extends Model
 
         foreach ([
             $this->dataPribadi,
-            $this->alamat,
-            $this->pendidikan,
-            $this->penunjangPrestasi,
-            $this->dataAyah,
-            $this->dataIbu,
-            $this->dataWali,
+            $this->dataOrangtua,
         ] as $model) {
             if ($model) {
                 $data = array_merge($data, collect($model->getAttributes())->except(['id', 'pendaftaran_id', 'created_at', 'updated_at'])->toArray());

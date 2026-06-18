@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BiodataAlamat extends Model
+class DataOrangtua extends Model
 {
+    protected $table = 'data_orangtua';
+
     protected $guarded = ['id'];
 
     public function pendaftaran()

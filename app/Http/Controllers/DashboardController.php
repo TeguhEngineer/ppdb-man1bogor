@@ -19,12 +19,7 @@ class DashboardController extends Controller
                 'biodata',
                 'berkas',
                 'dataPribadi',
-                'alamat',
-                'pendidikan',
-                'penunjangPrestasi',
-                'dataAyah',
-                'dataIbu',
-                'dataWali',
+                'dataOrangtua',
                 'kartuPesertaUjian.ruangan',
                 'kartuPesertaUjian.jadwalUjian',
             ])

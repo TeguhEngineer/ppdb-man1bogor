@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\BiodataPribadi;
+use App\Models\DataPribadi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,19 +49,14 @@ class ProfileController extends Controller
                     }
 
                     $path = $request->file('foto_profil')->store('berkas/foto_profil', 'public');
-                    BiodataPribadi::updateOrCreate(
+                    DataPribadi::updateOrCreate(
                         ['pendaftaran_id' => $pendaftaran->id],
                         ['foto_profil' => $path]
                     );
 
                     $pendaftaran->fresh([
                         'dataPribadi',
-                        'alamat',
-                        'pendidikan',
-                        'penunjangPrestasi',
-                        'dataAyah',
-                        'dataIbu',
-                        'dataWali',
+                        'dataOrangtua',
                     ])->syncBiodataAggregate();
                 } else {
                     return Redirect::route('profile.index')->with('error', 'Gagal mengunggah foto. Anda belum mengisi biodata pendaftaran.');

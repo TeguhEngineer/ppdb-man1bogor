@@ -3,13 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biodata;
-use App\Models\BiodataAlamat;
-use App\Models\BiodataDataAyah;
-use App\Models\BiodataDataIbu;
-use App\Models\BiodataDataWali;
-use App\Models\BiodataPendidikan;
-use App\Models\BiodataPenunjangPrestasi;
-use App\Models\BiodataPribadi;
+use App\Models\DataOrangtua;
+use App\Models\DataPribadi;
 use App\Models\Jalur;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
@@ -20,14 +15,8 @@ use Illuminate\Validation\ValidationException;
 class BiodataController extends Controller
 {
     private array $tabs = [
-        'registrasi',
         'pribadi',
-        'alamat',
-        'pendidikan',
-        'prestasi',
-        'ayah',
-        'ibu',
-        'wali',
+        'orangtua',
         'berkas',
     ];
 
@@ -38,11 +27,11 @@ class BiodataController extends Controller
         if ($pendaftaran->biodata) {
             return redirect()->route('biodata.edit', [
                 'biodatum' => $pendaftaran->biodata->id,
-                'tab' => $request->query('tab', 'registrasi'),
+                'tab' => $request->query('tab', 'pribadi'),
             ]);
         }
 
-        return $this->showForm($pendaftaran, null, $request->query('tab', 'registrasi'));
+        return $this->showForm($pendaftaran, null, $request->query('tab', 'pribadi'));
     }
 
     public function edit(Request $request, Biodata $biodatum)
@@ -55,7 +44,7 @@ class BiodataController extends Controller
 
         $pendaftaran = $this->loadBiodataRelations($pendaftaran);
 
-        return $this->showForm($pendaftaran, $biodatum, $request->query('tab', 'registrasi'));
+        return $this->showForm($pendaftaran, $biodatum, $request->query('tab', 'pribadi'));
     }
 
     public function updateTab(Request $request, string $tab)
@@ -67,14 +56,8 @@ class BiodataController extends Controller
         $this->ensureEditable($pendaftaran);
 
         match ($tab) {
-            'registrasi' => $this->saveRegistrasi($request, $pendaftaran),
-            'pribadi' => $this->savePribadi($request, $pendaftaran),
-            'alamat' => $this->saveAlamat($request, $pendaftaran),
-            'pendidikan' => $this->savePendidikan($request, $pendaftaran),
-            'prestasi' => $this->savePrestasi($request, $pendaftaran),
-            'ayah' => $this->saveAyah($request, $pendaftaran),
-            'ibu' => $this->saveIbu($request, $pendaftaran),
-            'wali' => $this->saveWali($request, $pendaftaran),
+            'pribadi' => $this->saveDataPribadi($request, $pendaftaran),
+            'orangtua' => $this->saveDataOrangtua($request, $pendaftaran),
         };
 
         $biodata = $this->loadBiodataRelations($pendaftaran)->syncBiodataAggregate();
@@ -102,7 +85,7 @@ class BiodataController extends Controller
     {
         $pendaftaran = $this->loadBiodataRelations($pendaftaran);
         $jalurs = Jalur::all();
-        $activeTab = in_array($activeTab, $this->tabs, true) ? $activeTab : 'registrasi';
+        $activeTab = in_array($activeTab, $this->tabs, true) ? $activeTab : 'pribadi';
 
         return view('biodata.form', compact('pendaftaran', 'biodatum', 'jalurs', 'activeTab'));
     }
@@ -119,12 +102,7 @@ class BiodataController extends Controller
             'berkas',
             'jalur',
             'dataPribadi',
-            'alamat',
-            'pendidikan',
-            'penunjangPrestasi',
-            'dataAyah',
-            'dataIbu',
-            'dataWali',
+            'dataOrangtua',
         ]);
     }
 
@@ -137,23 +115,15 @@ class BiodataController extends Controller
         }
     }
 
-    private function saveRegistrasi(Request $request, Pendaftaran $pendaftaran): void
-    {
-        $validated = $this->validateBiodata($request, [
-            'nisn' => ['required', 'numeric', 'digits:10'],
-            'jalur_id' => ['required', 'exists:jalurs,id'],
-            'kampus' => ['required', 'string', 'max:255'],
-        ]);
-
-        $pendaftaran->update($validated);
-    }
-
-    private function savePribadi(Request $request, Pendaftaran $pendaftaran): void
+    private function saveDataPribadi(Request $request, Pendaftaran $pendaftaran): void
     {
         $biodataId = optional($pendaftaran->biodata)->id;
         $dataPribadiId = optional($pendaftaran->dataPribadi)->id;
 
         $validated = $this->validateBiodata($request, [
+            'nisn' => ['required', 'numeric', 'digits:10'],
+            'jalur_id' => ['required', 'exists:jalurs,id'],
+            'kampus' => ['required', 'string', 'max:255'],
             'nama_lengkap' => ['required', 'string', 'max:255'],
             'tempat_lahir' => ['required', 'string', 'max:255'],
             'tanggal_lahir' => ['required', 'date'],
@@ -163,7 +133,7 @@ class BiodataController extends Controller
                 'numeric',
                 'digits:16',
                 Rule::unique('biodatas', 'nik')->ignore($biodataId),
-                Rule::unique('biodata_pribadis', 'nik')->ignore($dataPribadiId),
+                Rule::unique('data_pribadi', 'nik')->ignore($dataPribadiId),
             ],
             'no_kk' => ['required', 'numeric', 'digits:16'],
             'tinggi_badan' => ['required', 'integer'],
@@ -174,14 +144,6 @@ class BiodataController extends Controller
             'jumlah_saudara' => ['required', 'integer'],
             'agama' => ['required', 'string', 'max:255'],
             'no_whatsapp' => ['required', 'string', 'max:30'],
-        ]);
-
-        BiodataPribadi::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
-    }
-
-    private function saveAlamat(Request $request, Pendaftaran $pendaftaran): void
-    {
-        $validated = $this->validateBiodata($request, [
             'alamat' => ['required', 'string'],
             'desa' => ['required', 'string', 'max:255'],
             'kecamatan' => ['required', 'string', 'max:255'],
@@ -190,36 +152,24 @@ class BiodataController extends Controller
             'kode_pos' => ['required', 'digits:5'],
             'jarak_ke_sekolah' => ['required', 'string', 'max:255'],
             'waktu_tempuh_ke_sekolah' => ['required', 'string', 'max:255'],
-        ]);
-
-        BiodataAlamat::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
-    }
-
-    private function savePendidikan(Request $request, Pendaftaran $pendaftaran): void
-    {
-        $validated = $this->validateBiodata($request, [
             'asal_satuan_pendidikan' => ['required', 'in:SMP,MTS'],
             'nama_asal_sekolah' => ['required', 'string', 'max:255'],
             'npsn' => ['required', 'string', 'max:255'],
         ]);
 
-        BiodataPendidikan::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
-    }
-
-    private function savePrestasi(Request $request, Pendaftaran $pendaftaran): void
-    {
-        $validated = $this->validateBiodata($request, [
-            'kategori_prestasi' => ['nullable', 'string', 'max:255'],
-            'jumlah_juz' => ['nullable', 'integer'],
-            'tingkat_prestasi' => ['nullable', 'string', 'max:255'],
-            'jenis_prestasi' => ['nullable', 'string', 'max:255'],
-            'nama_lomba' => ['nullable', 'string', 'max:255'],
+        $pendaftaran->update([
+            'nisn' => $validated['nisn'],
+            'jalur_id' => $validated['jalur_id'],
+            'kampus' => $validated['kampus'],
         ]);
 
-        BiodataPenunjangPrestasi::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+        DataPribadi::updateOrCreate(
+            ['pendaftaran_id' => $pendaftaran->id],
+            collect($validated)->except(['nisn', 'jalur_id', 'kampus'])->toArray()
+        );
     }
 
-    private function saveAyah(Request $request, Pendaftaran $pendaftaran): void
+    private function saveDataOrangtua(Request $request, Pendaftaran $pendaftaran): void
     {
         $validated = $this->validateBiodata($request, [
             'nama_ayah' => ['required', 'string', 'max:255'],
@@ -230,14 +180,6 @@ class BiodataController extends Controller
             'pekerjaan_ayah' => ['required', 'string', 'max:255'],
             'penghasilan_ayah' => ['required', 'string', 'max:255'],
             'no_hp_ayah' => ['required', 'string', 'max:30'],
-        ]);
-
-        BiodataDataAyah::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
-    }
-
-    private function saveIbu(Request $request, Pendaftaran $pendaftaran): void
-    {
-        $validated = $this->validateBiodata($request, [
             'nama_ibu' => ['required', 'string', 'max:255'],
             'nik_ibu' => ['nullable', 'string', 'max:255'],
             'tempat_lahir_ibu' => ['nullable', 'string', 'max:255'],
@@ -246,14 +188,6 @@ class BiodataController extends Controller
             'pekerjaan_ibu' => ['required', 'string', 'max:255'],
             'penghasilan_ibu' => ['required', 'string', 'max:255'],
             'no_hp_ibu' => ['required', 'string', 'max:30'],
-        ]);
-
-        BiodataDataIbu::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
-    }
-
-    private function saveWali(Request $request, Pendaftaran $pendaftaran): void
-    {
-        $validated = $this->validateBiodata($request, [
             'nama_wali' => ['nullable', 'string', 'max:255'],
             'nik_wali' => ['nullable', 'string', 'max:255'],
             'tempat_lahir_wali' => ['nullable', 'string', 'max:255'],
@@ -264,7 +198,7 @@ class BiodataController extends Controller
             'no_hp_wali' => ['nullable', 'string', 'max:30'],
         ]);
 
-        BiodataDataWali::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+        DataOrangtua::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
     }
 
     private function validateBiodata(Request $request, array $rules): array
@@ -319,11 +253,6 @@ class BiodataController extends Controller
             'asal_satuan_pendidikan' => 'asal satuan pendidikan',
             'nama_asal_sekolah' => 'nama asal sekolah',
             'npsn' => 'NPSN',
-            'kategori_prestasi' => 'kategori prestasi',
-            'jumlah_juz' => 'jumlah juz hafalan',
-            'tingkat_prestasi' => 'tingkat prestasi',
-            'jenis_prestasi' => 'jenis prestasi',
-            'nama_lomba' => 'nama lomba',
             'nama_ayah' => 'nama ayah',
             'nik_ayah' => 'NIK ayah',
             'tempat_lahir_ayah' => 'tempat lahir ayah',
