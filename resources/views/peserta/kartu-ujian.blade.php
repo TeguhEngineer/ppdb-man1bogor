@@ -258,7 +258,7 @@
 
         <div class="footer">
             <div class="signature">
-                <p>Panitia PMB,</p>
+                <p>Panitia PPDB,</p>
                 <div class="signature-space"></div>
                 <p><strong>Wahyu Mulyadin, SP, MM</strong></p>
                 <p>NIP. 196806221999031003</p>
