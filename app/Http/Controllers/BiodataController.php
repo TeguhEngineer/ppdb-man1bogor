@@ -45,35 +45,6 @@ class BiodataController extends Controller
         return $this->showForm($pendaftaran, null, $request->query('tab', 'registrasi'));
     }
 
-    public function store(Request $request)
-    {
-        $pendaftaran = $this->pendaftaran();
-        $this->ensureEditable($pendaftaran);
-
-        $this->saveRegistrasi($request, $pendaftaran);
-        $this->savePribadi($request, $pendaftaran);
-        $this->saveAlamat($request, $pendaftaran);
-        $this->savePendidikan($request, $pendaftaran);
-        $this->savePrestasi($request, $pendaftaran);
-        $this->saveAyah($request, $pendaftaran);
-        $this->saveIbu($request, $pendaftaran);
-        $this->saveWali($request, $pendaftaran);
-
-        $biodata = $pendaftaran->fresh([
-            'dataPribadi',
-            'alamat',
-            'pendidikan',
-            'penunjangPrestasi',
-            'dataAyah',
-            'dataIbu',
-            'dataWali',
-        ])->syncBiodataAggregate();
-
-        return redirect()
-            ->route($biodata ? 'biodata.edit' : 'biodata.create', $biodata ? ['biodatum' => $biodata->id] : [])
-            ->with('success', 'Biodata berhasil disimpan.');
-    }
-
     public function edit(Request $request, Biodata $biodatum)
     {
         $pendaftaran = $this->pendaftaran();
@@ -85,30 +56,6 @@ class BiodataController extends Controller
         $pendaftaran = $this->loadBiodataRelations($pendaftaran);
 
         return $this->showForm($pendaftaran, $biodatum, $request->query('tab', 'registrasi'));
-    }
-
-    public function update(Request $request, Biodata $biodatum)
-    {
-        $pendaftaran = $this->pendaftaran();
-
-        if ($biodatum->pendaftaran_id !== $pendaftaran->id) {
-            abort(403);
-        }
-
-        $this->ensureEditable($pendaftaran);
-
-        $this->saveRegistrasi($request, $pendaftaran);
-        $this->savePribadi($request, $pendaftaran);
-        $this->saveAlamat($request, $pendaftaran);
-        $this->savePendidikan($request, $pendaftaran);
-        $this->savePrestasi($request, $pendaftaran);
-        $this->saveAyah($request, $pendaftaran);
-        $this->saveIbu($request, $pendaftaran);
-        $this->saveWali($request, $pendaftaran);
-
-        $this->loadBiodataRelations($pendaftaran)->syncBiodataAggregate();
-
-        return redirect()->back()->with('success', 'Biodata berhasil diperbarui.');
     }
 
     public function updateTab(Request $request, string $tab)
