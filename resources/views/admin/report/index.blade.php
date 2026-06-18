@@ -13,6 +13,7 @@
             'lulus' => 'green',
             'tidak_lulus' => 'red',
         ];
+        $selectedJalur = $jalurs->firstWhere('id', (int) request('jalur_id'));
     @endphp
 
     <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 mb-6">
@@ -20,7 +21,7 @@
             <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6">
                 <div>
                     <h3 class="text-lg font-bold text-gray-900">Laporan Data Pendaftaran</h3>
-                    <p class="text-sm text-gray-500 mt-1">Filter data berdasarkan status pendaftaran peserta.</p>
+                    <p class="text-sm text-gray-500 mt-1">Cetak report berdasarkan kombinasi jalur dan status pendaftaran.</p>
                 </div>
 
                 <form method="GET" action="{{ route('admin.report.index') }}" class="flex flex-col md:flex-row gap-2 w-full lg:w-auto">
@@ -33,6 +34,13 @@
                             <i class="fi fi-rs-search text-gray-400"></i>
                         </div>
                     </div>
+                    <select name="jalur_id"
+                        class="rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm">
+                        <option value="">Semua Jalur</option>
+                        @foreach($jalurs as $jalur)
+                            <option value="{{ $jalur->id }}" @selected((int) request('jalur_id') === $jalur->id)>{{ $jalur->nama_jalur }}</option>
+                        @endforeach
+                    </select>
                     <select name="status"
                         class="rounded-lg border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm">
                         <option value="">Semua Status</option>
@@ -44,7 +52,7 @@
                         class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm">
                         <i class="fi fi-rs-print mr-1.5"></i> Cetak Report
                     </button>
-                    @if(request()->hasAny(['status', 'search']))
+                    @if(request()->hasAny(['jalur_id', 'status', 'search']))
                         <a href="{{ route('admin.report.index') }}"
                             class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm text-center print:hidden">
                             Reset
@@ -56,6 +64,9 @@
             @if($isPrinting)
                 <div class="mb-4 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3 text-sm text-gray-600">
                     Menampilkan <strong>{{ $pendaftarans->total() }}</strong> data
+                    @if($selectedJalur)
+                        pada jalur <strong>{{ $selectedJalur->nama_jalur }}</strong>
+                    @endif
                     @if(request('status') && isset($statusOptions[request('status')]))
                         dengan status <strong>{{ $statusOptions[request('status')] }}</strong>
                     @endif
@@ -66,7 +77,7 @@
                 </div>
             @else
                 <div class="mb-4 rounded-lg bg-yellow-50 border border-yellow-200 px-4 py-3 text-sm text-yellow-800">
-                    Pilih status lalu klik <strong>Cetak Report</strong>. Data awal sengaja dikosongkan dan baru tampil setelah report dicetak.
+                    Pilih jalur dan/atau status lalu klik <strong>Cetak Report</strong>. Data awal sengaja dikosongkan dan baru tampil setelah report dicetak.
                 </div>
             @endif
 
@@ -89,11 +100,14 @@
                             @php
                                 $color = $statusColors[$pendaftaran->status_pendaftaran] ?? 'gray';
                                 $statusLabel = $statusOptions[$pendaftaran->status_pendaftaran] ?? ucfirst($pendaftaran->status_pendaftaran);
+                                $namaPeserta = $pendaftaran->dataPribadi->nama_lengkap
+                                    ?? $pendaftaran->biodata->nama_lengkap
+                                    ?? $pendaftaran->user->name;
                             @endphp
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="p-4 font-mono text-xs text-gray-700">{{ $pendaftaran->no_pendaftaran }}</td>
                                 <td class="p-4">
-                                    <p class="font-bold text-gray-800">{{ $pendaftaran->biodata->nama_lengkap ?? $pendaftaran->user->name }}</p>
+                                    <p class="font-bold text-gray-800">{{ $namaPeserta }}</p>
                                     <p class="text-xs text-gray-500 mt-1">{{ $pendaftaran->user->email }}</p>
                                 </td>
                                 <td class="p-4 text-gray-600">{{ $pendaftaran->nisn ?? '-' }}</td>

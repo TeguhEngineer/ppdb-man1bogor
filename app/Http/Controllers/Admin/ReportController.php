@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jalur;
 use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $statusOptions = [
-            'pending' => 'Pending',
+            'pending' => 'Registrasi',
             'verifikasi' => 'Verifikasi',
             'tes' => 'Tes',
             'lulus' => 'Lulus',
@@ -19,10 +20,15 @@ class ReportController extends Controller
         ];
 
         $isPrinting = $request->boolean('print');
-        $query = Pendaftaran::with(['user', 'jalur', 'biodata', 'berkas'])->latest();
+        $jalurs = Jalur::orderBy('nama_jalur')->get();
+        $query = Pendaftaran::with(['user', 'jalur', 'biodata', 'dataPribadi', 'berkas'])->latest();
 
         if ($isPrinting && $request->filled('status') && array_key_exists($request->status, $statusOptions)) {
             $query->where('status_pendaftaran', $request->status);
+        }
+
+        if ($isPrinting && $request->filled('jalur_id') && $jalurs->contains('id', (int) $request->jalur_id)) {
+            $query->where('jalur_id', $request->jalur_id);
         }
 
         if ($isPrinting && $request->filled('search')) {
@@ -41,6 +47,6 @@ class ReportController extends Controller
             ? $query->paginate(20)->withQueryString()
             : Pendaftaran::whereRaw('1 = 0')->paginate(20)->withQueryString();
 
-        return view('admin.report.index', compact('pendaftarans', 'statusOptions', 'isPrinting'));
+        return view('admin.report.index', compact('pendaftarans', 'statusOptions', 'jalurs', 'isPrinting'));
     }
 }
