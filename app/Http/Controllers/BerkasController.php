@@ -18,7 +18,7 @@ class BerkasController extends Controller
             return redirect()->route('berkas.edit', $pendaftaran->berkas->id);
         }
 
-        if (!$pendaftaran->biodata) {
+        if (!$pendaftaran->isBiodataLengkap()) {
             return redirect()->route('dashboard')->with('error', 'Silakan lengkapi biodata Anda terlebih dahulu.');
         }
 
@@ -48,7 +48,7 @@ class BerkasController extends Controller
             'file' => 'Berkas :attribute harus berupa file.',
             'mimes' => 'Format berkas :attribute harus berupa: :values.',
             'max' => 'Ukuran berkas :attribute maksimal :max KB.',
-        ]);
+        ], $this->validationAttributes());
 
         $berkasData = ['pendaftaran_id' => $pendaftaran->id];
 
@@ -83,6 +83,12 @@ class BerkasController extends Controller
         }
 
         $berkas = Berkas::create($berkasData);
+
+        if ($request->boolean('from_biodata_tab')) {
+            $biodata = $pendaftaran->biodata;
+
+            return redirect()->route('biodata.edit', ['biodatum' => $biodata->id, 'tab' => 'berkas'])->with('success', 'Berkas berhasil diunggah!');
+        }
 
         return redirect()->route('berkas.edit', $berkas->id)->with('success', 'Berkas berhasil diunggah!');
     }
@@ -124,7 +130,7 @@ class BerkasController extends Controller
             'file' => 'Berkas :attribute harus berupa file.',
             'mimes' => 'Format berkas :attribute harus berupa: :values.',
             'max' => 'Ukuran berkas :attribute maksimal :max KB.',
-        ]);
+        ], $this->validationAttributes());
 
         $path = 'berkas/' . $pendaftaran->no_pendaftaran;
 
@@ -166,6 +172,12 @@ class BerkasController extends Controller
         }
 
         $berka->save();
+
+        if ($request->boolean('from_biodata_tab')) {
+            $biodata = $pendaftaran->biodata;
+
+            return redirect()->route('biodata.edit', ['biodatum' => $biodata->id, 'tab' => 'berkas'])->with('success', 'Berkas berhasil diperbarui!');
+        }
 
         return redirect()->back()->with('success', 'Berkas berhasil diperbarui!');
     }
@@ -213,5 +225,20 @@ class BerkasController extends Controller
         }
 
         return true;
+    }
+
+    private function validationAttributes(): array
+    {
+        return [
+            'file_raport' => 'raport terakhir',
+            'file_nisn' => 'NISN',
+            'file_foto' => 'pas foto',
+            'file_surat_keterangan_aktif' => 'surat keterangan aktif/SKL',
+            'file_slip_gaji' => 'slip gaji orang tua',
+            'file_kk' => 'kartu keluarga',
+            'file_sertifikat' => 'sertifikat prestasi',
+            'file_sktm' => 'SKTM',
+            'file_kip' => 'kartu KIP',
+        ];
     }
 }

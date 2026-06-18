@@ -3,322 +3,404 @@
 namespace App\Http\Controllers;
 
 use App\Models\Biodata;
-use App\Models\Pendaftaran;
+use App\Models\BiodataAlamat;
+use App\Models\BiodataDataAyah;
+use App\Models\BiodataDataIbu;
+use App\Models\BiodataDataWali;
+use App\Models\BiodataPendidikan;
+use App\Models\BiodataPenunjangPrestasi;
+use App\Models\BiodataPribadi;
 use App\Models\Jalur;
+use App\Models\Pendaftaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class BiodataController extends Controller
 {
-    public function create()
+    private array $tabs = [
+        'registrasi',
+        'pribadi',
+        'alamat',
+        'pendidikan',
+        'prestasi',
+        'ayah',
+        'ibu',
+        'wali',
+        'berkas',
+    ];
+
+    public function create(Request $request)
     {
-        $user = Auth::user();
-        $pendaftaran = Pendaftaran::where('user_id', $user->id)->firstOrFail();
+        $pendaftaran = $this->pendaftaran();
 
         if ($pendaftaran->biodata) {
-            return redirect()->route('biodata.edit', $pendaftaran->biodata->id);
+            return redirect()->route('biodata.edit', [
+                'biodatum' => $pendaftaran->biodata->id,
+                'tab' => $request->query('tab', 'registrasi'),
+            ]);
         }
 
-        $jalurs = Jalur::all();
-
-        return view('biodata.create', compact('pendaftaran', 'jalurs'));
+        return $this->showForm($pendaftaran, null, $request->query('tab', 'registrasi'));
     }
 
     public function store(Request $request)
     {
-        $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
+        $pendaftaran = $this->pendaftaran();
+        $this->ensureEditable($pendaftaran);
 
-        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
-            return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
-        }
+        $this->saveRegistrasi($request, $pendaftaran);
+        $this->savePribadi($request, $pendaftaran);
+        $this->saveAlamat($request, $pendaftaran);
+        $this->savePendidikan($request, $pendaftaran);
+        $this->savePrestasi($request, $pendaftaran);
+        $this->saveAyah($request, $pendaftaran);
+        $this->saveIbu($request, $pendaftaran);
+        $this->saveWali($request, $pendaftaran);
 
-        $validated = $request->validate([
-            'nisn' => 'required|numeric|digits:10',
-            'jalur_id' => 'required|exists:jalurs,id',
-            'kampus' => 'required|string',
-            'nama_lengkap' => 'required|string|max:255',
-            'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
-            'nik' => 'required|numeric|digits:16|unique:biodatas',
-            'no_kk' => 'required|numeric|digits:16',
-            'tinggi_badan' => 'required|integer',
-            'berat_badan' => 'required|integer',
-            'status_dalam_keluarga' => 'required|string',
-            'tinggal_bersama' => 'required|string',
-            'anak_ke' => 'required|integer',
-            'jumlah_saudara' => 'required|integer',
-            'agama' => 'required|string',
-            'no_whatsapp' => 'required|string',
-            
-            'alamat' => 'required|string',
-            'desa' => 'required|string',
-            'kecamatan' => 'required|string',
-            'kabupaten' => 'required|string',
-            'provinsi' => 'required|string',
-            'kode_pos' => 'required|string|digits:5',
-            'jarak_ke_sekolah' => 'required|string',
-            'waktu_tempuh_ke_sekolah' => 'required|string',
-            
-            'asal_satuan_pendidikan' => 'required|in:SMP,MTS',
-            'nama_asal_sekolah' => 'required|string',
-            'npsn' => 'required|string',
-            
-            'kategori_prestasi' => 'nullable|string',
-            'jumlah_juz' => 'nullable|integer',
-            'tingkat_prestasi' => 'nullable|string',
-            'jenis_prestasi' => 'nullable|string',
-            'nama_lomba' => 'nullable|string',
-            
-            'nama_ayah' => 'required|string',
-            'nik_ayah' => 'nullable|string',
-            'tempat_lahir_ayah' => 'nullable|string',
-            'tanggal_lahir_ayah' => 'nullable|date',
-            'pendidikan_terakhir_ayah' => 'required|string',
-            'pekerjaan_ayah' => 'required|string',
-            'penghasilan_ayah' => 'required|string',
-            'no_hp_ayah' => 'required|string',
-            
-            'nama_ibu' => 'required|string',
-            'nik_ibu' => 'nullable|string',
-            'tempat_lahir_ibu' => 'nullable|string',
-            'tanggal_lahir_ibu' => 'nullable|date',
-            'pendidikan_terakhir_ibu' => 'required|string',
-            'pekerjaan_ibu' => 'required|string',
-            'penghasilan_ibu' => 'required|string',
-            'no_hp_ibu' => 'required|string',
-            
-            'nama_wali' => 'nullable|string',
-            'nik_wali' => 'nullable|string',
-            'tempat_lahir_wali' => 'nullable|string',
-            'tanggal_lahir_wali' => 'nullable|date',
-            'pendidikan_terakhir_wali' => 'nullable|string',
-            'pekerjaan_wali' => 'nullable|string',
-            'penghasilan_wali' => 'nullable|string',
-            'no_hp_wali' => 'nullable|string',
-        ], [
-            'nisn.required' => 'NISN wajib diisi.',
-            'nisn.numeric' => 'NISN harus berupa angka.',
-            'nisn.digits' => 'NISN harus berjumlah tepat 10 digit.',
-            'nik.required' => 'NIK wajib diisi.',
-            'nik.numeric' => 'NIK harus berupa angka.',
-            'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
-            'nik.unique' => 'NIK sudah terdaftar.',
-            'no_kk.required' => 'Nomor KK wajib diisi.',
-            'no_kk.numeric' => 'Nomor KK harus berupa angka.',
-            'no_kk.digits' => 'Nomor KK harus berjumlah tepat 16 digit.',
-            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
-            'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
-            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
-            'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
-            'agama.required' => 'Agama wajib diisi.',
-            'no_whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
-            'alamat.required' => 'Alamat lengkap wajib diisi.',
-            'desa.required' => 'Desa/Kelurahan wajib diisi.',
-            'kecamatan.required' => 'Kecamatan wajib diisi.',
-            'kabupaten.required' => 'Kabupaten wajib diisi.',
-            'provinsi.required' => 'Provinsi wajib diisi.',
-            'kode_pos.required' => 'Kode pos wajib diisi.',
-            'kode_pos.digits' => 'Kode pos harus berjumlah 5 digit.',
-            'asal_satuan_pendidikan.required' => 'Asal satuan pendidikan wajib diisi.',
-            'nama_asal_sekolah.required' => 'Nama asal sekolah wajib diisi.',
-            'nama_ayah.required' => 'Nama ayah wajib diisi.',
-            'pendidikan_terakhir_ayah.required' => 'Pendidikan terakhir ayah wajib diisi.',
-            'pekerjaan_ayah.required' => 'Pekerjaan ayah wajib diisi.',
-            'penghasilan_ayah.required' => 'Penghasilan ayah wajib diisi.',
-            'no_hp_ayah.required' => 'Nomor HP ayah wajib diisi.',
-            'nama_ibu.required' => 'Nama ibu wajib diisi.',
-            'pendidikan_terakhir_ibu.required' => 'Pendidikan terakhir ibu wajib diisi.',
-            'pekerjaan_ibu.required' => 'Pekerjaan ibu wajib diisi.',
-            'penghasilan_ibu.required' => 'Penghasilan ibu wajib diisi.',
-            'no_hp_ibu.required' => 'Nomor HP ibu wajib diisi.',
-            'tinggi_badan.required' => 'Tinggi badan wajib diisi.',
-            'tinggi_badan.integer' => 'Tinggi badan harus berupa angka.',
-            'berat_badan.required' => 'Berat badan wajib diisi.',
-            'berat_badan.integer' => 'Berat badan harus berupa angka.',
-            'status_dalam_keluarga.required' => 'Status dalam keluarga wajib diisi.',
-            'tinggal_bersama.required' => 'Tinggal bersama wajib diisi.',
-            'anak_ke.required' => 'Anak ke berapa wajib diisi.',
-            'anak_ke.integer' => 'Anak ke harus berupa angka.',
-            'jumlah_saudara.required' => 'Jumlah saudara wajib diisi.',
-            'jumlah_saudara.integer' => 'Jumlah saudara harus berupa angka.',
-            'npsn.required' => 'NPSN sekolah asal wajib diisi.',
-            'jarak_ke_sekolah.required' => 'Jarak ke sekolah wajib diisi.',
-            'waktu_tempuh_ke_sekolah.required' => 'Waktu tempuh ke sekolah wajib diisi.',
-        ]);
+        $biodata = $pendaftaran->fresh([
+            'dataPribadi',
+            'alamat',
+            'pendidikan',
+            'penunjangPrestasi',
+            'dataAyah',
+            'dataIbu',
+            'dataWali',
+        ])->syncBiodataAggregate();
 
-
-
-
-        $pendaftaran->update([
-            'nisn' => $request->nisn,
-            'jalur_id' => $request->jalur_id,
-            'kampus' => $request->kampus,
-        ]);
-
-        unset($validated['nisn'], $validated['jalur_id'], $validated['kampus']);
-
-        $validated['pendaftaran_id'] = $pendaftaran->id;
-        
-        $biodatum = Biodata::create($validated);
-
-        return redirect()->route('biodata.edit', $biodatum->id)->with('success', 'Biodata berhasil disimpan!');
+        return redirect()
+            ->route($biodata ? 'biodata.edit' : 'biodata.create', $biodata ? ['biodatum' => $biodata->id] : [])
+            ->with('success', 'Biodata berhasil disimpan.');
     }
 
-    public function edit(Biodata $biodatum)
+    public function edit(Request $request, Biodata $biodatum)
     {
-        $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
-        
+        $pendaftaran = $this->pendaftaran();
+
         if ($biodatum->pendaftaran_id !== $pendaftaran->id) {
             abort(403);
         }
 
-        $jalurs = Jalur::all();
+        $pendaftaran = $this->loadBiodataRelations($pendaftaran);
 
-        return view('biodata.edit', compact('biodatum', 'pendaftaran', 'jalurs'));
+        return $this->showForm($pendaftaran, $biodatum, $request->query('tab', 'registrasi'));
     }
 
     public function update(Request $request, Biodata $biodatum)
     {
-        $pendaftaran = Pendaftaran::where('user_id', Auth::id())->firstOrFail();
-        
+        $pendaftaran = $this->pendaftaran();
+
         if ($biodatum->pendaftaran_id !== $pendaftaran->id) {
             abort(403);
         }
 
-        if ($pendaftaran->status_pendaftaran === 'verifikasi') {
-            return redirect()->back()->with('error', 'Data sudah diverifikasi dan tidak dapat diubah.');
+        $this->ensureEditable($pendaftaran);
+
+        $this->saveRegistrasi($request, $pendaftaran);
+        $this->savePribadi($request, $pendaftaran);
+        $this->saveAlamat($request, $pendaftaran);
+        $this->savePendidikan($request, $pendaftaran);
+        $this->savePrestasi($request, $pendaftaran);
+        $this->saveAyah($request, $pendaftaran);
+        $this->saveIbu($request, $pendaftaran);
+        $this->saveWali($request, $pendaftaran);
+
+        $this->loadBiodataRelations($pendaftaran)->syncBiodataAggregate();
+
+        return redirect()->back()->with('success', 'Biodata berhasil diperbarui.');
+    }
+
+    public function updateTab(Request $request, string $tab)
+    {
+        abort_unless(in_array($tab, $this->tabs, true), 404);
+        abort_if($tab === 'berkas', 404);
+
+        $pendaftaran = $this->pendaftaran();
+        $this->ensureEditable($pendaftaran);
+
+        match ($tab) {
+            'registrasi' => $this->saveRegistrasi($request, $pendaftaran),
+            'pribadi' => $this->savePribadi($request, $pendaftaran),
+            'alamat' => $this->saveAlamat($request, $pendaftaran),
+            'pendidikan' => $this->savePendidikan($request, $pendaftaran),
+            'prestasi' => $this->savePrestasi($request, $pendaftaran),
+            'ayah' => $this->saveAyah($request, $pendaftaran),
+            'ibu' => $this->saveIbu($request, $pendaftaran),
+            'wali' => $this->saveWali($request, $pendaftaran),
+        };
+
+        $biodata = $this->loadBiodataRelations($pendaftaran)->syncBiodataAggregate();
+
+        $targetTab = $this->targetTab($request, $tab);
+        $route = $biodata
+            ? route('biodata.edit', ['biodatum' => $biodata->id, 'tab' => $targetTab])
+            : route('biodata.create', ['tab' => $targetTab]);
+
+        return redirect($route)->with('success', 'Data berhasil disimpan.');
+    }
+
+    private function targetTab(Request $request, string $currentTab): string
+    {
+        $nextTab = $request->input('next_tab');
+
+        if ($nextTab && in_array($nextTab, $this->tabs, true)) {
+            return $nextTab;
         }
 
-        $validated = $request->validate([
-            'nisn' => 'required|numeric|digits:10',
-            'jalur_id' => 'required|exists:jalurs,id',
-            'kampus' => 'required|string',
-            'nama_lengkap' => 'required|string|max:255',
-            'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
-            'nik' => 'required|numeric|digits:16|unique:biodatas,nik,'.$biodatum->id,
-            'no_kk' => 'required|numeric|digits:16',
-            'tinggi_badan' => 'required|integer',
-            'berat_badan' => 'required|integer',
-            'status_dalam_keluarga' => 'required|string',
-            'tinggal_bersama' => 'required|string',
-            'anak_ke' => 'required|integer',
-            'jumlah_saudara' => 'required|integer',
-            'agama' => 'required|string',
-            'no_whatsapp' => 'required|string',
-            
-            'alamat' => 'required|string',
-            'desa' => 'required|string',
-            'kecamatan' => 'required|string',
-            'kabupaten' => 'required|string',
-            'provinsi' => 'required|string',
-            'kode_pos' => 'required|string|digits:5',
-            'jarak_ke_sekolah' => 'required|string',
-            'waktu_tempuh_ke_sekolah' => 'required|string',
-            
-            'asal_satuan_pendidikan' => 'required|in:SMP,MTS',
-            'nama_asal_sekolah' => 'required|string',
-            'npsn' => 'required|string',
-            
-            'kategori_prestasi' => 'nullable|string',
-            'jumlah_juz' => 'nullable|integer',
-            'tingkat_prestasi' => 'nullable|string',
-            'jenis_prestasi' => 'nullable|string',
-            'nama_lomba' => 'nullable|string',
-            
-            'nama_ayah' => 'required|string',
-            'nik_ayah' => 'nullable|string',
-            'tempat_lahir_ayah' => 'nullable|string',
-            'tanggal_lahir_ayah' => 'nullable|date',
-            'pendidikan_terakhir_ayah' => 'required|string',
-            'pekerjaan_ayah' => 'required|string',
-            'penghasilan_ayah' => 'required|string',
-            'no_hp_ayah' => 'required|string',
-            
-            'nama_ibu' => 'required|string',
-            'nik_ibu' => 'nullable|string',
-            'tempat_lahir_ibu' => 'nullable|string',
-            'tanggal_lahir_ibu' => 'nullable|date',
-            'pendidikan_terakhir_ibu' => 'required|string',
-            'pekerjaan_ibu' => 'required|string',
-            'penghasilan_ibu' => 'required|string',
-            'no_hp_ibu' => 'required|string',
-            
-            'nama_wali' => 'nullable|string',
-            'nik_wali' => 'nullable|string',
-            'tempat_lahir_wali' => 'nullable|string',
-            'tanggal_lahir_wali' => 'nullable|date',
-            'pendidikan_terakhir_wali' => 'nullable|string',
-            'pekerjaan_wali' => 'nullable|string',
-            'penghasilan_wali' => 'nullable|string',
-            'no_hp_wali' => 'nullable|string',
-        ], [
-            'nisn.required' => 'NISN wajib diisi.',
-            'nisn.numeric' => 'NISN harus berupa angka.',
-            'nisn.digits' => 'NISN harus berjumlah tepat 10 digit.',
-            'nik.required' => 'NIK wajib diisi.',
-            'nik.numeric' => 'NIK harus berupa angka.',
-            'nik.digits' => 'NIK harus berjumlah tepat 16 digit.',
-            'nik.unique' => 'NIK sudah terdaftar.',
-            'no_kk.required' => 'Nomor KK wajib diisi.',
-            'no_kk.numeric' => 'Nomor KK harus berupa angka.',
-            'no_kk.digits' => 'Nomor KK harus berjumlah tepat 16 digit.',
-            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
-            'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
-            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
-            'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
-            'agama.required' => 'Agama wajib diisi.',
-            'no_whatsapp.required' => 'Nomor WhatsApp wajib diisi.',
-            'alamat.required' => 'Alamat lengkap wajib diisi.',
-            'desa.required' => 'Desa/Kelurahan wajib diisi.',
-            'kecamatan.required' => 'Kecamatan wajib diisi.',
-            'kabupaten.required' => 'Kabupaten wajib diisi.',
-            'provinsi.required' => 'Provinsi wajib diisi.',
-            'kode_pos.required' => 'Kode pos wajib diisi.',
-            'kode_pos.digits' => 'Kode pos harus berjumlah 5 digit.',
-            'asal_satuan_pendidikan.required' => 'Asal satuan pendidikan wajib diisi.',
-            'nama_asal_sekolah.required' => 'Nama asal sekolah wajib diisi.',
-            'nama_ayah.required' => 'Nama ayah wajib diisi.',
-            'pendidikan_terakhir_ayah.required' => 'Pendidikan terakhir ayah wajib diisi.',
-            'pekerjaan_ayah.required' => 'Pekerjaan ayah wajib diisi.',
-            'penghasilan_ayah.required' => 'Penghasilan ayah wajib diisi.',
-            'no_hp_ayah.required' => 'Nomor HP ayah wajib diisi.',
-            'nama_ibu.required' => 'Nama ibu wajib diisi.',
-            'pendidikan_terakhir_ibu.required' => 'Pendidikan terakhir ibu wajib diisi.',
-            'pekerjaan_ibu.required' => 'Pekerjaan ibu wajib diisi.',
-            'penghasilan_ibu.required' => 'Penghasilan ibu wajib diisi.',
-            'no_hp_ibu.required' => 'Nomor HP ibu wajib diisi.',
-            'tinggi_badan.required' => 'Tinggi badan wajib diisi.',
-            'tinggi_badan.integer' => 'Tinggi badan harus berupa angka.',
-            'berat_badan.required' => 'Berat badan wajib diisi.',
-            'berat_badan.integer' => 'Berat badan harus berupa angka.',
-            'status_dalam_keluarga.required' => 'Status dalam keluarga wajib diisi.',
-            'tinggal_bersama.required' => 'Tinggal bersama wajib diisi.',
-            'anak_ke.required' => 'Anak ke berapa wajib diisi.',
-            'anak_ke.integer' => 'Anak ke harus berupa angka.',
-            'jumlah_saudara.required' => 'Jumlah saudara wajib diisi.',
-            'jumlah_saudara.integer' => 'Jumlah saudara harus berupa angka.',
-            'npsn.required' => 'NPSN sekolah asal wajib diisi.',
-            'jarak_ke_sekolah.required' => 'Jarak ke sekolah wajib diisi.',
-            'waktu_tempuh_ke_sekolah.required' => 'Waktu tempuh ke sekolah wajib diisi.',
+        return $currentTab;
+    }
+
+    private function showForm(Pendaftaran $pendaftaran, ?Biodata $biodatum, string $activeTab)
+    {
+        $pendaftaran = $this->loadBiodataRelations($pendaftaran);
+        $jalurs = Jalur::all();
+        $activeTab = in_array($activeTab, $this->tabs, true) ? $activeTab : 'registrasi';
+
+        return view('biodata.form', compact('pendaftaran', 'biodatum', 'jalurs', 'activeTab'));
+    }
+
+    private function pendaftaran(): Pendaftaran
+    {
+        return Pendaftaran::where('user_id', Auth::id())->firstOrFail();
+    }
+
+    private function loadBiodataRelations(Pendaftaran $pendaftaran): Pendaftaran
+    {
+        return $pendaftaran->load([
+            'biodata',
+            'berkas',
+            'jalur',
+            'dataPribadi',
+            'alamat',
+            'pendidikan',
+            'penunjangPrestasi',
+            'dataAyah',
+            'dataIbu',
+            'dataWali',
+        ]);
+    }
+
+    private function ensureEditable(Pendaftaran $pendaftaran): void
+    {
+        if (in_array($pendaftaran->status_pendaftaran, ['verifikasi', 'tes', 'lulus', 'tidak_lulus'], true)) {
+            throw ValidationException::withMessages([
+                'biodata' => 'Data sudah masuk tahap verifikasi dan tidak dapat diubah.',
+            ]);
+        }
+    }
+
+    private function saveRegistrasi(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'nisn' => ['required', 'numeric', 'digits:10'],
+            'jalur_id' => ['required', 'exists:jalurs,id'],
+            'kampus' => ['required', 'string', 'max:255'],
         ]);
 
+        $pendaftaran->update($validated);
+    }
 
+    private function savePribadi(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $biodataId = optional($pendaftaran->biodata)->id;
+        $dataPribadiId = optional($pendaftaran->dataPribadi)->id;
 
-
-        $pendaftaran->update([
-            'nisn' => $request->nisn,
-            'jalur_id' => $request->jalur_id,
-            'kampus' => $request->kampus,
+        $validated = $this->validateBiodata($request, [
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'tempat_lahir' => ['required', 'string', 'max:255'],
+            'tanggal_lahir' => ['required', 'date'],
+            'jenis_kelamin' => ['required', 'in:laki-laki,perempuan'],
+            'nik' => [
+                'required',
+                'numeric',
+                'digits:16',
+                Rule::unique('biodatas', 'nik')->ignore($biodataId),
+                Rule::unique('biodata_pribadis', 'nik')->ignore($dataPribadiId),
+            ],
+            'no_kk' => ['required', 'numeric', 'digits:16'],
+            'tinggi_badan' => ['required', 'integer'],
+            'berat_badan' => ['required', 'integer'],
+            'status_dalam_keluarga' => ['required', 'string', 'max:255'],
+            'tinggal_bersama' => ['required', 'string', 'max:255'],
+            'anak_ke' => ['required', 'integer'],
+            'jumlah_saudara' => ['required', 'integer'],
+            'agama' => ['required', 'string', 'max:255'],
+            'no_whatsapp' => ['required', 'string', 'max:30'],
         ]);
 
-        unset($validated['nisn'], $validated['jalur_id'], $validated['kampus']);
+        BiodataPribadi::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
 
-        $biodatum->update($validated);
+    private function saveAlamat(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'alamat' => ['required', 'string'],
+            'desa' => ['required', 'string', 'max:255'],
+            'kecamatan' => ['required', 'string', 'max:255'],
+            'kabupaten' => ['required', 'string', 'max:255'],
+            'provinsi' => ['required', 'string', 'max:255'],
+            'kode_pos' => ['required', 'digits:5'],
+            'jarak_ke_sekolah' => ['required', 'string', 'max:255'],
+            'waktu_tempuh_ke_sekolah' => ['required', 'string', 'max:255'],
+        ]);
 
-        return redirect()->back()->with('success', 'Biodata berhasil diperbarui!');
+        BiodataAlamat::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
+
+    private function savePendidikan(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'asal_satuan_pendidikan' => ['required', 'in:SMP,MTS'],
+            'nama_asal_sekolah' => ['required', 'string', 'max:255'],
+            'npsn' => ['required', 'string', 'max:255'],
+        ]);
+
+        BiodataPendidikan::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
+
+    private function savePrestasi(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'kategori_prestasi' => ['nullable', 'string', 'max:255'],
+            'jumlah_juz' => ['nullable', 'integer'],
+            'tingkat_prestasi' => ['nullable', 'string', 'max:255'],
+            'jenis_prestasi' => ['nullable', 'string', 'max:255'],
+            'nama_lomba' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        BiodataPenunjangPrestasi::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
+
+    private function saveAyah(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'nama_ayah' => ['required', 'string', 'max:255'],
+            'nik_ayah' => ['nullable', 'string', 'max:255'],
+            'tempat_lahir_ayah' => ['nullable', 'string', 'max:255'],
+            'tanggal_lahir_ayah' => ['nullable', 'date'],
+            'pendidikan_terakhir_ayah' => ['required', 'string', 'max:255'],
+            'pekerjaan_ayah' => ['required', 'string', 'max:255'],
+            'penghasilan_ayah' => ['required', 'string', 'max:255'],
+            'no_hp_ayah' => ['required', 'string', 'max:30'],
+        ]);
+
+        BiodataDataAyah::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
+
+    private function saveIbu(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'nama_ibu' => ['required', 'string', 'max:255'],
+            'nik_ibu' => ['nullable', 'string', 'max:255'],
+            'tempat_lahir_ibu' => ['nullable', 'string', 'max:255'],
+            'tanggal_lahir_ibu' => ['nullable', 'date'],
+            'pendidikan_terakhir_ibu' => ['required', 'string', 'max:255'],
+            'pekerjaan_ibu' => ['required', 'string', 'max:255'],
+            'penghasilan_ibu' => ['required', 'string', 'max:255'],
+            'no_hp_ibu' => ['required', 'string', 'max:30'],
+        ]);
+
+        BiodataDataIbu::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
+
+    private function saveWali(Request $request, Pendaftaran $pendaftaran): void
+    {
+        $validated = $this->validateBiodata($request, [
+            'nama_wali' => ['nullable', 'string', 'max:255'],
+            'nik_wali' => ['nullable', 'string', 'max:255'],
+            'tempat_lahir_wali' => ['nullable', 'string', 'max:255'],
+            'tanggal_lahir_wali' => ['nullable', 'date'],
+            'pendidikan_terakhir_wali' => ['nullable', 'string', 'max:255'],
+            'pekerjaan_wali' => ['nullable', 'string', 'max:255'],
+            'penghasilan_wali' => ['nullable', 'string', 'max:255'],
+            'no_hp_wali' => ['nullable', 'string', 'max:30'],
+        ]);
+
+        BiodataDataWali::updateOrCreate(['pendaftaran_id' => $pendaftaran->id], $validated);
+    }
+
+    private function validateBiodata(Request $request, array $rules): array
+    {
+        return $request->validate($rules, $this->validationMessages(), $this->validationAttributes());
+    }
+
+    private function validationMessages(): array
+    {
+        return [
+            'required' => ':attribute wajib diisi.',
+            'numeric' => ':attribute harus berupa angka.',
+            'digits' => ':attribute harus berjumlah tepat :digits digit.',
+            'integer' => ':attribute harus berupa angka.',
+            'date' => ':attribute harus berupa tanggal yang valid.',
+            'in' => ':attribute tidak valid.',
+            'exists' => ':attribute tidak valid.',
+            'unique' => ':attribute sudah terdaftar.',
+            'string' => ':attribute harus berupa teks.',
+            'max' => ':attribute maksimal :max karakter.',
+        ];
+    }
+
+    private function validationAttributes(): array
+    {
+        return [
+            'nisn' => 'NISN',
+            'jalur_id' => 'jalur pendaftaran',
+            'kampus' => 'pilihan kampus',
+            'nama_lengkap' => 'nama lengkap',
+            'tempat_lahir' => 'tempat lahir',
+            'tanggal_lahir' => 'tanggal lahir',
+            'jenis_kelamin' => 'jenis kelamin',
+            'nik' => 'NIK',
+            'no_kk' => 'nomor KK',
+            'tinggi_badan' => 'tinggi badan',
+            'berat_badan' => 'berat badan',
+            'status_dalam_keluarga' => 'status dalam keluarga',
+            'tinggal_bersama' => 'tinggal bersama',
+            'anak_ke' => 'anak ke',
+            'jumlah_saudara' => 'jumlah saudara',
+            'agama' => 'agama',
+            'no_whatsapp' => 'nomor WhatsApp',
+            'alamat' => 'alamat lengkap',
+            'desa' => 'desa/kelurahan',
+            'kecamatan' => 'kecamatan',
+            'kabupaten' => 'kabupaten/kota',
+            'provinsi' => 'provinsi',
+            'kode_pos' => 'kode pos',
+            'jarak_ke_sekolah' => 'jarak ke sekolah',
+            'waktu_tempuh_ke_sekolah' => 'waktu tempuh ke sekolah',
+            'asal_satuan_pendidikan' => 'asal satuan pendidikan',
+            'nama_asal_sekolah' => 'nama asal sekolah',
+            'npsn' => 'NPSN',
+            'kategori_prestasi' => 'kategori prestasi',
+            'jumlah_juz' => 'jumlah juz hafalan',
+            'tingkat_prestasi' => 'tingkat prestasi',
+            'jenis_prestasi' => 'jenis prestasi',
+            'nama_lomba' => 'nama lomba',
+            'nama_ayah' => 'nama ayah',
+            'nik_ayah' => 'NIK ayah',
+            'tempat_lahir_ayah' => 'tempat lahir ayah',
+            'tanggal_lahir_ayah' => 'tanggal lahir ayah',
+            'pendidikan_terakhir_ayah' => 'pendidikan terakhir ayah',
+            'pekerjaan_ayah' => 'pekerjaan ayah',
+            'penghasilan_ayah' => 'penghasilan ayah',
+            'no_hp_ayah' => 'nomor HP ayah',
+            'nama_ibu' => 'nama ibu',
+            'nik_ibu' => 'NIK ibu',
+            'tempat_lahir_ibu' => 'tempat lahir ibu',
+            'tanggal_lahir_ibu' => 'tanggal lahir ibu',
+            'pendidikan_terakhir_ibu' => 'pendidikan terakhir ibu',
+            'pekerjaan_ibu' => 'pekerjaan ibu',
+            'penghasilan_ibu' => 'penghasilan ibu',
+            'no_hp_ibu' => 'nomor HP ibu',
+            'nama_wali' => 'nama wali',
+            'nik_wali' => 'NIK wali',
+            'tempat_lahir_wali' => 'tempat lahir wali',
+            'tanggal_lahir_wali' => 'tanggal lahir wali',
+            'pendidikan_terakhir_wali' => 'pendidikan terakhir wali',
+            'pekerjaan_wali' => 'pekerjaan wali',
+            'penghasilan_wali' => 'penghasilan wali',
+            'no_hp_wali' => 'nomor HP wali',
+        ];
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\BiodataPribadi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -38,14 +40,29 @@ class ProfileController extends Controller
         if ($request->hasFile('foto_profil')) {
             $pendaftaran = $user->pendaftarans()->latest()->first();
             if ($pendaftaran) {
-                // Pastikan biodata ada, jika tidak, kita tidak bisa menyimpan foto_profil
-                $biodata = $pendaftaran->biodata;
-                if ($biodata) {
-                    if ($biodata->foto_profil && \Illuminate\Support\Facades\Storage::disk('public')->exists($biodata->foto_profil)) {
-                        \Illuminate\Support\Facades\Storage::disk('public')->delete($biodata->foto_profil);
+                $pendaftaran->load(['biodata', 'dataPribadi']);
+                $existingPhoto = optional($pendaftaran->dataPribadi)->foto_profil ?? optional($pendaftaran->biodata)->foto_profil;
+
+                if ($pendaftaran->dataPribadi || $pendaftaran->biodata) {
+                    if ($existingPhoto && Storage::disk('public')->exists($existingPhoto)) {
+                        Storage::disk('public')->delete($existingPhoto);
                     }
+
                     $path = $request->file('foto_profil')->store('berkas/foto_profil', 'public');
-                    $biodata->update(['foto_profil' => $path]);
+                    BiodataPribadi::updateOrCreate(
+                        ['pendaftaran_id' => $pendaftaran->id],
+                        ['foto_profil' => $path]
+                    );
+
+                    $pendaftaran->fresh([
+                        'dataPribadi',
+                        'alamat',
+                        'pendidikan',
+                        'penunjangPrestasi',
+                        'dataAyah',
+                        'dataIbu',
+                        'dataWali',
+                    ])->syncBiodataAggregate();
                 } else {
                     return Redirect::route('profile.index')->with('error', 'Gagal mengunggah foto. Anda belum mengisi biodata pendaftaran.');
                 }

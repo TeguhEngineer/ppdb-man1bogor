@@ -38,16 +38,6 @@
             </a>
         </div>
         <div class="flex items-center mr-4">
-            @if (request()->is('berkas*'))
-                <div class="w-[5px] h-12 bg-emerald-700 rounded-r-md"></div>
-            @endif
-            <a href="{{ route('berkas.create') }}"
-                class="flex items-center flex-1 px-4 py-3 {{ request()->is('berkas*') ? 'bg-emerald-100 text-emerald-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3">
-                <i class="fi fi-rs-folder-upload text-lg leading-none relative top-0.5"></i>
-                <span class="ml-3 font-medium">Upload Berkas</span>
-            </a>
-        </div>
-        <div class="flex items-center mr-4">
             @if (request()->is('pengumuman*'))
                 <div class="w-[5px] h-12 bg-emerald-700 rounded-r-md"></div>
             @endif

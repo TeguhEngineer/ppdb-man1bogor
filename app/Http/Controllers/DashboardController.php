@@ -14,7 +14,21 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'peserta') {
-            $pendaftaran = Pendaftaran::with(['jalur', 'biodata', 'berkas', 'pengumumans', 'kartuPesertaUjian.ruangan', 'kartuPesertaUjian.jadwalUjian'])
+            $pendaftaran = Pendaftaran::with([
+                'jalur',
+                'biodata',
+                'berkas',
+                'pengumumans',
+                'dataPribadi',
+                'alamat',
+                'pendidikan',
+                'penunjangPrestasi',
+                'dataAyah',
+                'dataIbu',
+                'dataWali',
+                'kartuPesertaUjian.ruangan',
+                'kartuPesertaUjian.jadwalUjian',
+            ])
                 ->where('user_id', $user->id)
                 ->first();
 
@@ -58,7 +72,7 @@ class DashboardController extends Controller
             ->where('user_id', $user->id)
             ->first();
 
-        if (!$pendaftaran || !$pendaftaran->biodata) {
+        if (!$pendaftaran || !$pendaftaran->isBiodataLengkap()) {
             return redirect()->route('dashboard')->with('error', 'Silakan lengkapi biodata terlebih dahulu sebelum mencetak formulir.');
         }
 

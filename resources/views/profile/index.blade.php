@@ -41,8 +41,8 @@
                     <x-error-message class="mt-2" :messages="$errors->get('foto_profil')" />
                     @php
                         $user = Auth::user();
-                        $pendaftaran = $user->pendaftarans()->latest()->first();
-                        $foto = $pendaftaran && $pendaftaran->biodata ? $pendaftaran->biodata->foto_profil : null;
+                        $pendaftaran = $user->pendaftarans()->with(['dataPribadi', 'biodata'])->latest()->first();
+                        $foto = $pendaftaran ? (optional($pendaftaran->dataPribadi)->foto_profil ?? optional($pendaftaran->biodata)->foto_profil) : null;
                     @endphp
                     @if($foto)
                         <div class="mt-2">

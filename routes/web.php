@@ -25,9 +25,10 @@ Route::get('/kartu-ujian/cetak', [KartuUjianController::class, 'cetakPeserta'])
     ->name('kartu-ujian.cetak');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('biodata', BiodataController::class);
+    Route::post('biodata/tab/{tab}', [BiodataController::class, 'updateTab'])->name('biodata.tab.update');
+    Route::resource('biodata', BiodataController::class)->except(['index', 'show', 'destroy']);
     Route::post('berkas/{berka}/ajukan-ulang', [BerkasController::class, 'ajukanUlang'])->name('berkas.ajukan-ulang');
-    Route::resource('berkas', BerkasController::class);
+    Route::resource('berkas', BerkasController::class)->except(['index', 'show', 'destroy']);
     Route::get('pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman.index');
     Route::post('pengumuman/{id}/dibaca', [App\Http\Controllers\PengumumanController::class, 'tandaiDibaca'])->name('pengumuman.dibaca');
     

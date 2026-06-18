@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 md:shrink-0">
-                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
+                    <a href="{{ $pendaftaran->biodata ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => 'berkas']) : route('biodata.create', ['tab' => 'berkas']) }}"
                         class="inline-flex items-center justify-center px-4 py-2 bg-white border border-red-200 text-red-700 font-bold rounded-lg hover:bg-red-100 transition-colors text-sm">
                         Perbaiki Berkas
                     </a>
@@ -226,8 +226,11 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Biodata Action -->
         @php
-            $hasBiodata = $pendaftaran->biodata != null;
-            $isBiodataComplete = $hasBiodata;
+            $hasBiodata = $pendaftaran->biodata || $pendaftaran->dataPribadi || $pendaftaran->alamat || $pendaftaran->pendidikan || $pendaftaran->dataAyah || $pendaftaran->dataIbu;
+            $isBiodataComplete = $pendaftaran->isBiodataLengkap();
+            $biodataUrl = fn ($tab = 'registrasi') => $pendaftaran->biodata
+                ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => $tab])
+                : route('biodata.create', ['tab' => $tab]);
         @endphp
         <div
             class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataComplete ? 'green' : 'yellow' }}-500">
@@ -248,7 +251,7 @@
                         Selesai Diisi
                     </span>
                     <div class="grid grid-cols-2 gap-3 mt-4">
-                        <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}"
+                        <a href="{{ $biodataUrl('registrasi') }}"
                             class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors text-sm">
                             <i class="fi fi-rs-eye mr-2"></i> Lihat Data
                         </a>
@@ -262,7 +265,7 @@
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Lengkap
                     </span>
-                    <a href="{{ route('biodata.edit', $pendaftaran->biodata->id) }}"
+                    <a href="{{ $biodataUrl('registrasi') }}"
                         class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi
                         Biodata</a>
                 @else
@@ -270,7 +273,7 @@
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Diisi
                     </span>
-                    <a href="{{ route('biodata.create') }}"
+                    <a href="{{ $biodataUrl('registrasi') }}"
                         class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi
                         Biodata Sekarang</a>
                 @endif
@@ -308,7 +311,7 @@
                         title="Klik untuk melihat pesan penolakan">
                         Ditolak
                     </button>
-                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
+                    <a href="{{ $biodataUrl('berkas') }}"
                         class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Perbaiki
                         Berkas</a>
                     <form action="{{ route('berkas.ajukan-ulang', $pendaftaran->berkas->id) }}" method="POST" class="mt-3">
@@ -323,7 +326,7 @@
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $berkasAccepted ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
                         {{ $berkasAccepted ? 'Diterima' : 'Selesai Diupload' }}
                     </span>
-                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
+                    <a href="{{ $biodataUrl('berkas') }}"
                         class="block text-center mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat
                         Berkas</a>
                 @elseif ($hasBerkas)
@@ -331,7 +334,7 @@
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                         Belum Lengkap
                     </span>
-                    <a href="{{ route('berkas.edit', $pendaftaran->berkas->id) }}"
+                    <a href="{{ $biodataUrl('berkas') }}"
                         class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi
                         Berkas</a>
                 @else
@@ -344,7 +347,7 @@
                             class="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors opacity-50 cursor-not-allowed"
                             disabled title="Lengkapi biodata terlebih dahulu">Upload Berkas</button>
                     @else
-                        <a href="{{ route('berkas.create') }}"
+                        <a href="{{ $biodataUrl('berkas') }}"
                             class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Upload
                             Berkas</a>
                     @endif
