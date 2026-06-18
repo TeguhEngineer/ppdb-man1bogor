@@ -228,129 +228,80 @@
         @php
             $hasBiodata = $pendaftaran->biodata || $pendaftaran->dataPribadi || $pendaftaran->dataOrangtua;
             $isBiodataComplete = $pendaftaran->isBiodataLengkap();
-            $biodataUrl = fn ($tab = 'pribadi') => $pendaftaran->biodata
-                ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => $tab])
-                : route('biodata.create', ['tab' => $tab]);
-        @endphp
-        <div
-            class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataComplete ? 'green' : 'yellow' }}-500">
-            <div class="flex items-start justify-between">
-                <div>
-                    <h3 class="text-lg font-bold text-gray-800">Biodata</h3>
-                    <p class="text-gray-500 text-sm mt-1">Lengkapi data diri dan data orang tua.</p>
-                </div>
-                <div
-                    class="bg-{{ $isBiodataComplete ? 'green' : 'yellow' }}-100 text-{{ $isBiodataComplete ? 'green' : 'yellow' }}-600 p-3 rounded-full">
-                    <i class="fi fi-rs-{{ $isBiodataComplete ? 'check-circle' : 'exclamation' }} text-xl"></i>
-                </div>
-            </div>
-            <div class="mt-6">
-                @if ($isBiodataComplete)
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        Selesai Diisi
-                    </span>
-                    <div class="grid grid-cols-2 gap-3 mt-4">
-                        <a href="{{ $biodataUrl('pribadi') }}"
-                            class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors text-sm">
-                            <i class="fi fi-rs-eye mr-2"></i> Lihat Data
-                        </a>
-                        <a href="{{ route('pendaftaran.cetak') }}" target="_blank"
-                            class="flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors text-sm">
-                            <i class="fi fi-rs-print mr-2"></i> Cetak Formulir
-                        </a>
-                    </div>
-                @elseif ($hasBiodata)
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        Belum Lengkap
-                    </span>
-                    <a href="{{ $biodataUrl('pribadi') }}"
-                        class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi
-                        Biodata</a>
-                @else
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        Belum Diisi
-                    </span>
-                    <a href="{{ $biodataUrl('pribadi') }}"
-                        class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi
-                        Biodata Sekarang</a>
-                @endif
-            </div>
-        </div>
-
-        <!-- Berkas Action -->
-        @php
             $isBerkasComplete = $pendaftaran->isBerkasLengkap();
             $hasBerkas = $pendaftaran->berkas != null;
             $berkasStatus = optional($pendaftaran->berkas)->status_berkas;
             $berkasRejected = $berkasStatus === 'tolak';
             $berkasAccepted = $berkasStatus === 'terima';
-            $berkasBorderColor = $berkasRejected ? 'red' : ($isBerkasComplete ? 'green' : ($hasBerkas ? 'yellow' : 'red'));
+            $isBiodataFinished = $isBiodataComplete && $isBerkasComplete;
+            $nextBiodataTab = $isBiodataComplete ? 'berkas' : 'pribadi';
+            $biodataUrl = fn ($tab = 'pribadi') => $pendaftaran->biodata
+                ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => $tab])
+                : route('biodata.create', ['tab' => $tab]);
         @endphp
         <div
-            class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $berkasBorderColor }}-500">
+            class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataFinished ? 'green' : ($berkasRejected ? 'red' : 'yellow') }}-500">
             <div class="flex items-start justify-between">
                 <div>
-                    <h3 class="text-lg font-bold text-gray-800">Upload Berkas</h3>
-                    <p class="text-gray-500 text-sm mt-1">Unggah dokumen persyaratan jalur
-                        {{ $pendaftaran->jalur->nama_jalur }}.
-                    </p>
+                    <h3 class="text-lg font-bold text-gray-800">Biodata</h3>
+                    <p class="text-gray-500 text-sm mt-1">Lengkapi data diri, data orang tua, dan berkas persyaratan.</p>
                 </div>
                 <div
-                    class="bg-{{ $berkasBorderColor }}-100 text-{{ $berkasBorderColor }}-600 p-3 rounded-full">
-                    <i
-                        class="fi fi-rs-{{ $berkasRejected ? 'cross' : ($isBerkasComplete ? 'check-circle' : ($hasBerkas ? 'exclamation' : 'document')) }} text-xl"></i>
+                    class="bg-{{ $isBiodataFinished ? 'green' : ($berkasRejected ? 'red' : 'yellow') }}-100 text-{{ $isBiodataFinished ? 'green' : ($berkasRejected ? 'red' : 'yellow') }}-600 p-3 rounded-full">
+                    <i class="fi fi-rs-{{ $isBiodataFinished ? 'check-circle' : ($berkasRejected ? 'cross' : 'exclamation') }} text-xl"></i>
                 </div>
             </div>
             <div class="mt-6">
-                @if ($berkasRejected)
-                    <button type="button" onclick="alert(@js($pendaftaran->berkas->pesan ?? 'Berkas ditolak. Silakan perbaiki unggahan Anda.'))"
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 hover:bg-red-200 transition-colors"
-                        title="Klik untuk melihat pesan penolakan">
-                        Ditolak
-                    </button>
-                    <a href="{{ $biodataUrl('berkas') }}"
-                        class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Perbaiki
-                        Berkas</a>
-                    <form action="{{ route('berkas.ajukan-ulang', $pendaftaran->berkas->id) }}" method="POST" class="mt-3">
-                        @csrf
-                        <button type="submit"
-                            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 rounded-lg shadow transition-colors">
-                            Ajukan Ulang Verifikasi
-                        </button>
-                    </form>
-                @elseif ($isBerkasComplete)
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $berkasAccepted ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
-                        {{ $berkasAccepted ? 'Diterima' : 'Selesai Diupload' }}
-                    </span>
-                    <a href="{{ $biodataUrl('berkas') }}"
-                        class="block text-center mt-4 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors">Lihat
-                        Berkas</a>
-                @elseif ($hasBerkas)
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        Belum Lengkap
-                    </span>
-                    <a href="{{ $biodataUrl('berkas') }}"
-                        class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lengkapi
-                        Berkas</a>
+                @if ($isBiodataFinished)
+                    <div>
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Biodata Selesai Diisi
+                        </span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                            <a href="{{ $biodataUrl('pribadi') }}"
+                                class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 rounded-lg transition-colors text-sm">
+                                <i class="fi fi-rs-eye mr-2"></i> Lihat Data
+                            </a>
+                            <a href="{{ route('pendaftaran.cetak') }}" target="_blank"
+                                class="flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors text-sm">
+                                <i class="fi fi-rs-print mr-2"></i> Cetak Formulir
+                            </a>
+                        </div>
+                    </div>
+                @elseif ($hasBiodata)
+                    <div>
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $berkasRejected ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800' }}">
+                            @if($berkasRejected)
+                                Berkas Ditolak
+                            @elseif(!$isBiodataComplete)
+                                Biodata Belum Lengkap
+                            @elseif($hasBerkas)
+                                Berkas Belum Lengkap
+                            @else
+                                Berkas Belum Diupload
+                            @endif
+                        </span>
+                        <a href="{{ $biodataUrl($nextBiodataTab) }}"
+                            class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Lihat Data</a>
+                        @if($berkasRejected && optional($pendaftaran->berkas)->pesan)
+                            <button type="button" onclick="alert(@js($pendaftaran->berkas->pesan))"
+                                class="block mt-3 w-full text-center bg-red-100 hover:bg-red-200 text-red-800 font-medium py-2 rounded-lg transition-colors">
+                                Lihat Pesan Penolakan
+                            </button>
+                        @endif
+                    </div>
                 @else
-                    <span
-                        class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                        Belum Diupload
-                    </span>
-                    @if(!$isBiodataComplete)
-                        <button
-                            class="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors opacity-50 cursor-not-allowed"
-                            disabled title="Lengkapi biodata terlebih dahulu">Upload Berkas</button>
-                    @else
-                        <a href="{{ $biodataUrl('berkas') }}"
-                            class="block text-center mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Upload
-                            Berkas</a>
-                    @endif
+                    <div>
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                            Biodata Belum Diisi
+                        </span>
+                        <a href="{{ $biodataUrl('pribadi') }}"
+                            class="block mt-4 w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 rounded-lg shadow transition-colors">Isi
+                            Biodata Sekarang</a>
+                    </div>
                 @endif
             </div>
         </div>
