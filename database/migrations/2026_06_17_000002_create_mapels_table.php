@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('mapels', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_mapel');
+            $table->string('nama_mapel', 100);
             $table->text('deskripsi')->nullable();
             $table->timestamps();
         });

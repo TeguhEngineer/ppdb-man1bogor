@@ -17,77 +17,77 @@ return new class extends Migration
             
             // Data Pribadi
             $table->string('foto_profil')->nullable();
-            $table->string('nama_lengkap');
-            $table->string('tempat_lahir');
+            $table->string('nama_lengkap', 150);
+            $table->string('tempat_lahir', 100);
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
-            $table->string('nik')->unique();
-            $table->string('no_kk');
+            $table->string('nik', 16)->unique();
+            $table->string('no_kk', 16);
             $table->integer('tinggi_badan')->nullable();
             $table->integer('berat_badan')->nullable();
-            $table->string('status_dalam_keluarga')->nullable();
-            $table->string('tinggal_bersama')->nullable();
+            $table->string('status_dalam_keluarga', 50)->nullable();
+            $table->string('tinggal_bersama', 50)->nullable();
             $table->integer('anak_ke')->nullable();
             $table->integer('jumlah_saudara')->nullable();
-            $table->string('agama');
-            $table->string('no_whatsapp');
+            $table->string('agama', 20);
+            $table->string('no_whatsapp', 15);
             
             // Data Alamat
             $table->text('alamat');
-            $table->string('desa');
-            $table->string('kecamatan');
-            $table->string('kabupaten');
-            $table->string('provinsi');
-            $table->string('kode_pos');
-            $table->string('jarak_ke_sekolah')->nullable();
-            $table->string('waktu_tempuh_ke_sekolah')->nullable();
+            $table->string('desa', 100);
+            $table->string('kecamatan', 100);
+            $table->string('kabupaten', 100);
+            $table->string('provinsi', 100);
+            $table->string('kode_pos', 5);
+            $table->string('jarak_ke_sekolah', 50)->nullable();
+            $table->string('waktu_tempuh_ke_sekolah', 50)->nullable();
             
             // Data Pendidikan
             $table->enum('asal_satuan_pendidikan', ['SMP', 'MTS']);
-            $table->string('nama_asal_sekolah');
-            $table->string('npsn')->nullable();
+            $table->string('nama_asal_sekolah', 150);
+            $table->string('npsn', 8)->nullable();
             
             // Data Penunjang Prestasi
-            $table->string('kategori_prestasi')->nullable();
+            $table->string('kategori_prestasi', 100)->nullable();
             $table->integer('jumlah_juz')->nullable();
-            $table->string('tingkat_prestasi')->nullable();
-            $table->string('jenis_prestasi')->nullable();
-            $table->string('nama_lomba')->nullable();
-            $table->string('sertifikat')->nullable();
+            $table->string('tingkat_prestasi', 50)->nullable();
+            $table->string('jenis_prestasi', 100)->nullable();
+            $table->string('nama_lomba', 150)->nullable();
+            $table->string('sertifikat', 500)->nullable();
             
             // Data Slip Gaji
-            $table->string('slip_gaji')->nullable();
+            $table->string('slip_gaji', 500)->nullable();
             
             // Data Ayah
-            $table->string('nama_ayah')->nullable();
-            $table->string('nik_ayah')->nullable();
-            $table->string('tempat_lahir_ayah')->nullable();
+            $table->string('nama_ayah', 150)->nullable();
+            $table->string('nik_ayah', 16)->nullable();
+            $table->string('tempat_lahir_ayah', 100)->nullable();
             $table->date('tanggal_lahir_ayah')->nullable();
-            $table->string('pendidikan_terakhir_ayah')->nullable();
-            $table->string('pekerjaan_ayah')->nullable();
-            $table->string('penghasilan_ayah')->nullable();
-            $table->string('no_hp_ayah')->nullable();
+            $table->string('pendidikan_terakhir_ayah', 50)->nullable();
+            $table->string('pekerjaan_ayah', 100)->nullable();
+            $table->string('penghasilan_ayah', 50)->nullable();
+            $table->string('no_hp_ayah', 20)->nullable();
             
             // Data Ibu
-            $table->string('nama_ibu')->nullable();
-            $table->string('nik_ibu')->nullable();
-            $table->string('tempat_lahir_ibu')->nullable();
+            $table->string('nama_ibu', 150)->nullable();
+            $table->string('nik_ibu', 16)->nullable();
+            $table->string('tempat_lahir_ibu', 100)->nullable();
             $table->date('tanggal_lahir_ibu')->nullable();
-            $table->string('pendidikan_terakhir_ibu')->nullable();
-            $table->string('pekerjaan_ibu')->nullable();
-            $table->string('penghasilan_ibu')->nullable();
-            $table->string('no_hp_ibu')->nullable();
-            $table->string('kartu_keluarga')->nullable();
+            $table->string('pendidikan_terakhir_ibu', 50)->nullable();
+            $table->string('pekerjaan_ibu', 100)->nullable();
+            $table->string('penghasilan_ibu', 50)->nullable();
+            $table->string('no_hp_ibu', 20)->nullable();
+            $table->string('kartu_keluarga', 500)->nullable();
             
             // Data Wali
-            $table->string('nama_wali')->nullable();
-            $table->string('nik_wali')->nullable();
-            $table->string('tempat_lahir_wali')->nullable();
+            $table->string('nama_wali', 150)->nullable();
+            $table->string('nik_wali', 16)->nullable();
+            $table->string('tempat_lahir_wali', 100)->nullable();
             $table->date('tanggal_lahir_wali')->nullable();
-            $table->string('pendidikan_terakhir_wali')->nullable();
-            $table->string('pekerjaan_wali')->nullable();
-            $table->string('penghasilan_wali')->nullable();
-            $table->string('no_hp_wali')->nullable();
+            $table->string('pendidikan_terakhir_wali', 50)->nullable();
+            $table->string('pekerjaan_wali', 100)->nullable();
+            $table->string('penghasilan_wali', 50)->nullable();
+            $table->string('no_hp_wali', 20)->nullable();
             
             $table->timestamps();
         });

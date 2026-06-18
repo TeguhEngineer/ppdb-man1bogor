@@ -74,7 +74,7 @@ class PengumumanController extends Controller
     private function validatePengumuman(Request $request): array
     {
         return $request->validate([
-            'judul' => ['required', 'string', 'max:255'],
+            'judul' => ['required', 'string', 'max:150'],
             'keterangan' => ['required', 'string'],
             'is_published' => ['nullable', 'boolean'],
         ], [

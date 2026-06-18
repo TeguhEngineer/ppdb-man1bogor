@@ -16,7 +16,7 @@ return new class extends Migration
             $table->time('waktu_selesai');
             $table->date('tanggal_wawancara_btq')->nullable();
             $table->time('waktu_wawancara_btq')->nullable();
-            $table->string('tempat_wawancara_btq')->nullable();
+            $table->string('tempat_wawancara_btq', 150)->nullable();
             $table->text('catatan')->nullable();
             $table->timestamps();
         });

@@ -78,7 +78,7 @@ class JalurController extends Controller
     private function validatedData(Request $request): array
     {
         $data = $request->validate([
-            'nama_jalur' => 'required|string|max:255',
+            'nama_jalur' => 'required|string|max:50',
             'total_kuota' => 'required|integer|min:0',
             'deskripsi' => 'nullable|string',
             'tgl_buka' => 'nullable|date_format:Y-m-d\TH:i',

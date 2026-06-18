@@ -44,8 +44,8 @@ class SeleksiUjianController extends Controller
     public function storeRuangan(Request $request)
     {
         $data = $request->validate([
-            'nama_ruangan' => 'required|string|max:255|unique:ruangans,nama_ruangan',
-            'lokasi' => 'nullable|string|max:255',
+            'nama_ruangan' => 'required|string|max:50|unique:ruangans,nama_ruangan',
+            'lokasi' => 'nullable|string|max:150',
             'kapasitas' => 'nullable|integer|min:1',
             'deskripsi' => 'nullable|string',
         ]);
@@ -58,8 +58,8 @@ class SeleksiUjianController extends Controller
     public function updateRuangan(Request $request, Ruangan $ruangan)
     {
         $data = $request->validate([
-            'nama_ruangan' => 'required|string|max:255|unique:ruangans,nama_ruangan,' . $ruangan->id,
-            'lokasi' => 'nullable|string|max:255',
+            'nama_ruangan' => 'required|string|max:50|unique:ruangans,nama_ruangan,' . $ruangan->id,
+            'lokasi' => 'nullable|string|max:150',
             'kapasitas' => 'nullable|integer|min:1',
             'deskripsi' => 'nullable|string',
         ]);
@@ -83,7 +83,7 @@ class SeleksiUjianController extends Controller
     public function storeMapel(Request $request)
     {
         $data = $request->validate([
-            'nama_mapel' => 'required|string|max:255',
+            'nama_mapel' => 'required|string|max:100',
             'deskripsi' => 'nullable|string',
             'jalur_ids' => 'nullable|array',
             'jalur_ids.*' => 'exists:jalurs,id',
@@ -102,7 +102,7 @@ class SeleksiUjianController extends Controller
     public function updateMapel(Request $request, Mapel $mapel)
     {
         $data = $request->validate([
-            'nama_mapel' => 'required|string|max:255',
+            'nama_mapel' => 'required|string|max:100',
             'deskripsi' => 'nullable|string',
             'jalur_ids' => 'nullable|array',
             'jalur_ids.*' => 'exists:jalurs,id',
@@ -156,8 +156,8 @@ class SeleksiUjianController extends Controller
         $data = $request->validate([
             'ruangan_id' => 'required|exists:ruangans,id',
             'jadwal_ujian_id' => 'required|exists:jadwal_ujians,id',
-            'username_ujian' => 'required|string|max:255',
-            'password_ujian' => 'required|string|max:255',
+            'username_ujian' => 'required|string|max:50',
+            'password_ujian' => 'required|string|max:50',
         ]);
 
         if (!$pendaftaran->berkas || $pendaftaran->berkas->status_berkas !== 'terima') {
@@ -187,7 +187,7 @@ class SeleksiUjianController extends Controller
             'waktu_selesai' => 'required|date_format:H:i|after:waktu_mulai',
             'tanggal_wawancara_btq' => 'nullable|date',
             'waktu_wawancara_btq' => 'nullable|date_format:H:i',
-            'tempat_wawancara_btq' => 'nullable|string|max:255',
+            'tempat_wawancara_btq' => 'nullable|string|max:150',
             'catatan' => 'nullable|string',
         ]);
     }

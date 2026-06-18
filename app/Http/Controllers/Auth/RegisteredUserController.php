@@ -32,9 +32,9 @@ class RegisteredUserController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:150'],
                 'nisn' => ['required', 'numeric', 'digits:10'],
-                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:191', 'unique:'.User::class],
                 'password' => ['required', 'digits:10', 'same:nisn'],
                 'jalur' => ['nullable', 'string']
             ], [

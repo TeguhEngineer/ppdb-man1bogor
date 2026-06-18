@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('ruangans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_ruangan')->unique();
-            $table->string('lokasi')->nullable();
+            $table->string('nama_ruangan', 50)->unique();
+            $table->string('lokasi', 150)->nullable();
             $table->unsignedInteger('kapasitas')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamps();

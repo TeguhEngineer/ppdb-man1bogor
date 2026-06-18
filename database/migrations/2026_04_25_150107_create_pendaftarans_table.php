@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('pendaftarans', function (Blueprint $table) {
             $table->id();
-            $table->string('no_pendaftaran')->unique();
-            $table->string('nisn')->nullable();
+            $table->string('no_pendaftaran', 30)->unique();
+            $table->string('nisn', 10)->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('jalur_id')->constrained('jalurs')->cascadeOnDelete();
-            $table->string('kampus')->default('MAN 1 BOGOR');
+            $table->string('kampus', 100)->default('MAN 1 BOGOR');
             $table->enum('status_pendaftaran', ['pending', 'verifikasi', 'tes', 'lulus', 'tidak_lulus'])->default('pending');
             $table->timestamps();
         });

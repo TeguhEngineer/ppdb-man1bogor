@@ -13,20 +13,20 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
             $table->string('foto_profil')->nullable();
-            $table->string('nama_lengkap')->nullable();
-            $table->string('tempat_lahir')->nullable();
+            $table->string('nama_lengkap', 150)->nullable();
+            $table->string('tempat_lahir', 100)->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan'])->nullable();
-            $table->string('nik')->nullable()->unique();
-            $table->string('no_kk')->nullable();
+            $table->string('nik', 16)->nullable()->unique();
+            $table->string('no_kk', 16)->nullable();
             $table->integer('tinggi_badan')->nullable();
             $table->integer('berat_badan')->nullable();
-            $table->string('status_dalam_keluarga')->nullable();
-            $table->string('tinggal_bersama')->nullable();
+            $table->string('status_dalam_keluarga', 50)->nullable();
+            $table->string('tinggal_bersama', 50)->nullable();
             $table->integer('anak_ke')->nullable();
             $table->integer('jumlah_saudara')->nullable();
-            $table->string('agama')->nullable();
-            $table->string('no_whatsapp')->nullable();
+            $table->string('agama', 20)->nullable();
+            $table->string('no_whatsapp', 20)->nullable();
             $table->timestamps();
         });
 
@@ -34,13 +34,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
             $table->text('alamat')->nullable();
-            $table->string('desa')->nullable();
-            $table->string('kecamatan')->nullable();
-            $table->string('kabupaten')->nullable();
-            $table->string('provinsi')->nullable();
-            $table->string('kode_pos')->nullable();
-            $table->string('jarak_ke_sekolah')->nullable();
-            $table->string('waktu_tempuh_ke_sekolah')->nullable();
+            $table->string('desa', 100)->nullable();
+            $table->string('kecamatan', 100)->nullable();
+            $table->string('kabupaten', 100)->nullable();
+            $table->string('provinsi', 100)->nullable();
+            $table->string('kode_pos', 5)->nullable();
+            $table->string('jarak_ke_sekolah', 50)->nullable();
+            $table->string('waktu_tempuh_ke_sekolah', 50)->nullable();
             $table->timestamps();
         });
 
@@ -48,61 +48,61 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
             $table->enum('asal_satuan_pendidikan', ['SMP', 'MTS'])->nullable();
-            $table->string('nama_asal_sekolah')->nullable();
-            $table->string('npsn')->nullable();
+            $table->string('nama_asal_sekolah', 150)->nullable();
+            $table->string('npsn', 8)->nullable();
             $table->timestamps();
         });
 
         Schema::create('biodata_penunjang_prestasis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
-            $table->string('kategori_prestasi')->nullable();
+            $table->string('kategori_prestasi', 100)->nullable();
             $table->integer('jumlah_juz')->nullable();
-            $table->string('tingkat_prestasi')->nullable();
-            $table->string('jenis_prestasi')->nullable();
-            $table->string('nama_lomba')->nullable();
+            $table->string('tingkat_prestasi', 50)->nullable();
+            $table->string('jenis_prestasi', 100)->nullable();
+            $table->string('nama_lomba', 150)->nullable();
             $table->timestamps();
         });
 
         Schema::create('biodata_data_ayahs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
-            $table->string('nama_ayah')->nullable();
-            $table->string('nik_ayah')->nullable();
-            $table->string('tempat_lahir_ayah')->nullable();
+            $table->string('nama_ayah', 150)->nullable();
+            $table->string('nik_ayah', 16)->nullable();
+            $table->string('tempat_lahir_ayah', 100)->nullable();
             $table->date('tanggal_lahir_ayah')->nullable();
-            $table->string('pendidikan_terakhir_ayah')->nullable();
-            $table->string('pekerjaan_ayah')->nullable();
-            $table->string('penghasilan_ayah')->nullable();
-            $table->string('no_hp_ayah')->nullable();
+            $table->string('pendidikan_terakhir_ayah', 50)->nullable();
+            $table->string('pekerjaan_ayah', 100)->nullable();
+            $table->string('penghasilan_ayah', 50)->nullable();
+            $table->string('no_hp_ayah', 20)->nullable();
             $table->timestamps();
         });
 
         Schema::create('biodata_data_ibus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
-            $table->string('nama_ibu')->nullable();
-            $table->string('nik_ibu')->nullable();
-            $table->string('tempat_lahir_ibu')->nullable();
+            $table->string('nama_ibu', 150)->nullable();
+            $table->string('nik_ibu', 16)->nullable();
+            $table->string('tempat_lahir_ibu', 100)->nullable();
             $table->date('tanggal_lahir_ibu')->nullable();
-            $table->string('pendidikan_terakhir_ibu')->nullable();
-            $table->string('pekerjaan_ibu')->nullable();
-            $table->string('penghasilan_ibu')->nullable();
-            $table->string('no_hp_ibu')->nullable();
+            $table->string('pendidikan_terakhir_ibu', 50)->nullable();
+            $table->string('pekerjaan_ibu', 100)->nullable();
+            $table->string('penghasilan_ibu', 50)->nullable();
+            $table->string('no_hp_ibu', 20)->nullable();
             $table->timestamps();
         });
 
         Schema::create('biodata_data_walis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
-            $table->string('nama_wali')->nullable();
-            $table->string('nik_wali')->nullable();
-            $table->string('tempat_lahir_wali')->nullable();
+            $table->string('nama_wali', 150)->nullable();
+            $table->string('nik_wali', 16)->nullable();
+            $table->string('tempat_lahir_wali', 100)->nullable();
             $table->date('tanggal_lahir_wali')->nullable();
-            $table->string('pendidikan_terakhir_wali')->nullable();
-            $table->string('pekerjaan_wali')->nullable();
-            $table->string('penghasilan_wali')->nullable();
-            $table->string('no_hp_wali')->nullable();
+            $table->string('pendidikan_terakhir_wali', 50)->nullable();
+            $table->string('pekerjaan_wali', 100)->nullable();
+            $table->string('penghasilan_wali', 50)->nullable();
+            $table->string('no_hp_wali', 20)->nullable();
             $table->timestamps();
         });
 

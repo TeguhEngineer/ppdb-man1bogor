@@ -13,9 +13,9 @@ return new class extends Migration
             $table->foreignId('pendaftaran_id')->unique()->constrained('pendaftarans')->cascadeOnDelete();
             $table->foreignId('ruangan_id')->nullable()->constrained('ruangans')->nullOnDelete();
             $table->foreignId('jadwal_ujian_id')->nullable()->constrained('jadwal_ujians')->nullOnDelete();
-            $table->string('nomor_peserta_ujian')->unique();
-            $table->string('username_ujian');
-            $table->string('password_ujian');
+            $table->string('nomor_peserta_ujian', 30)->unique();
+            $table->string('username_ujian', 50);
+            $table->string('password_ujian', 50);
             $table->timestamp('generated_at')->nullable();
             $table->timestamps();
         });

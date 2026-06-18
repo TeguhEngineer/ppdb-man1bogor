@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('pengumumans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pendaftaran_id')->constrained('pendaftarans')->cascadeOnDelete();
-            $table->string('judul');
+            $table->string('judul', 150);
             $table->text('keterangan');
             $table->enum('status', ['lulus', 'tidak_lulus', 'pending'])->default('pending'); //hapus
             $table->timestamps();
