@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <div class="relative overflow-hidden rounded-2xl bg-white border border-gray-100 shadow-sm">
+        <div class="relative overflow-hidden rounded-2xl bg-white border-2 border-{{ $accent }}-200 shadow-sm">
             <div class="absolute inset-x-0 top-0 h-2 bg-{{ $accent }}-500"></div>
             <div class="p-6 md:p-10">
                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="w-full lg:w-80">
-                        <div class="rounded-2xl border border-gray-100 bg-gray-50 p-5 space-y-4">
+                        <div class="rounded-2xl border border-{{ $accent }}-100 bg-{{ $accent }}-50/40 p-5 space-y-4">
                             <div>
                                 <p class="text-xs uppercase tracking-wider text-gray-400 font-bold">No Pendaftaran</p>
                                 <p class="text-lg font-black text-gray-900">{{ $pendaftaran->no_pendaftaran }}</p>
