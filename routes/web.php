@@ -30,7 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::post('berkas/{berka}/ajukan-ulang', [BerkasController::class, 'ajukanUlang'])->name('berkas.ajukan-ulang');
     Route::resource('berkas', BerkasController::class)->except(['index', 'show', 'destroy']);
     Route::get('pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman.index');
-    Route::post('pengumuman/{id}/dibaca', [App\Http\Controllers\PengumumanController::class, 'tandaiDibaca'])->name('pengumuman.dibaca');
     
     // Profile routes (all authenticated users)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.index');
@@ -68,13 +67,14 @@ Route::middleware('auth')->group(function () {
         Route::put('/seleksi-ujian/kartu/{pendaftaran}', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'updateKartu'])->name('admin.seleksi-ujian.kartu.update');
         Route::get('/seleksi-ujian/kartu/{pendaftaran}/cetak', [KartuUjianController::class, 'cetakAdmin'])->name('admin.seleksi-ujian.kartu.cetak');
 
-        Route::get('/pengumuman/search-participants', [App\Http\Controllers\Admin\PengumumanController::class, 'searchParticipants'])->name('admin.pengumuman.search');
         Route::resource('pengumuman', App\Http\Controllers\Admin\PengumumanController::class)->names([
             'index' => 'admin.pengumuman.index',
             'create' => 'admin.pengumuman.create',
             'store' => 'admin.pengumuman.store',
+            'edit' => 'admin.pengumuman.edit',
+            'update' => 'admin.pengumuman.update',
             'destroy' => 'admin.pengumuman.destroy',
-        ])->except(['show', 'edit', 'update']);
+        ])->except(['show']);
     });
 });
 

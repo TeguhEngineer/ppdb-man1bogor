@@ -6,7 +6,7 @@
                 &larr;
             </a>
             <h2 class="font-bold text-xl text-gray-800 leading-tight">
-                {{ __('Buat Pengumuman Umum') }}
+                {{ __('Edit Pengumuman') }}
             </h2>
         </div>
     </x-slot>
@@ -15,13 +15,11 @@
         <div class="lg:col-span-1">
             <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-6 shadow-sm">
                 <h3 class="text-emerald-800 font-bold text-lg mb-3 flex items-center">
-                    <i class="fi fi-rs-info mr-2"></i> Pengumuman Umum
+                    <i class="fi fi-rs-info mr-2"></i> Status Publikasi
                 </h3>
-                <ul class="text-sm text-emerald-700 space-y-3 leading-relaxed">
-                    <li>Pengumuman dibuat satu kali dan tampil untuk semua peserta.</li>
-                    <li>Tidak ada duplikasi data per peserta, sehingga lebih ringan saat jumlah pendaftar besar.</li>
-                    <li>Gunakan opsi tampilkan untuk menyimpan draft atau langsung mempublikasikan.</li>
-                </ul>
+                <p class="text-sm text-emerald-700 leading-relaxed">
+                    Jika status ditampilkan, pengumuman ini terlihat oleh semua peserta. Jika tidak, pengumuman menjadi draft.
+                </p>
             </div>
         </div>
 
@@ -38,15 +36,15 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.pengumuman.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('admin.pengumuman.update', $pengumuman->id) }}" method="POST" class="space-y-6">
                     @csrf
+                    @method('PUT')
 
                     <div>
                         <label for="judul" class="block text-sm font-bold text-gray-700 mb-1">
                             Judul Pengumuman <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="judul" id="judul" value="{{ old('judul') }}"
-                            placeholder="Contoh: Pengumuman Jadwal Tes Seleksi"
+                        <input type="text" name="judul" id="judul" value="{{ old('judul', $pengumuman->judul) }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
                             required>
                         @error('judul')
@@ -60,22 +58,21 @@
                         </label>
                         <textarea name="keterangan" id="keterangan" rows="8"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
-                            placeholder="Tulis pengumuman Anda di sini..." required>{{ old('keterangan') }}</textarea>
+                            required>{{ old('keterangan', $pengumuman->keterangan) }}</textarea>
                         @error('keterangan')
                             <p class="mt-1 text-xs text-red-600 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                        <input type="checkbox" name="is_published" value="1" class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" @checked(old('is_published', true))>
-                        Tampilkan langsung ke semua peserta
+                        <input type="checkbox" name="is_published" value="1" class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" @checked(old('is_published', $pengumuman->is_published))>
+                        Tampilkan ke semua peserta
                     </label>
 
                     <div class="flex justify-end pt-4 border-t border-gray-100">
                         <button type="submit"
-                            class="inline-flex justify-center items-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors"
-                            onclick="return confirm('Simpan pengumuman ini?');">
-                            <i class="fi fi-rs-disk mr-2"></i> Simpan Pengumuman
+                            class="inline-flex justify-center items-center py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
+                            <i class="fi fi-rs-disk mr-2"></i> Simpan Perubahan
                         </button>
                     </div>
                 </form>

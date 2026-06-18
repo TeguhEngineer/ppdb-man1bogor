@@ -9,8 +9,8 @@ class Pengumuman extends Model
     protected $table = 'pengumumans';
     protected $guarded = ['id'];
 
-    public function pendaftaran()
-    {
-        return $this->belongsTo(Pendaftaran::class);
-    }
+    protected $casts = [
+        'is_published' => 'boolean',
+        'published_at' => 'datetime',
+    ];
 }

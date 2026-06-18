@@ -18,7 +18,6 @@ class DashboardController extends Controller
                 'jalur',
                 'biodata',
                 'berkas',
-                'pengumumans',
                 'dataPribadi',
                 'alamat',
                 'pendidikan',
