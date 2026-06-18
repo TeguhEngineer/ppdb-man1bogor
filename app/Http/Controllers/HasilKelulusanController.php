@@ -29,7 +29,7 @@ class HasilKelulusanController extends Controller
     {
         abort_unless(Auth::user()->role === 'peserta', 403);
 
-        return Pendaftaran::with(['user', 'jalur', 'biodata', 'dataPribadi', 'berkas'])
+        return Pendaftaran::with(['user', 'jalur', 'dataPribadi', 'berkas'])
             ->where('user_id', Auth::id())
             ->firstOrFail();
     }

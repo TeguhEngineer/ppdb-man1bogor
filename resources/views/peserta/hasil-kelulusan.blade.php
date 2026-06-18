@@ -10,7 +10,6 @@
         $isFinal = in_array($status, ['lulus', 'tidak_lulus'], true);
         $isLulus = $status === 'lulus';
         $name = $pendaftaran->dataPribadi->nama_lengkap
-            ?? $pendaftaran->biodata->nama_lengkap
             ?? $pendaftaran->user->name;
         $statusLabel = $isLulus ? 'LULUS' : ($status === 'tidak_lulus' ? 'TIDAK LULUS' : 'BELUM DIUMUMKAN');
         $accent = $isLulus ? 'emerald' : ($status === 'tidak_lulus' ? 'red' : 'amber');

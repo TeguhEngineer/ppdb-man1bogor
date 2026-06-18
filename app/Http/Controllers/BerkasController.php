@@ -85,9 +85,7 @@ class BerkasController extends Controller
         $berkas = Berkas::create($berkasData);
 
         if ($request->boolean('from_biodata_tab')) {
-            $biodata = $pendaftaran->biodata;
-
-            return redirect()->route('biodata.edit', ['biodatum' => $biodata->id, 'tab' => 'berkas'])->with('success', 'Berkas berhasil diunggah!');
+            return redirect()->route('biodata.edit', ['tab' => 'berkas'])->with('success', 'Berkas berhasil diunggah!');
         }
 
         return redirect()->route('berkas.edit', $berkas->id)->with('success', 'Berkas berhasil diunggah!');
@@ -174,9 +172,7 @@ class BerkasController extends Controller
         $berka->save();
 
         if ($request->boolean('from_biodata_tab')) {
-            $biodata = $pendaftaran->biodata;
-
-            return redirect()->route('biodata.edit', ['biodatum' => $biodata->id, 'tab' => 'berkas'])->with('success', 'Berkas berhasil diperbarui!');
+            return redirect()->route('biodata.edit', ['tab' => 'berkas'])->with('success', 'Berkas berhasil diperbarui!');
         }
 
         return redirect()->back()->with('success', 'Berkas berhasil diperbarui!');

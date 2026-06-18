@@ -176,12 +176,12 @@
                 <tr>
                     <td class="label">Nama Lengkap</td>
                     <td class="sep">:</td>
-                    <td><strong>{{ $pendaftaran->biodata->nama_lengkap ?? $pendaftaran->user->name }}</strong></td>
+                    <td><strong>{{ $pendaftaran->dataPribadi->nama_lengkap ?? $pendaftaran->user->name }}</strong></td>
                 </tr>
                 <tr>
                     <td class="label">Asal Sekolah</td>
                     <td class="sep">:</td>
-                    <td>{{ $pendaftaran->biodata->nama_asal_sekolah ?? '-' }}</td>
+                    <td>{{ $pendaftaran->dataPribadi->nama_asal_sekolah ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="label">Jalur Pendaftaran</td>

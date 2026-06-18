@@ -19,7 +19,7 @@
         $fileClass = 'mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100';
         $field = fn ($model, $name) => old($name, optional($model)->{$name});
         $fieldError = fn (string $name) => $errors->has($name) ? '<p class="mt-1 text-xs text-red-600 font-medium">'.e($errors->first($name)).'</p>' : '';
-        $tabUrl = fn ($key) => $biodatum ? route('biodata.edit', ['biodatum' => $biodatum->id, 'tab' => $key]) : route('biodata.create', ['tab' => $key]);
+        $tabUrl = fn ($key) => route('biodata.edit', ['tab' => $key]);
         $dataPribadi = $pendaftaran->dataPribadi;
         $dataOrangtua = $pendaftaran->dataOrangtua;
     @endphp

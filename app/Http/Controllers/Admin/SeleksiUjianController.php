@@ -18,7 +18,7 @@ class SeleksiUjianController extends Controller
         $pendaftarans = Pendaftaran::with([
                 'user',
                 'jalur.mapels',
-                'biodata',
+                'dataPribadi',
                 'berkas',
                 'kartuPesertaUjian.ruangan',
                 'kartuPesertaUjian.jadwalUjian',

@@ -321,7 +321,7 @@
                                         @csrf
                                         @method('PUT')
                                         <td class="p-4">
-                                            <p class="font-bold text-gray-800">{{ $pendaftaran->biodata->nama_lengkap ?? $pendaftaran->user->name }}</p>
+                                            <p class="font-bold text-gray-800">{{ $pendaftaran->dataPribadi->nama_lengkap ?? $pendaftaran->user->name }}</p>
                                             <p class="text-xs text-gray-500 mt-1">{{ $pendaftaran->no_pendaftaran }}</p>
                                             <p class="text-xs text-gray-500">No. Kartu: {{ $kartu->nomor_peserta_ujian ?? '-' }}</p>
                                         </td>

@@ -18,11 +18,6 @@ class Pendaftaran extends Model
         return $this->belongsTo(Jalur::class);
     }
 
-    public function biodata()
-    {
-        return $this->hasOne(Biodata::class);
-    }
-
     public function dataPribadi()
     {
         return $this->hasOne(DataPribadi::class);
@@ -80,85 +75,49 @@ class Pendaftaran extends Model
 
     public function isBiodataLengkap()
     {
-        if ($this->dataPribadi || $this->dataOrangtua) {
-            $requiredGroups = [
-                [
-                    'model' => $this->dataPribadi,
-                    'fields' => [
-                        'nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
-                        'no_kk', 'tinggi_badan', 'berat_badan', 'status_dalam_keluarga',
-                        'tinggal_bersama', 'anak_ke', 'jumlah_saudara', 'agama', 'no_whatsapp',
-                        'alamat', 'desa', 'kecamatan', 'kabupaten', 'provinsi', 'kode_pos',
-                        'jarak_ke_sekolah', 'waktu_tempuh_ke_sekolah',
-                        'asal_satuan_pendidikan', 'nama_asal_sekolah', 'npsn',
-                    ],
+        $requiredGroups = [
+            [
+                'model' => $this->dataPribadi,
+                'fields' => [
+                    'nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin',
+                    'no_kk', 'tinggi_badan', 'berat_badan', 'status_dalam_keluarga',
+                    'tinggal_bersama', 'anak_ke', 'jumlah_saudara', 'agama', 'no_whatsapp',
+                    'alamat', 'desa', 'kecamatan', 'kabupaten', 'provinsi', 'kode_pos',
+                    'jarak_ke_sekolah', 'waktu_tempuh_ke_sekolah',
+                    'asal_satuan_pendidikan', 'nama_asal_sekolah', 'npsn',
                 ],
-                [
-                    'model' => $this->dataOrangtua,
-                    'fields' => [
-                        'nama_ayah', 'pendidikan_terakhir_ayah', 'pekerjaan_ayah', 'penghasilan_ayah', 'no_hp_ayah',
-                        'nama_ibu', 'pendidikan_terakhir_ibu', 'pekerjaan_ibu', 'penghasilan_ibu', 'no_hp_ibu',
-                    ],
+            ],
+            [
+                'model' => $this->dataOrangtua,
+                'fields' => [
+                    'nama_ayah', 'pendidikan_terakhir_ayah', 'pekerjaan_ayah', 'penghasilan_ayah', 'no_hp_ayah',
+                    'nama_ibu', 'pendidikan_terakhir_ibu', 'pekerjaan_ibu', 'penghasilan_ibu', 'no_hp_ibu',
                 ],
-            ];
+            ],
+        ];
 
-            foreach ($requiredGroups as $group) {
-                $model = $group['model'];
-                $fields = $group['fields'];
+        foreach ($requiredGroups as $group) {
+            $model = $group['model'];
+            $fields = $group['fields'];
 
-                if (!$model) {
+            if (!$model) {
+                return false;
+            }
+
+            foreach ($fields as $field) {
+                if (!isset($model->$field)) {
                     return false;
                 }
 
-                foreach ($fields as $field) {
-                    if (!isset($model->$field)) {
-                        return false;
-                    }
+                $value = $model->$field;
 
-                    $value = $model->$field;
-
-                    if (is_string($value) && trim($value) === '') {
-                        return false;
-                    }
-
-                    if (is_null($value)) {
-                        return false;
-                    }
+                if (is_string($value) && trim($value) === '') {
+                    return false;
                 }
-            }
 
-            return true;
-        }
-
-        if (!$this->biodata) return false;
-
-        $b = $this->biodata;
-        
-        // Cek field wajib (Seksi 1-4)
-        $requiredFields = [
-            'nama_lengkap', 'nik', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 
-            'no_kk', 'tinggi_badan', 'berat_badan', 'status_dalam_keluarga', 
-            'tinggal_bersama', 'anak_ke', 'jumlah_saudara', 'agama', 'no_whatsapp',
-            'alamat', 'desa', 'kecamatan', 'kabupaten', 'provinsi', 'kode_pos', 
-            'jarak_ke_sekolah', 'waktu_tempuh_ke_sekolah', 'asal_satuan_pendidikan', 
-            'nama_asal_sekolah', 'npsn', 'nama_ayah', 'pendidikan_terakhir_ayah', 
-            'pekerjaan_ayah', 'penghasilan_ayah', 'no_hp_ayah', 'nama_ibu', 
-            'pendidikan_terakhir_ibu', 'pekerjaan_ibu', 'penghasilan_ibu', 'no_hp_ibu'
-        ];
-
-        foreach ($requiredFields as $field) {
-            if (!isset($b->$field)) {
-                return false;
-            }
-
-            $value = $b->$field;
-
-            if (is_string($value) && trim($value) === '') {
-                return false;
-            }
-
-            if (is_null($value)) {
-                return false;
+                if (is_null($value)) {
+                    return false;
+                }
             }
         }
 
@@ -170,49 +129,4 @@ class Pendaftaran extends Model
         return $this->isBiodataLengkap() && $this->isBerkasLengkap();
     }
 
-    public function syncBiodataAggregate(): ?Biodata
-    {
-        $data = [];
-
-        foreach ([
-            $this->dataPribadi,
-            $this->dataOrangtua,
-        ] as $model) {
-            if ($model) {
-                $data = array_merge($data, collect($model->getAttributes())->except(['id', 'pendaftaran_id', 'created_at', 'updated_at'])->toArray());
-            }
-        }
-
-        $requiredForLegacyBiodata = [
-            'nama_lengkap',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'jenis_kelamin',
-            'nik',
-            'no_kk',
-            'agama',
-            'no_whatsapp',
-            'alamat',
-            'desa',
-            'kecamatan',
-            'kabupaten',
-            'provinsi',
-            'kode_pos',
-            'asal_satuan_pendidikan',
-            'nama_asal_sekolah',
-        ];
-
-        if (!$this->biodata) {
-            foreach ($requiredForLegacyBiodata as $field) {
-                if (!array_key_exists($field, $data) || trim((string) $data[$field]) === '') {
-                    return null;
-                }
-            }
-        }
-
-        return $this->biodata()->updateOrCreate(
-            ['pendaftaran_id' => $this->id],
-            $data
-        );
-    }
 }

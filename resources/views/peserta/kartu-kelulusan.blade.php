@@ -203,7 +203,7 @@
 </head>
 <body>
     @php
-        $dataPribadi = $pendaftaran->dataPribadi ?? $pendaftaran->biodata;
+        $dataPribadi = $pendaftaran->dataPribadi;
         $isLulus = $pendaftaran->status_pendaftaran === 'lulus';
         $statusLabel = $isLulus ? 'LULUS / DITERIMA' : 'TIDAK LULUS / TIDAK DITERIMA';
         $nama = strtoupper($dataPribadi->nama_lengkap ?? $pendaftaran->user->name);

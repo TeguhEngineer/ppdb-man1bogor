@@ -30,8 +30,9 @@ Route::get('/hasil-kelulusan/cetak', [HasilKelulusanController::class, 'cetak'])
     ->name('hasil-kelulusan.cetak');
 
 Route::middleware('auth')->group(function () {
+    Route::get('biodata/edit', [BiodataController::class, 'edit'])->name('biodata.edit');
     Route::post('biodata/tab/{tab}', [BiodataController::class, 'updateTab'])->name('biodata.tab.update');
-    Route::resource('biodata', BiodataController::class)->only(['create', 'edit']);
+    Route::resource('biodata', BiodataController::class)->only(['create']);
     Route::post('berkas/{berka}/ajukan-ulang', [BerkasController::class, 'ajukanUlang'])->name('berkas.ajukan-ulang');
     Route::resource('berkas', BerkasController::class)->except(['index', 'show', 'destroy']);
     Route::get('pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman.index');

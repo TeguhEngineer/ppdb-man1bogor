@@ -21,7 +21,7 @@ class ReportController extends Controller
 
         $isPrinting = $request->boolean('print');
         $jalurs = Jalur::orderBy('nama_jalur')->get();
-        $query = Pendaftaran::with(['user', 'jalur', 'biodata', 'dataPribadi', 'berkas'])->latest();
+        $query = Pendaftaran::with(['user', 'jalur', 'dataPribadi', 'berkas'])->latest();
 
         if ($isPrinting && $request->filled('status') && array_key_exists($request->status, $statusOptions)) {
             $query->where('status_pendaftaran', $request->status);

@@ -11,7 +11,7 @@ class VerifikasiController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pendaftaran::with(['user', 'jalur', 'biodata', 'berkas'])->latest();
+        $query = Pendaftaran::with(['user', 'jalur', 'dataPribadi', 'dataOrangtua', 'berkas'])->latest();
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
@@ -34,7 +34,7 @@ class VerifikasiController extends Controller
 
     public function show(Pendaftaran $pendaftaran)
     {
-        $pendaftaran->load(['user', 'jalur', 'biodata', 'berkas']);
+        $pendaftaran->load(['user', 'jalur', 'dataPribadi', 'dataOrangtua', 'berkas']);
         return view('admin.verifikasi.show', compact('pendaftaran'));
     }
 
@@ -127,7 +127,7 @@ class VerifikasiController extends Controller
     public function export(Request $request)
     {
         $type = $request->get('type', 'csv');
-        $query = Pendaftaran::with(['user', 'jalur', 'biodata', 'berkas'])->latest();
+        $query = Pendaftaran::with(['user', 'jalur', 'dataPribadi', 'dataOrangtua', 'berkas'])->latest();
 
         if ($request->has('status') && $request->status != '') {
             $query->where('status_pendaftaran', $request->status);
@@ -160,9 +160,9 @@ class VerifikasiController extends Controller
                     $p->no_pendaftaran,
                     $p->user->name,
                     $p->nisn,
-                    $p->biodata->jenis_kelamin ?? '-',
-                    $p->biodata->tempat_lahir ?? '-',
-                    $p->biodata->tanggal_lahir ?? '-',
+                    $p->dataPribadi->jenis_kelamin ?? '-',
+                    $p->dataPribadi->tempat_lahir ?? '-',
+                    $p->dataPribadi->tanggal_lahir ?? '-',
                     $p->jalur->nama_jalur,
                     ucfirst($p->status_pendaftaran),
                     $p->created_at->format('d-m-Y')

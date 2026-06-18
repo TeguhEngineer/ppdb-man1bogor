@@ -153,6 +153,11 @@
     </style>
 </head>
 <body>
+    @php
+        $dataPribadi = $pendaftaran->dataPribadi;
+        $dataOrangtua = $pendaftaran->dataOrangtua;
+    @endphp
+
     <div class="container">
         <!-- Header / Kop Surat -->
         <div class="header">
@@ -202,37 +207,37 @@
             <tr>
                 <td class="label">Nama Lengkap</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->nama_lengkap }}</td>
+                <td>{{ $dataPribadi->nama_lengkap }}</td>
             </tr>
             <tr>
                 <td class="label">NISN / NIK</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->nisn ?? '-' }} / {{ $pendaftaran->biodata->nik }}</td>
+                <td>{{ $pendaftaran->nisn ?? '-' }} / {{ $dataPribadi->nik }}</td>
             </tr>
             <tr>
                 <td class="label">Tempat, Tanggal Lahir</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->tempat_lahir }}, {{ \Carbon\Carbon::parse($pendaftaran->biodata->tanggal_lahir)->format('d F Y') }}</td>
+                <td>{{ $dataPribadi->tempat_lahir }}, {{ \Carbon\Carbon::parse($dataPribadi->tanggal_lahir)->format('d F Y') }}</td>
             </tr>
             <tr>
                 <td class="label">Jenis Kelamin</td>
                 <td class="separator">:</td>
-                <td>{{ ucfirst($pendaftaran->biodata->jenis_kelamin) }}</td>
+                <td>{{ ucfirst($dataPribadi->jenis_kelamin) }}</td>
             </tr>
             <tr>
                 <td class="label">Agama</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->agama }}</td>
+                <td>{{ $dataPribadi->agama }}</td>
             </tr>
             <tr>
                 <td class="label">No. WhatsApp</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->no_whatsapp }}</td>
+                <td>{{ $dataPribadi->no_whatsapp }}</td>
             </tr>
             <tr>
                 <td class="label">Alamat Lengkap</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->alamat }}, Desa {{ $pendaftaran->biodata->desa }}, Kec. {{ $pendaftaran->biodata->kecamatan }}, {{ $pendaftaran->biodata->kabupaten }}, {{ $pendaftaran->biodata->provinsi }}</td>
+                <td>{{ $dataPribadi->alamat }}, Desa {{ $dataPribadi->desa }}, Kec. {{ $dataPribadi->kecamatan }}, {{ $dataPribadi->kabupaten }}, {{ $dataPribadi->provinsi }}</td>
             </tr>
         </table>
 
@@ -241,12 +246,12 @@
             <tr>
                 <td class="label">Asal Sekolah</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->asal_satuan_pendidikan }} {{ $pendaftaran->biodata->nama_asal_sekolah }}</td>
+                <td>{{ $dataPribadi->asal_satuan_pendidikan }} {{ $dataPribadi->nama_asal_sekolah }}</td>
             </tr>
             <tr>
                 <td class="label">NPSN Sekolah Asal</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->npsn ?? '-' }}</td>
+                <td>{{ $dataPribadi->npsn ?? '-' }}</td>
             </tr>
         </table>
 
@@ -255,27 +260,27 @@
             <tr>
                 <td class="label">Nama Ayah</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->nama_ayah ?? '-' }}</td>
+                <td>{{ $dataOrangtua->nama_ayah ?? '-' }}</td>
             </tr>
             <tr>
                 <td class="label">Pekerjaan Ayah</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->pekerjaan_ayah ?? '-' }}</td>
+                <td>{{ $dataOrangtua->pekerjaan_ayah ?? '-' }}</td>
             </tr>
             <tr>
                 <td class="label">Nama Ibu</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->nama_ibu ?? '-' }}</td>
+                <td>{{ $dataOrangtua->nama_ibu ?? '-' }}</td>
             </tr>
             <tr>
                 <td class="label">Pekerjaan Ibu</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->pekerjaan_ibu ?? '-' }}</td>
+                <td>{{ $dataOrangtua->pekerjaan_ibu ?? '-' }}</td>
             </tr>
             <tr>
                 <td class="label">No. HP Orang Tua</td>
                 <td class="separator">:</td>
-                <td>{{ $pendaftaran->biodata->no_hp_ayah ?? $pendaftaran->biodata->no_hp_ibu ?? '-' }}</td>
+                <td>{{ $dataOrangtua->no_hp_ayah ?? $dataOrangtua->no_hp_ibu ?? '-' }}</td>
             </tr>
         </table>
 
@@ -315,7 +320,7 @@
                 <p>Bogor, {{ date('d F Y') }}</p>
                 <p>Calon Siswa,</p>
                 <div class="signature-space"></div>
-                <p><strong>{{ $pendaftaran->biodata->nama_lengkap }}</strong></p>
+                <p><strong>{{ $dataPribadi->nama_lengkap }}</strong></p>
             </div>
         </div>
 

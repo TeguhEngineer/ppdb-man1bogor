@@ -22,8 +22,8 @@
                     <div class="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
                         @php
                             $user = Auth::user();
-                            $pendaftaran = $user->pendaftarans()->with(['dataPribadi', 'biodata'])->latest()->first();
-                            $foto = $pendaftaran ? (optional($pendaftaran->dataPribadi)->foto_profil ?? optional($pendaftaran->biodata)->foto_profil) : null;
+                            $pendaftaran = $user->pendaftarans()->with(['dataPribadi'])->latest()->first();
+                            $foto = $pendaftaran ? optional($pendaftaran->dataPribadi)->foto_profil : null;
                             $avatarUrl = $foto ? Storage::url($foto) : 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&background=random';
                         @endphp
                         <img src="{{ $avatarUrl }}" alt="User profile" class="w-full h-full object-cover">

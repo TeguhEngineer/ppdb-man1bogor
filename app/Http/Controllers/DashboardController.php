@@ -16,7 +16,6 @@ class DashboardController extends Controller
         if ($user->role === 'peserta') {
             $pendaftaran = Pendaftaran::with([
                 'jalur',
-                'biodata',
                 'berkas',
                 'dataPribadi',
                 'dataOrangtua',
@@ -62,7 +61,7 @@ class DashboardController extends Controller
             abort(403);
         }
 
-        $pendaftaran = Pendaftaran::with(['jalur', 'biodata', 'user'])
+        $pendaftaran = Pendaftaran::with(['jalur', 'dataPribadi', 'dataOrangtua', 'user'])
             ->where('user_id', $user->id)
             ->first();
 

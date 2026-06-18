@@ -1,4 +1,9 @@
 <x-app-layout>
+    @php
+        $dataPribadi = $pendaftaran->dataPribadi;
+        $dataOrangtua = $pendaftaran->dataOrangtua;
+    @endphp
+
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <a href="{{ route('admin.verifikasi.index') }}"
@@ -20,7 +25,7 @@
             <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
                     <h3 class="font-bold text-lg text-gray-800">Biodata Peserta</h3>
-                    @if($pendaftaran->biodata)
+                    @if($dataPribadi && $dataOrangtua)
                         <span
                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Tersedia</span>
                     @else
@@ -30,7 +35,7 @@
                     @endif
                 </div>
 
-                @if($pendaftaran->biodata)
+                @if($dataPribadi && $dataOrangtua)
                     <div class="p-6">
                         <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 text-sm">
                             <!-- Data Pribadi -->
@@ -39,32 +44,32 @@
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Nama Lengkap</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->nama_lengkap }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->nama_lengkap }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">NIK</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->nik }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->nik }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Tempat, Tgl Lahir</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->tempat_lahir }},
-                                    {{ \Carbon\Carbon::parse($pendaftaran->biodata->tanggal_lahir)->format('d M Y') }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->tempat_lahir }},
+                                    {{ \Carbon\Carbon::parse($dataPribadi->tanggal_lahir)->format('d M Y') }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Jenis Kelamin</dt>
-                                <dd class="text-gray-900 mt-1 capitalize">{{ $pendaftaran->biodata->jenis_kelamin }}</dd>
+                                <dd class="text-gray-900 mt-1 capitalize">{{ $dataPribadi->jenis_kelamin }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">No. KK</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->no_kk }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->no_kk }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Agama</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->agama }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->agama }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">No. Whatsapp</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->no_whatsapp }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->no_whatsapp }}</dd>
                             </div>
 
                             <!-- Data Alamat -->
@@ -73,10 +78,10 @@
                             </div>
                             <div class="md:col-span-2">
                                 <dt class="text-gray-500 font-medium">Alamat Lengkap</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->alamat }}, Desa/Kel.
-                                    {{ $pendaftaran->biodata->desa }}, Kec. {{ $pendaftaran->biodata->kecamatan }},
-                                    Kab/Kota. {{ $pendaftaran->biodata->kabupaten }}, {{ $pendaftaran->biodata->provinsi }}
-                                    - {{ $pendaftaran->biodata->kode_pos }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->alamat }}, Desa/Kel.
+                                    {{ $dataPribadi->desa }}, Kec. {{ $dataPribadi->kecamatan }},
+                                    Kab/Kota. {{ $dataPribadi->kabupaten }}, {{ $dataPribadi->provinsi }}
+                                    - {{ $dataPribadi->kode_pos }}</dd>
                             </div>
 
                             <!-- Data Pendidikan -->
@@ -85,12 +90,12 @@
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Asal Sekolah</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->asal_satuan_pendidikan }} -
-                                    {{ $pendaftaran->biodata->nama_asal_sekolah }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->asal_satuan_pendidikan }} -
+                                    {{ $dataPribadi->nama_asal_sekolah }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">NPSN</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->npsn ?? '-' }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataPribadi->npsn ?? '-' }}</dd>
                             </div>
 
                             <!-- Data Orang Tua -->
@@ -99,19 +104,19 @@
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Nama Ayah</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->nama_ayah ?? '-' }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataOrangtua->nama_ayah ?? '-' }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Pekerjaan Ayah</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->pekerjaan_ayah ?? '-' }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataOrangtua->pekerjaan_ayah ?? '-' }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Nama Ibu</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->nama_ibu ?? '-' }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataOrangtua->nama_ibu ?? '-' }}</dd>
                             </div>
                             <div>
                                 <dt class="text-gray-500 font-medium">Pekerjaan Ibu</dt>
-                                <dd class="text-gray-900 mt-1">{{ $pendaftaran->biodata->pekerjaan_ibu ?? '-' }}</dd>
+                                <dd class="text-gray-900 mt-1">{{ $dataOrangtua->pekerjaan_ibu ?? '-' }}</dd>
                             </div>
                         </dl>
                     </div>
@@ -188,61 +193,6 @@
                     </div>
                 @endif
             </div>
-
-            <!-- Uploaded on Biodata -->
-            @if($pendaftaran->biodata && ($pendaftaran->biodata->kartu_keluarga || $pendaftaran->biodata->slip_gaji || $pendaftaran->biodata->sertifikat))
-                <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100">
-                    <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                        <h3 class="font-bold text-lg text-gray-800">Dokumen Pendukung (Biodata)</h3>
-                    </div>
-                    <div class="p-6">
-                        <ul class="space-y-3">
-                            @if($pendaftaran->biodata->kartu_keluarga)
-                                <li
-                                    class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-center">
-                                        <i class="fi fi-rs-users text-emerald-500 text-xl mr-3"></i>
-                                        <div>
-                                            <p class="font-medium text-sm text-gray-900">Kartu Keluarga</p>
-                                        </div>
-                                    </div>
-                                    <a href="{{ Storage::url($pendaftaran->biodata->kartu_keluarga) }}" target="_blank"
-                                        class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                        / Unduh</a>
-                                </li>
-                            @endif
-                            @if($pendaftaran->biodata->slip_gaji)
-                                <li
-                                    class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-center">
-                                        <i class="fi fi-rs-money-bill-wave text-emerald-500 text-xl mr-3"></i>
-                                        <div>
-                                            <p class="font-medium text-sm text-gray-900">Slip Gaji / Penghasilan</p>
-                                        </div>
-                                    </div>
-                                    <a href="{{ Storage::url($pendaftaran->biodata->slip_gaji) }}" target="_blank"
-                                        class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                        / Unduh</a>
-                                </li>
-                            @endif
-                            @if($pendaftaran->biodata->sertifikat)
-                                <li
-                                    class="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 transition-colors">
-                                    <div class="flex items-center">
-                                        <i class="fi fi-rs-diploma text-emerald-500 text-xl mr-3"></i>
-                                        <div>
-                                            <p class="font-medium text-sm text-gray-900">Sertifikat Prestasi</p>
-                                        </div>
-                                    </div>
-                                    <a href="{{ Storage::url($pendaftaran->biodata->sertifikat) }}" target="_blank"
-                                        class="text-sm font-medium text-emerald-600 hover:text-emerald-900 bg-emerald-50 px-3 py-1 rounded-md">Lihat
-                                        / Unduh</a>
-                                </li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            @endif
 
         </div>
 

@@ -12,7 +12,7 @@ class KartuUjianController extends Controller
         $pendaftaran = Pendaftaran::with([
                 'user',
                 'jalur.mapels',
-                'biodata',
+                'dataPribadi',
                 'berkas',
                 'kartuPesertaUjian.ruangan',
                 'kartuPesertaUjian.jadwalUjian',
@@ -30,7 +30,7 @@ class KartuUjianController extends Controller
         $pendaftaran->load([
             'user',
             'jalur.mapels',
-            'biodata',
+            'dataPribadi',
             'berkas',
             'kartuPesertaUjian.ruangan',
             'kartuPesertaUjian.jadwalUjian',

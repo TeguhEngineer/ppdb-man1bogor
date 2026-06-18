@@ -101,7 +101,6 @@
                                 $color = $statusColors[$pendaftaran->status_pendaftaran] ?? 'gray';
                                 $statusLabel = $statusOptions[$pendaftaran->status_pendaftaran] ?? ucfirst($pendaftaran->status_pendaftaran);
                                 $namaPeserta = $pendaftaran->dataPribadi->nama_lengkap
-                                    ?? $pendaftaran->biodata->nama_lengkap
                                     ?? $pendaftaran->user->name;
                             @endphp
                             <tr class="hover:bg-gray-50 transition-colors">

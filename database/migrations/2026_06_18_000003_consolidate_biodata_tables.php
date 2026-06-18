@@ -67,7 +67,7 @@ return new class extends Migration
             $table->string('pendidikan_terakhir_wali', 50)->nullable();
             $table->string('pekerjaan_wali', 100)->nullable();
             $table->string('penghasilan_wali', 50)->nullable();
-            $table->string('no_hp_wali', 15)->nullable();
+            $table->string('no_hp_wali', 20)->nullable();
             $table->timestamps();
         });
 
@@ -152,6 +152,8 @@ return new class extends Migration
         ] as $table) {
             Schema::dropIfExists($table);
         }
+
+        Schema::dropIfExists('biodatas');
     }
 
     public function down(): void

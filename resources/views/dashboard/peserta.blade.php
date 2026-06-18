@@ -209,7 +209,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-2 md:shrink-0">
-                    <a href="{{ $pendaftaran->biodata ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => 'berkas']) : route('biodata.create', ['tab' => 'berkas']) }}"
+                    <a href="{{ route('biodata.edit', ['tab' => 'berkas']) }}"
                         class="inline-flex items-center justify-center px-4 py-2 bg-white border border-red-200 text-red-700 font-bold rounded-lg hover:bg-red-100 transition-colors text-sm">
                         Perbaiki Berkas
                     </a>
@@ -228,7 +228,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Biodata Action -->
         @php
-            $hasBiodata = $pendaftaran->biodata || $pendaftaran->dataPribadi || $pendaftaran->dataOrangtua;
+            $hasBiodata = $pendaftaran->dataPribadi || $pendaftaran->dataOrangtua;
             $isBiodataComplete = $pendaftaran->isBiodataLengkap();
             $isBerkasComplete = $pendaftaran->isBerkasLengkap();
             $hasBerkas = $pendaftaran->berkas != null;
@@ -237,9 +237,7 @@
             $berkasAccepted = $berkasStatus === 'terima';
             $isBiodataFinished = $isBiodataComplete && $isBerkasComplete;
             $nextBiodataTab = $isBiodataComplete ? 'berkas' : 'pribadi';
-            $biodataUrl = fn ($tab = 'pribadi') => $pendaftaran->biodata
-                ? route('biodata.edit', ['biodatum' => $pendaftaran->biodata->id, 'tab' => $tab])
-                : route('biodata.create', ['tab' => $tab]);
+            $biodataUrl = fn ($tab = 'pribadi') => route('biodata.edit', ['tab' => $tab]);
         @endphp
         <div
             class="bg-white rounded-xl shadow-md p-6 border-t-4 border-{{ $isBiodataFinished ? 'green' : ($berkasRejected ? 'red' : 'yellow') }}-500">

@@ -40,10 +40,10 @@ class ProfileController extends Controller
         if ($request->hasFile('foto_profil')) {
             $pendaftaran = $user->pendaftarans()->latest()->first();
             if ($pendaftaran) {
-                $pendaftaran->load(['biodata', 'dataPribadi']);
-                $existingPhoto = optional($pendaftaran->dataPribadi)->foto_profil ?? optional($pendaftaran->biodata)->foto_profil;
+                $pendaftaran->load(['dataPribadi']);
+                $existingPhoto = optional($pendaftaran->dataPribadi)->foto_profil;
 
-                if ($pendaftaran->dataPribadi || $pendaftaran->biodata) {
+                if ($pendaftaran->dataPribadi) {
                     if ($existingPhoto && Storage::disk('public')->exists($existingPhoto)) {
                         Storage::disk('public')->delete($existingPhoto);
                     }
@@ -54,10 +54,6 @@ class ProfileController extends Controller
                         ['foto_profil' => $path]
                     );
 
-                    $pendaftaran->fresh([
-                        'dataPribadi',
-                        'dataOrangtua',
-                    ])->syncBiodataAggregate();
                 } else {
                     return Redirect::route('profile.index')->with('error', 'Gagal mengunggah foto. Anda belum mengisi biodata pendaftaran.');
                 }

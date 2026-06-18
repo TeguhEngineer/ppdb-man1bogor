@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Biodata;
 use App\Models\DataOrangtua;
 use App\Models\DataPribadi;
 use App\Models\Jalur;
@@ -24,27 +23,14 @@ class BiodataController extends Controller
     {
         $pendaftaran = $this->pendaftaran();
 
-        if ($pendaftaran->biodata) {
-            return redirect()->route('biodata.edit', [
-                'biodatum' => $pendaftaran->biodata->id,
-                'tab' => $request->query('tab', 'pribadi'),
-            ]);
-        }
-
-        return $this->showForm($pendaftaran, null, $request->query('tab', 'pribadi'));
+        return $this->showForm($pendaftaran, $request->query('tab', 'pribadi'));
     }
 
-    public function edit(Request $request, Biodata $biodatum)
+    public function edit(Request $request)
     {
         $pendaftaran = $this->pendaftaran();
 
-        if ($biodatum->pendaftaran_id !== $pendaftaran->id) {
-            abort(403);
-        }
-
-        $pendaftaran = $this->loadBiodataRelations($pendaftaran);
-
-        return $this->showForm($pendaftaran, $biodatum, $request->query('tab', 'pribadi'));
+        return $this->showForm($pendaftaran, $request->query('tab', 'pribadi'));
     }
 
     public function updateTab(Request $request, string $tab)
@@ -60,12 +46,8 @@ class BiodataController extends Controller
             'orangtua' => $this->saveDataOrangtua($request, $pendaftaran),
         };
 
-        $biodata = $this->loadBiodataRelations($pendaftaran)->syncBiodataAggregate();
-
         $targetTab = $this->targetTab($request, $tab);
-        $route = $biodata
-            ? route('biodata.edit', ['biodatum' => $biodata->id, 'tab' => $targetTab])
-            : route('biodata.create', ['tab' => $targetTab]);
+        $route = route('biodata.edit', ['tab' => $targetTab]);
 
         return redirect($route)->with('success', 'Data berhasil disimpan.');
     }
@@ -81,13 +63,13 @@ class BiodataController extends Controller
         return $currentTab;
     }
 
-    private function showForm(Pendaftaran $pendaftaran, ?Biodata $biodatum, string $activeTab)
+    private function showForm(Pendaftaran $pendaftaran, string $activeTab)
     {
         $pendaftaran = $this->loadBiodataRelations($pendaftaran);
         $jalurs = Jalur::all();
         $activeTab = in_array($activeTab, $this->tabs, true) ? $activeTab : 'pribadi';
 
-        return view('biodata.form', compact('pendaftaran', 'biodatum', 'jalurs', 'activeTab'));
+        return view('biodata.form', compact('pendaftaran', 'jalurs', 'activeTab'));
     }
 
     private function pendaftaran(): Pendaftaran
@@ -98,7 +80,6 @@ class BiodataController extends Controller
     private function loadBiodataRelations(Pendaftaran $pendaftaran): Pendaftaran
     {
         return $pendaftaran->load([
-            'biodata',
             'berkas',
             'jalur',
             'dataPribadi',
@@ -117,7 +98,6 @@ class BiodataController extends Controller
 
     private function saveDataPribadi(Request $request, Pendaftaran $pendaftaran): void
     {
-        $biodataId = optional($pendaftaran->biodata)->id;
         $dataPribadiId = optional($pendaftaran->dataPribadi)->id;
 
         $validated = $this->validateBiodata($request, [
@@ -132,7 +112,6 @@ class BiodataController extends Controller
                 'required',
                 'numeric',
                 'digits:16',
-                Rule::unique('biodatas', 'nik')->ignore($biodataId),
                 Rule::unique('data_pribadi', 'nik')->ignore($dataPribadiId),
             ],
             'no_kk' => ['required', 'numeric', 'digits:16'],
