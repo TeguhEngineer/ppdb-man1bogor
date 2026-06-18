@@ -9,7 +9,9 @@
         $status = $pendaftaran->status_pendaftaran;
         $isFinal = in_array($status, ['lulus', 'tidak_lulus'], true);
         $isLulus = $status === 'lulus';
-        $name = $pendaftaran->biodata->nama_lengkap ?? $pendaftaran->user->name;
+        $name = $pendaftaran->dataPribadi->nama_lengkap
+            ?? $pendaftaran->biodata->nama_lengkap
+            ?? $pendaftaran->user->name;
         $statusLabel = $isLulus ? 'LULUS' : ($status === 'tidak_lulus' ? 'TIDAK LULUS' : 'BELUM DIUMUMKAN');
         $accent = $isLulus ? 'emerald' : ($status === 'tidak_lulus' ? 'red' : 'amber');
     @endphp
@@ -47,7 +49,7 @@
 
                         <p class="text-gray-600 max-w-2xl leading-relaxed">
                             @if($isLulus)
-                                Selamat kepada <strong class="text-gray-900">{{ $name }}</strong>. Berdasarkan hasil seleksi PPDB, Anda dinyatakan <strong class="text-emerald-700">lulus</strong>. Silakan cetak kartu kelulusan dan ikuti informasi lanjutan dari panitia.
+                                Selamat kepada <strong class="text-gray-900">{{ $name }}</strong>. Berdasarkan hasil seleksi PPDB, Anda dinyatakan <strong class="text-emerald-700">lulus</strong>. Silakan cetak surat keterangan kelulusan seleksi dan ikuti informasi lanjutan dari panitia.
                             @elseif($status === 'tidak_lulus')
                                 Berdasarkan hasil seleksi PPDB, peserta atas nama <strong class="text-gray-900">{{ $name }}</strong> dinyatakan <strong class="text-red-700">tidak lulus</strong>. Terima kasih telah mengikuti proses PPDB.
                             @else
@@ -67,8 +69,8 @@
                                 <div class="flex items-start gap-3 rounded-xl bg-emerald-50 border border-emerald-100 p-4">
                                     <i class="fi fi-rs-print text-emerald-600 mt-0.5"></i>
                                     <div>
-                                        <p class="font-bold text-emerald-800 text-sm">Kartu Tersedia</p>
-                                        <p class="text-xs text-emerald-700 mt-1">Kartu kelulusan dapat dicetak.</p>
+                                        <p class="font-bold text-emerald-800 text-sm">Surat Tersedia</p>
+                                        <p class="text-xs text-emerald-700 mt-1">SK kelulusan seleksi dapat dicetak.</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start gap-3 rounded-xl bg-emerald-50 border border-emerald-100 p-4">
@@ -107,14 +109,14 @@
                 </div>
 
                 <div class="mt-8 flex flex-col sm:flex-row gap-3 border-t border-gray-100 pt-6">
-                    @if($isFinal)
+                    @if($isLulus)
                         <a href="{{ route('hasil-kelulusan.cetak') }}" target="_blank"
                             class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-{{ $accent }}-600 hover:bg-{{ $accent }}-700 text-white font-bold shadow-sm transition-colors">
-                            <i class="fi fi-rs-print mr-2"></i> Cetak Kartu Kelulusan
+                            <i class="fi fi-rs-print mr-2"></i> Cetak Surat Kelulusan
                         </a>
-                    @else
+                    @elseif(!$isFinal)
                         <button disabled class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-gray-200 text-gray-500 font-bold cursor-not-allowed">
-                            <i class="fi fi-rs-print mr-2"></i> Cetak Kartu Belum Tersedia
+                            <i class="fi fi-rs-print mr-2"></i> Cetak Surat Belum Tersedia
                         </button>
                     @endif
                     <a href="{{ route('pengumuman.index') }}"
