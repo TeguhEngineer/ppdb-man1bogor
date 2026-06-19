@@ -135,6 +135,15 @@
         }
         .signature-space {
             height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2px 0;
+        }
+        .signature-image {
+            max-width: 150px;
+            max-height: 56px;
+            object-fit: contain;
         }
         .signature strong {
             text-decoration: underline;
@@ -224,6 +233,7 @@
         $tempatTanggalTtd = $sklSettings['skl_ttd_tempat_tanggal'] ?? 'Bogor, 19 Juni 2026';
         $ketuaPanitia = $sklSettings['skl_ketua_panitia'] ?? 'WAHYU MULYADIN, SP, MM';
         $nipKetuaPanitia = $sklSettings['skl_nip_ketua_panitia'] ?? '196806221999031003';
+        $tandaTanganKetuaPanitia = $sklSettings['skl_tanda_tangan_ketua_panitia'] ?? null;
     @endphp
 
     <button class="print-btn" onclick="window.print()">Cetak Surat</button>
@@ -326,7 +336,13 @@
             <div class="signature-wrap">
                 <div class="signature">
                     <p>{{ $tempatTanggalTtd }}<br>Ketua Panitia,</p>
-                    <div class="signature-space"></div>
+                    <div class="signature-space">
+                        @if($tandaTanganKetuaPanitia)
+                            <img src="{{ Storage::url($tandaTanganKetuaPanitia) }}"
+                                alt="Tanda tangan ketua panitia"
+                                class="signature-image">
+                        @endif
+                    </div>
                     <p><strong>{{ $ketuaPanitia }}</strong><br>NIP. {{ $nipKetuaPanitia }}</p>
                 </div>
             </div>

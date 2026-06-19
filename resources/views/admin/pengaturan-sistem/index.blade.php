@@ -20,7 +20,7 @@
     @endif
 
     <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100 mb-6">
-        <form action="{{ route('admin.pengaturan-sistem.skl.update') }}" method="POST" class="p-6 md:p-8">
+        <form action="{{ route('admin.pengaturan-sistem.skl.update') }}" method="POST" enctype="multipart/form-data" class="p-6 md:p-8">
             @csrf
             @method('PUT')
 
@@ -112,6 +112,30 @@
                     @error('skl_nip_ketua_panitia')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="skl_tanda_tangan_ketua_panitia" class="block text-sm font-semibold text-gray-700 mb-2">Tanda Tangan Ketua Panitia</label>
+                    <div class="grid grid-cols-1 md:grid-cols-[220px,1fr] gap-4 items-start">
+                        <div class="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 min-h-28 flex items-center justify-center">
+                            @if(!empty($sklSettings['skl_tanda_tangan_ketua_panitia']))
+                                <img src="{{ Storage::url($sklSettings['skl_tanda_tangan_ketua_panitia']) }}"
+                                    alt="Tanda tangan ketua panitia"
+                                    class="max-h-24 max-w-full object-contain">
+                            @else
+                                <span class="text-xs text-gray-500 text-center">Belum ada tanda tangan</span>
+                            @endif
+                        </div>
+                        <div>
+                            <input type="file" name="skl_tanda_tangan_ketua_panitia" id="skl_tanda_tangan_ketua_panitia"
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100"
+                                accept="image/png,image/jpeg,image/webp">
+                            <p class="mt-2 text-xs text-gray-500">Format PNG/JPG/JPEG/WEBP, maksimal 1 MB. Disarankan gambar tanda tangan dengan background transparan.</p>
+                            @error('skl_tanda_tangan_ketua_panitia')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
