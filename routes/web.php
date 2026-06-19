@@ -51,6 +51,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/verifikasi/{pendaftaran}/status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateStatus'])->name('admin.verifikasi.update');
         Route::post('/verifikasi/{pendaftaran}/berkas-status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateBerkasStatus'])->name('admin.verifikasi.berkas-status');
         Route::get('/report', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('admin.report.index');
+        Route::get('/report/export', [App\Http\Controllers\Admin\ReportController::class, 'export'])->name('admin.report.export');
         Route::get('/pengaturan-sistem', [App\Http\Controllers\Admin\PengaturanSistemController::class, 'index'])->name('admin.pengaturan-sistem.index');
         Route::put('/pengaturan-sistem/skl', [App\Http\Controllers\Admin\PengaturanSistemController::class, 'updateSkl'])->name('admin.pengaturan-sistem.skl.update');
         Route::get('/jalur-pendaftaran', [App\Http\Controllers\Admin\JalurController::class, 'index'])->name('admin.jalur.index');
