@@ -37,8 +37,8 @@ class PengumumanController extends Controller
         Pengumuman::create([
             'judul' => $validated['judul'],
             'keterangan' => $validated['keterangan'],
-            'is_published' => $request->boolean('is_published', true),
-            'published_at' => $request->boolean('is_published', true) ? now() : null,
+            'is_published' => true,
+            'published_at' => now(),
         ]);
 
         return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil dibuat.');
@@ -52,13 +52,12 @@ class PengumumanController extends Controller
     public function update(Request $request, Pengumuman $pengumuman)
     {
         $validated = $this->validatePengumuman($request);
-        $isPublished = $request->boolean('is_published');
 
         $pengumuman->update([
             'judul' => $validated['judul'],
             'keterangan' => $validated['keterangan'],
-            'is_published' => $isPublished,
-            'published_at' => $isPublished ? ($pengumuman->published_at ?? now()) : null,
+            'is_published' => true,
+            'published_at' => $pengumuman->published_at ?? now(),
         ]);
 
         return redirect()->route('admin.pengumuman.index')->with('success', 'Pengumuman berhasil diperbarui.');
@@ -76,7 +75,6 @@ class PengumumanController extends Controller
         return $request->validate([
             'judul' => ['required', 'string', 'max:150'],
             'keterangan' => ['required', 'string'],
-            'is_published' => ['nullable', 'boolean'],
         ], [
             'judul.required' => 'Judul pengumuman wajib diisi.',
             'judul.max' => 'Judul pengumuman maksimal :max karakter.',

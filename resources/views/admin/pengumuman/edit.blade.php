@@ -15,10 +15,10 @@
         <div class="lg:col-span-1">
             <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-6 shadow-sm">
                 <h3 class="text-emerald-800 font-bold text-lg mb-3 flex items-center">
-                    <i class="fi fi-rs-info mr-2"></i> Status Publikasi
+                    <i class="fi fi-rs-info mr-2"></i> Pengumuman Umum
                 </h3>
                 <p class="text-sm text-emerald-700 leading-relaxed">
-                    Jika status ditampilkan, pengumuman ini terlihat oleh semua peserta. Jika tidak, pengumuman menjadi draft.
+                    Setiap pengumuman yang disimpan otomatis tampil untuk semua peserta.
                 </p>
             </div>
         </div>
@@ -63,11 +63,6 @@
                             <p class="mt-1 text-xs text-red-600 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
-
-                    <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                        <input type="checkbox" name="is_published" value="1" class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" @checked(old('is_published', $pengumuman->is_published))>
-                        Tampilkan ke semua peserta
-                    </label>
 
                     <div class="flex justify-end pt-4 border-t border-gray-100">
                         <button type="submit"

@@ -20,7 +20,7 @@
                 <ul class="text-sm text-emerald-700 space-y-3 leading-relaxed">
                     <li>Pengumuman dibuat satu kali dan tampil untuk semua peserta.</li>
                     <li>Tidak ada duplikasi data per peserta, sehingga lebih ringan saat jumlah pendaftar besar.</li>
-                    <li>Gunakan opsi tampilkan untuk menyimpan draft atau langsung mempublikasikan.</li>
+                    <li>Setiap pengumuman yang disimpan otomatis tampil untuk semua peserta.</li>
                 </ul>
             </div>
         </div>
@@ -65,11 +65,6 @@
                             <p class="mt-1 text-xs text-red-600 font-medium">{{ $message }}</p>
                         @enderror
                     </div>
-
-                    <label class="inline-flex items-center gap-2 text-sm text-gray-700">
-                        <input type="checkbox" name="is_published" value="1" class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" @checked(old('is_published', true))>
-                        Tampilkan langsung ke semua peserta
-                    </label>
 
                     <div class="flex justify-end pt-4 border-t border-gray-100">
                         <button type="submit"
