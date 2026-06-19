@@ -84,7 +84,7 @@
 </div>
 
 <div class="flex items-center justify-end gap-3 border-t pt-6 mt-8">
-    <a href="{{ route('admin.jalur.index') }}"
+    <a href="{{ route('admin.pengaturan-sistem.index') }}"
         class="inline-flex items-center px-4 py-2 rounded-lg border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
         Batal
     </a>

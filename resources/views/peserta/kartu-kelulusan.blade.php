@@ -215,14 +215,15 @@
         $tahunAkhir = $tahunAwal + 1;
         $romanMonths = [1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV', 5 => 'V', 6 => 'VI', 7 => 'VII', 8 => 'VIII', 9 => 'IX', 10 => 'X', 11 => 'XI', 12 => 'XII'];
         $nomorSurat = str_pad((string) $pendaftaran->id, 2, '0', STR_PAD_LEFT) . '/PAN-PMBM/' . $romanMonths[now()->month] . '/' . now()->year;
-        $bulan = [1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'];
-        $tanggalCetak = now()->day . ' ' . $bulan[now()->month] . ' ' . now()->year;
         $verificationUrl = route('hasil-kelulusan.cetak');
         $qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=' . urlencode($verificationUrl);
-        $agendaTanggal = 'Menunggu pengumuman panitia';
-        $agendaWaktu = 'Menunggu pengumuman panitia';
-        $agendaTempat = $pendaftaran->kampus ?: 'MAN 1 Bogor';
-        $agendaKeperluan = 'Rapat Sosialisasi Program MAN 1 Bogor';
+        $agendaTanggal = $sklSettings['skl_agenda_tanggal'] ?? 'Menunggu pengumuman panitia';
+        $agendaWaktu = $sklSettings['skl_agenda_waktu'] ?? 'Menunggu pengumuman panitia';
+        $agendaTempat = $sklSettings['skl_agenda_tempat'] ?? 'MAN 1 BOGOR';
+        $agendaKeperluan = $sklSettings['skl_agenda_keperluan'] ?? 'Rapat Sosialisasi Program MAN 1 Bogor';
+        $tempatTanggalTtd = $sklSettings['skl_ttd_tempat_tanggal'] ?? 'Bogor, 19 Juni 2026';
+        $ketuaPanitia = $sklSettings['skl_ketua_panitia'] ?? 'WAHYU MULYADIN, SP, MM';
+        $nipKetuaPanitia = $sklSettings['skl_nip_ketua_panitia'] ?? '196806221999031003';
     @endphp
 
     <button class="print-btn" onclick="window.print()">Cetak Surat</button>
@@ -324,9 +325,9 @@
 
             <div class="signature-wrap">
                 <div class="signature">
-                    <p>Bogor, {{ $tanggalCetak }}<br>Ketua Panitia,</p>
+                    <p>{{ $tempatTanggalTtd }}<br>Ketua Panitia,</p>
                     <div class="signature-space"></div>
-                    <p><strong>WAHYU MULYADIN, SP, MM</strong><br>NIP. 196806221999031003</p>
+                    <p><strong>{{ $ketuaPanitia }}</strong><br>NIP. {{ $nipKetuaPanitia }}</p>
                 </div>
             </div>
         </div>

@@ -60,13 +60,13 @@
     @elseif (Auth::user()->role === 'admin')
         <!-- Menu Admin -->
         <div class="flex items-center mr-4">
-            @if (request()->is('admin/jalur-pendaftaran*'))
+            @if (request()->is('admin/pengaturan-sistem*'))
                 <div class="w-[5px] h-12 bg-emerald-700 rounded-r-md"></div>
             @endif
-            <a href="{{ route('admin.jalur.index') }}"
-                class="flex items-center flex-1 px-4 py-3 {{ request()->is('admin/jalur-pendaftaran*') ? 'bg-emerald-100 text-emerald-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3">
-                <i class="fi fi-rs-route text-lg leading-none relative top-0.5"></i>
-                <span class="ml-3 font-medium">Jalur Pendaftaran</span>
+            <a href="{{ route('admin.pengaturan-sistem.index') }}"
+                class="flex items-center flex-1 px-4 py-3 {{ request()->is('admin/pengaturan-sistem*') ? 'bg-emerald-100 text-emerald-800' : 'text-gray-500 hover:bg-gray-50' }} rounded-lg ml-3">
+                <i class="fi fi-rs-settings text-lg leading-none relative top-0.5"></i>
+                <span class="ml-3 font-medium">Pengaturan Sistem</span>
             </a>
         </div>
         <div class="flex items-center mr-4">

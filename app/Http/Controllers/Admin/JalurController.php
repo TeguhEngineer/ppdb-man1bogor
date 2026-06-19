@@ -12,9 +12,7 @@ class JalurController extends Controller
 {
     public function index()
     {
-        $jalurs = Jalur::withCount('pendaftarans')->latest()->paginate(10);
-
-        return view('admin.jalur.index', compact('jalurs'));
+        return redirect()->route('admin.pengaturan-sistem.index');
     }
 
     public function create()
@@ -27,7 +25,7 @@ class JalurController extends Controller
         Jalur::create($this->validatedData($request));
 
         return redirect()
-            ->route('admin.jalur.index')
+            ->route('admin.pengaturan-sistem.index')
             ->with('success', 'Jalur pendaftaran berhasil ditambahkan.');
     }
 
@@ -54,7 +52,7 @@ class JalurController extends Controller
         $jalur->update($data);
 
         return redirect()
-            ->route('admin.jalur.index')
+            ->route('admin.pengaturan-sistem.index')
             ->with('success', 'Jalur pendaftaran berhasil diperbarui.');
     }
 
@@ -71,7 +69,7 @@ class JalurController extends Controller
         $jalur->delete();
 
         return redirect()
-            ->route('admin.jalur.index')
+            ->route('admin.pengaturan-sistem.index')
             ->with('success', 'Jalur pendaftaran berhasil dihapus.');
     }
 

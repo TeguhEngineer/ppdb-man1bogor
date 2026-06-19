@@ -51,16 +51,17 @@ Route::middleware('auth')->group(function () {
         Route::put('/verifikasi/{pendaftaran}/status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateStatus'])->name('admin.verifikasi.update');
         Route::post('/verifikasi/{pendaftaran}/berkas-status', [App\Http\Controllers\Admin\VerifikasiController::class, 'updateBerkasStatus'])->name('admin.verifikasi.berkas-status');
         Route::get('/report', [App\Http\Controllers\Admin\ReportController::class, 'index'])->name('admin.report.index');
+        Route::get('/pengaturan-sistem', [App\Http\Controllers\Admin\PengaturanSistemController::class, 'index'])->name('admin.pengaturan-sistem.index');
+        Route::put('/pengaturan-sistem/skl', [App\Http\Controllers\Admin\PengaturanSistemController::class, 'updateSkl'])->name('admin.pengaturan-sistem.skl.update');
+        Route::get('/jalur-pendaftaran', [App\Http\Controllers\Admin\JalurController::class, 'index'])->name('admin.jalur.index');
         
-        // Jalur/Quota routes
-        Route::resource('jalur-pendaftaran', App\Http\Controllers\Admin\JalurController::class)->names([
-            'index' => 'admin.jalur.index',
+        Route::resource('pengaturan-sistem/jalur-pendaftaran', App\Http\Controllers\Admin\JalurController::class)->names([
             'create' => 'admin.jalur.create',
             'store' => 'admin.jalur.store',
             'edit' => 'admin.jalur.edit',
             'update' => 'admin.jalur.update',
             'destroy' => 'admin.jalur.destroy',
-        ])->parameters(['jalur-pendaftaran' => 'jalur'])->except(['show']);
+        ])->parameters(['jalur-pendaftaran' => 'jalur'])->except(['index', 'show']);
 
         Route::get('/seleksi-ujian', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'index'])->name('admin.seleksi-ujian.index');
         Route::post('/seleksi-ujian/ruangan', [App\Http\Controllers\Admin\SeleksiUjianController::class, 'storeRuangan'])->name('admin.seleksi-ujian.ruangan.store');

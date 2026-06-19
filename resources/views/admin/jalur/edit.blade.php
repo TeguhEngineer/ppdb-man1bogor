@@ -4,7 +4,7 @@
             <h2 class="font-bold text-xl text-gray-800 leading-tight">
                 {{ __('Edit Jalur Pendaftaran') }}
             </h2>
-            <a href="{{ route('admin.jalur.index') }}"
+            <a href="{{ route('admin.pengaturan-sistem.index') }}"
                 class="text-sm text-emerald-600 hover:text-emerald-900 font-semibold">
                 &larr; Kembali
             </a>
