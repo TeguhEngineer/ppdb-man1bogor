@@ -24,29 +24,30 @@ class PengaturanSistem extends Model
 
     public static function getValue(string $key, ?string $default = null): ?string
     {
-        return static::query()->where('key', $key)->value('value') ?? $default;
+        $settings = static::first();
+        return $settings ? $settings->$key : ($default ?? self::defaults()[$key] ?? null);
     }
 
     public static function getMany(array $keys): array
     {
         $defaults = static::defaults();
-        $settings = static::query()
-            ->whereIn('key', $keys)
-            ->pluck('value', 'key')
-            ->toArray();
+        $settings = static::first();
 
         return collect($keys)
-            ->mapWithKeys(fn ($key) => [$key => $settings[$key] ?? $defaults[$key] ?? null])
+            ->mapWithKeys(function ($key) use ($settings, $defaults) {
+                return [$key => $settings ? $settings->$key : ($defaults[$key] ?? null)];
+            })
             ->toArray();
     }
 
     public static function setMany(array $settings): void
     {
-        foreach ($settings as $key => $value) {
-            static::query()->updateOrCreate(
-                ['key' => $key],
-                ['value' => $value]
-            );
+        $record = static::first();
+        
+        if ($record) {
+            $record->update($settings);
+        } else {
+            static::create(array_merge(static::defaults(), $settings));
         }
     }
 }
