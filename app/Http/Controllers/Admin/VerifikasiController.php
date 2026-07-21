@@ -94,8 +94,8 @@ class VerifikasiController extends Controller
                 'pendaftaran_id' => $pendaftaran->id,
             ], [
                 'nomor_peserta_ujian' => $this->generateNomorPesertaUjian($pendaftaran),
-                'username_ujian' => $pendaftaran->nisn ?: $pendaftaran->no_pendaftaran,
-                'password_ujian' => $pendaftaran->nisn ?: $pendaftaran->no_pendaftaran,
+                'username_ujian' => $pendaftaran->nisn,
+                'password_ujian' => $pendaftaran->nisn,
                 'generated_at' => now(),
             ]);
         } else {
@@ -113,15 +113,7 @@ class VerifikasiController extends Controller
 
     private function generateNomorPesertaUjian(Pendaftaran $pendaftaran): string
     {
-        $base = 'UJ-' . now()->format('Y') . '-' . str_pad((string) $pendaftaran->id, 5, '0', STR_PAD_LEFT);
-
-        if (! KartuPesertaUjian::where('nomor_peserta_ujian', $base)->exists()) {
-            return $base;
-        }
-
-        $sequence = KartuPesertaUjian::where('nomor_peserta_ujian', 'like', $base . '-%')->count() + 1;
-
-        return $base . '-' . $sequence;
+        return 'UJ-' . now()->format('Y') . '-' . str_pad((string) $pendaftaran->id, 5, '0', STR_PAD_LEFT);
     }
 
     public function export(Request $request)

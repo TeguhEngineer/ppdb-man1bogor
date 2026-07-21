@@ -156,8 +156,8 @@ class SeleksiUjianController extends Controller
         $data = $request->validate([
             'ruangan_id' => 'required|exists:ruangans,id',
             'jadwal_ujian_id' => 'required|exists:jadwal_ujians,id',
-            'username_ujian' => 'required|string|max:50',
-            'password_ujian' => 'required|string|max:50',
+            'username_ujian' => 'required|string|size:10',
+            'password_ujian' => 'required|string|size:10',
         ]);
 
         if (!$pendaftaran->berkas || $pendaftaran->berkas->status_berkas !== 'terima') {
@@ -206,14 +206,7 @@ class SeleksiUjianController extends Controller
     private function generateNomorPeserta(Pendaftaran $pendaftaran): string
     {
         $year = now()->format('Y');
-        $base = 'UJ-' . $year . '-' . str_pad((string) $pendaftaran->id, 5, '0', STR_PAD_LEFT);
-
-        if (! KartuPesertaUjian::where('nomor_peserta_ujian', $base)->exists()) {
-            return $base;
-        }
-
-        $sequence = KartuPesertaUjian::where('nomor_peserta_ujian', 'like', $base . '-%')->count() + 1;
-
-        return $base . '-' . $sequence;
+        
+        return 'UJ-' . $year . '-' . str_pad((string) $pendaftaran->id, 5, '0', STR_PAD_LEFT);
     }
 }

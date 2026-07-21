@@ -314,7 +314,7 @@
                             @forelse($pendaftarans as $pendaftaran)
                                 @php
                                     $kartu = $pendaftaran->kartuPesertaUjian;
-                                    $defaultAkun = $pendaftaran->nisn ?: $pendaftaran->no_pendaftaran;
+                                    $defaultAkun = $pendaftaran->nisn;
                                 @endphp
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <form action="{{ route('admin.seleksi-ujian.kartu.update', $pendaftaran->id) }}" method="POST">
@@ -352,9 +352,9 @@
                                         <td class="p-4">
                                             <div class="space-y-2">
                                                 <input type="text" name="username_ujian" value="{{ $kartu->username_ujian ?? $defaultAkun }}"
-                                                    class="w-36 rounded-md border-gray-300 text-sm" required>
+                                                    class="w-36 rounded-md border-gray-300 text-sm" required maxlength="10" minlength="10">
                                                 <input type="text" name="password_ujian" value="{{ $kartu->password_ujian ?? $defaultAkun }}"
-                                                    class="w-36 rounded-md border-gray-300 text-sm" required>
+                                                    class="w-36 rounded-md border-gray-300 text-sm" required maxlength="10" minlength="10">
                                             </div>
                                         </td>
                                         <td class="p-4 text-right">
