@@ -194,13 +194,7 @@ class SeleksiUjianController extends Controller
 
     private function syncMapelJalurs(Mapel $mapel, array $jalurIds): void
     {
-        $syncData = [];
-
-        foreach (array_values($jalurIds) as $index => $jalurId) {
-            $syncData[$jalurId] = ['urutan' => $index + 1];
-        }
-
-        $mapel->jalurs()->sync($syncData);
+        $mapel->jalurs()->sync($jalurIds);
     }
 
     private function generateNomorPeserta(Pendaftaran $pendaftaran): string

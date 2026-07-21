@@ -21,9 +21,7 @@ class Jalur extends Model
     public function mapels()
     {
         return $this->belongsToMany(Mapel::class, 'jalur_mapel')
-            ->withPivot('urutan')
-            ->withTimestamps()
-            ->orderByPivot('urutan');
+            ->withTimestamps();
     }
 
     public function jadwalUjians()
