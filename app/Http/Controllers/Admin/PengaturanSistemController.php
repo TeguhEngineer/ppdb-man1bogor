@@ -21,13 +21,13 @@ class PengaturanSistemController extends Controller
     public function updateSkl(Request $request)
     {
         $data = $request->validate([
-            'skl_agenda_tanggal' => ['required', 'string', 'max:150'],
-            'skl_agenda_waktu' => ['required', 'string', 'max:100'],
-            'skl_agenda_tempat' => ['required', 'string', 'max:150'],
-            'skl_agenda_keperluan' => ['required', 'string', 'max:150'],
-            'skl_ttd_tempat_tanggal' => ['required', 'string', 'max:100'],
-            'skl_ketua_panitia' => ['required', 'string', 'max:150'],
-            'skl_nip_ketua_panitia' => ['required', 'string', 'max:30'],
+            'skl_agenda_tanggal' => ['required', 'string', 'max:50'],
+            'skl_agenda_waktu' => ['required', 'string', 'max:50'],
+            'skl_agenda_tempat' => ['required', 'string', 'max:50'],
+            'skl_agenda_keperluan' => ['required', 'string', 'max:100'],
+            'skl_ttd_tempat_tanggal' => ['required', 'string', 'max:50'],
+            'skl_ketua_panitia' => ['required', 'string', 'max:50'],
+            'skl_nip_ketua_panitia' => ['required', 'string', 'max:18'],
             'skl_tanda_tangan_ketua_panitia' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:1024'],
         ], [
             'skl_agenda_tanggal.required' => 'Hari dan tanggal kegiatan wajib diisi.',
