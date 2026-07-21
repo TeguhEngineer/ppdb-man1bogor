@@ -37,28 +37,28 @@ class ProfileController extends Controller
 
         $user->save();
 
-        if ($request->hasFile('foto_profil')) {
-            $pendaftaran = $user->pendaftarans()->latest()->first();
-            if ($pendaftaran) {
-                $pendaftaran->load(['dataPribadi']);
-                $existingPhoto = optional($pendaftaran->dataPribadi)->foto_profil;
+        // if ($request->hasFile('foto_profil')) {
+        //     $pendaftaran = $user->pendaftarans()->latest()->first();
+        //     if ($pendaftaran) {
+        //         $pendaftaran->load(['dataPribadi']);
+        //         $existingPhoto = optional($pendaftaran->dataPribadi)->foto_profil;
 
-                if ($pendaftaran->dataPribadi) {
-                    if ($existingPhoto && Storage::disk('public')->exists($existingPhoto)) {
-                        Storage::disk('public')->delete($existingPhoto);
-                    }
+        //         if ($pendaftaran->dataPribadi) {
+        //             if ($existingPhoto && Storage::disk('public')->exists($existingPhoto)) {
+        //                 Storage::disk('public')->delete($existingPhoto);
+        //             }
 
-                    $path = $request->file('foto_profil')->store('berkas/foto_profil', 'public');
-                    DataPribadi::updateOrCreate(
-                        ['pendaftaran_id' => $pendaftaran->id],
-                        ['foto_profil' => $path]
-                    );
+        //             $path = $request->file('foto_profil')->store('berkas/foto_profil', 'public');
+        //             DataPribadi::updateOrCreate(
+        //                 ['pendaftaran_id' => $pendaftaran->id],
+        //                 ['foto_profil' => $path]
+        //             );
 
-                } else {
-                    return Redirect::route('profile.index')->with('error', 'Gagal mengunggah foto. Anda belum mengisi biodata pendaftaran.');
-                }
-            }
-        }
+        //         } else {
+        //             return Redirect::route('profile.index')->with('error', 'Gagal mengunggah foto. Anda belum mengisi biodata pendaftaran.');
+        //         }
+        //     }
+        // }
 
         return Redirect::route('profile.index')->with('status', 'profile-updated');
     }

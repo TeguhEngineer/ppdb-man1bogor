@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('pendaftaran_id')->constrained('pendaftarans')->cascadeOnDelete();
             
             // Data Pribadi
-            $table->string('foto_profil')->nullable();
+            // $table->string('foto_profil')->nullable();
             $table->string('nama_lengkap', 150);
             $table->string('tempat_lahir', 100);
             $table->date('tanggal_lahir');

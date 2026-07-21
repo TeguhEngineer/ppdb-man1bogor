@@ -29,7 +29,7 @@
                 @csrf
                 @method('patch')
 
-                <div>
+                {{-- <div>
                     <x-label for="foto_profil" :value="__('Foto Profil (Hanya bisa diisi jika Biodata sudah tersimpan)')" />
                     <input id="foto_profil" name="foto_profil" type="file" class="mt-1 block w-full text-sm text-gray-500
                         file:mr-4 file:py-2 file:px-4
@@ -49,7 +49,7 @@
                             <img src="{{ Storage::url($foto) }}" alt="Foto Profil Saat Ini" class="h-20 w-20 object-cover rounded-full border border-gray-200">
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
                 <div>
                     <x-label for="name" :value="__('Nama Lengkap')" />
