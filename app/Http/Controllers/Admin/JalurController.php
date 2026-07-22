@@ -76,8 +76,8 @@ class JalurController extends Controller
     private function validatedData(Request $request): array
     {
         $data = $request->validate([
-            'nama_jalur' => 'required|string|max:50',
-            'total_kuota' => 'required|integer|min:0|max:4',
+            'nama_jalur' => 'required|string|max:8',
+            'total_kuota' => 'required|integer|min:0|max:99',
             'deskripsi' => 'nullable|string',
             'tgl_buka' => 'nullable|date_format:Y-m-d\TH:i',
             'tgl_tutup' => 'nullable|date_format:Y-m-d\TH:i',
@@ -86,7 +86,7 @@ class JalurController extends Controller
             'total_kuota.required' => 'Total kuota wajib diisi.',
             'total_kuota.integer' => 'Total kuota harus berupa angka.',
             'total_kuota.min' => 'Total kuota minimal 0.',
-            'total_kuota.max' => 'Total kuota maksimal 4 digit.',
+            'total_kuota.max' => 'Total kuota maksimal 99.',
             'tgl_buka.date_format' => 'Format tanggal buka tidak valid.',
             'tgl_tutup.date_format' => 'Format tanggal tutup tidak valid.',
         ]);

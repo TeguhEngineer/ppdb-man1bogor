@@ -21,14 +21,14 @@ class PengaturanSistemController extends Controller
     public function updateSkl(Request $request)
     {
         $data = $request->validate([
-            'skl_agenda_tanggal' => ['required', 'string', 'max:50'],
-            'skl_agenda_waktu' => ['required', 'string', 'max:50'],
-            'skl_agenda_tempat' => ['required', 'string', 'max:50'],
-            'skl_agenda_keperluan' => ['required', 'string', 'max:100'],
-            'skl_ttd_tempat_tanggal' => ['required', 'string', 'max:50'],
-            'skl_ketua_panitia' => ['required', 'string', 'max:50'],
+            'skl_agenda_tanggal' => ['required', 'string', 'max:20'],
+            'skl_agenda_waktu' => ['required', 'string', 'max:13'],
+            'skl_agenda_tempat' => ['required', 'string', 'max:11'],
+            'skl_agenda_keperluan' => ['required', 'string', 'max:42'],
+            'skl_ttd_tempat_tanggal' => ['required', 'string', 'max:20'],
+            'skl_ketua_panitia' => ['required', 'string', 'max:22'],
             'skl_nip_ketua_panitia' => ['required', 'string', 'max:18'],
-            'skl_tanda_tangan_ketua_panitia' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:1024'],
+            'skl_tanda_tangan_ketua_panitia' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:59'],
         ], [
             'skl_agenda_tanggal.required' => 'Hari dan tanggal kegiatan wajib diisi.',
             'skl_agenda_waktu.required' => 'Waktu kegiatan wajib diisi.',
@@ -39,7 +39,7 @@ class PengaturanSistemController extends Controller
             'skl_nip_ketua_panitia.required' => 'NIP ketua panitia wajib diisi.',
             'skl_tanda_tangan_ketua_panitia.image' => 'Tanda tangan harus berupa file gambar.',
             'skl_tanda_tangan_ketua_panitia.mimes' => 'Tanda tangan harus berformat PNG, JPG, JPEG, atau WEBP.',
-            'skl_tanda_tangan_ketua_panitia.max' => 'Ukuran tanda tangan maksimal 1 MB.',
+            'skl_tanda_tangan_ketua_panitia.max' => 'Ukuran tanda tangan maksimal 59 KB.',
         ]);
 
         if ($request->hasFile('skl_tanda_tangan_ketua_panitia')) {

@@ -73,7 +73,7 @@ class PengumumanController extends Controller
     private function validatePengumuman(Request $request): array
     {
         return $request->validate([
-            'judul' => ['required', 'string', 'max:150'],
+            'judul' => ['required', 'string', 'max:42'],
             'keterangan' => ['required', 'string'],
         ], [
             'judul.required' => 'Judul pengumuman wajib diisi.',
