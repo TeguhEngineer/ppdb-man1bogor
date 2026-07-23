@@ -48,6 +48,10 @@ class SeleksiUjianController extends Controller
             'lokasi' => 'nullable|string|max:21',
             'kapasitas' => 'nullable|integer|min:1|max:99',
             'deskripsi' => 'nullable|string',
+        ], [
+            'nama_ruangan.max' => 'Nama ruangan maksimal 8 karakter.',
+            'lokasi.max' => 'Lokasi maksimal 21 karakter.',
+            'kapasitas.max' => 'Kapasitas maksimal 99.',
         ]);
 
         Ruangan::create($data);
@@ -62,6 +66,10 @@ class SeleksiUjianController extends Controller
             'lokasi' => 'nullable|string|max:21',
             'kapasitas' => 'nullable|integer|min:1|max:99',
             'deskripsi' => 'nullable|string',
+        ], [
+            'nama_ruangan.max' => 'Nama ruangan maksimal 8 karakter.',
+            'lokasi.max' => 'Lokasi maksimal 21 karakter.',
+            'kapasitas.max' => 'Kapasitas maksimal 99.',
         ]);
 
         $ruangan->update($data);
@@ -87,6 +95,8 @@ class SeleksiUjianController extends Controller
             'deskripsi' => 'nullable|string',
             'jalur_ids' => 'nullable|array',
             'jalur_ids.*' => 'exists:jalurs,id',
+        ], [
+            'nama_mapel.max' => 'Nama mata pelajaran maksimal 22 karakter.',
         ]);
 
         $mapel = Mapel::create([
@@ -106,6 +116,8 @@ class SeleksiUjianController extends Controller
             'deskripsi' => 'nullable|string',
             'jalur_ids' => 'nullable|array',
             'jalur_ids.*' => 'exists:jalurs,id',
+        ], [
+            'nama_mapel.max' => 'Nama mata pelajaran maksimal 22 karakter.',
         ]);
 
         $mapel->update([
@@ -158,6 +170,9 @@ class SeleksiUjianController extends Controller
             'jadwal_ujian_id' => 'required|exists:jadwal_ujians,id',
             'username_ujian' => 'required|string|max:10',
             'password_ujian' => 'required|string|max:10',
+        ], [
+            'username_ujian.max' => 'Username ujian maksimal 10 karakter.',
+            'password_ujian.max' => 'Password ujian maksimal 10 karakter.',
         ]);
 
         if (!$pendaftaran->berkas || $pendaftaran->berkas->status_berkas !== 'terima') {
@@ -189,6 +204,8 @@ class SeleksiUjianController extends Controller
             'waktu_wawancara_btq' => 'nullable|date_format:H:i',
             'tempat_wawancara_btq' => 'nullable|string|max:150',
             'catatan' => 'nullable|string',
+        ], [
+            'tempat_wawancara_btq.max' => 'Tempat wawancara BTQ maksimal 150 karakter.',
         ]);
     }
 
